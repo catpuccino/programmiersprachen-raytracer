@@ -1,6 +1,12 @@
 #include "box.hpp"
 
-Box::Box(const glm::vec3 &min, const glm::vec3 &max) :
+Box::Box(glm::vec3 const& min, glm::vec3 const& max) :
+        Shape("Box",Color{0.2f,0.2f,0.2f}),
+        min_{min},
+        max_{max} {}
+
+Box::Box(std::string const& str, Color const& clr, glm::vec3 const& min, glm::vec3 const& max) :
+        Shape(str,clr),
         min_{min},
         max_{max} {}
 

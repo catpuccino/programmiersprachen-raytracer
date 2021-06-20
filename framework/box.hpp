@@ -1,11 +1,12 @@
-#ifndef BUW_BOX_HPP
-#define BUW_BOX_HPP
+#ifndef BOX_HPP
+#define BOX_HPP
 
 #include "shape.hpp"
 
 class Box : public Shape {
 public:
     Box(glm::vec3 const& min, glm::vec3 const& max);
+    Box(std::string const& str, Color const& clr, glm::vec3 const& min, glm::vec3 const& max);
 
     float area() const override;
     float volume() const override;
@@ -14,4 +15,4 @@ private:
     glm::vec3 max_;
 };
 
-#endif // #ifndef BUW_BOX_HPP
+#endif // #ifndef BOX_HPP

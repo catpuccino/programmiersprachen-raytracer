@@ -4,7 +4,13 @@
 
 const double pi = acos(-1);
 
-Sphere::Sphere(const glm::vec3 &ctr, float r) :
+Sphere::Sphere(glm::vec3 const& ctr, float r) :
+        Shape("Sphere",Color{0.5f,0.5f,0.5f}),
+        centre_{ctr},
+        radius_{r} {}
+
+Sphere::Sphere(std::string const& str, Color const& clr, glm::vec3 const& ctr, float r) :
+        Shape(str,clr),
         centre_{ctr},
         radius_{r} {}
 
