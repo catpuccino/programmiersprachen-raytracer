@@ -25,3 +25,10 @@ float Box::volume() const {
   float volume = length * width * height;
   return volume;
 }
+
+std::ostream& Box::print(std::ostream& os) const {
+  Shape::print(os);
+  os << "min: {" << min_.x << ", " << min_.y << ", " << min_.z << "}" << std::endl;
+  os << "max: {" << max_.x << ", " << max_.y << ", " << max_.z << "}" << std::endl;
+  return os;
+}

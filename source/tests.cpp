@@ -58,6 +58,15 @@ TEST_CASE("Testing area and volume methods on Sphere and Box objects", "[area&vo
   }
 }
 
+TEST_CASE("print method should print all member attributes of each class to the console", "[print]")
+{
+  Box b{"Box",{0.2f,0.1f,0.3f},{1.2f,3.2f,9.83f},{9.88f,2.3f,1.9f}};
+  std::cout << b << std::endl;
+
+  Sphere s{"Sphere",{0.2f,0.1f,0.3f},{1.2f,3.2f,9.83f}};
+  std::cout << s << std::endl;
+}
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
