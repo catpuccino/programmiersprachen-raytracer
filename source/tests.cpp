@@ -1,8 +1,10 @@
 #define CATCH_CONFIG_RUNNER
-#include <catch.hpp>
 #include "shape.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
+#include <catch.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/intersect.hpp>
 
 TEST_CASE("Testing area and volume methods on Sphere and Box objects", "[area&volume]")
 {
@@ -65,6 +67,68 @@ TEST_CASE("print method should print all member attributes of each class to the 
 
   Sphere s{"Sphere",{0.2f,0.1f,0.3f},{1.2f,3.2f,9.83f}};
   std::cout << s << std::endl;
+}
+
+TEST_CASE("intersect_ray_sphere", "[intersect]")
+{
+// Ray
+  glm::vec3 ray_origin{0.0f,0.0f,0.0f};
+// ray direction has to be normalized !
+// you can use :
+// v = glm::normalize(some_vector)
+  glm::vec3 ray_direction{0.0f,0.0f,1.0f};
+// Sphere
+  glm::vec3 sphere_center{0.0f, 0.0f, 5.0f};
+  float sphere_radius{1.0f};
+  float distance = 0.0f;
+  auto result = glm::intersectRaySphere(
+          ray_origin , ray_direction,
+          sphere_center,
+          sphere_radius * sphere_radius, // squared radius !!!
+          distance);
+  REQUIRE(distance == Approx(4.0f));
+
+  // Tests with own intersect method
+  Sphere s{"Katze",{0.5f,0.5f,0.5f},{0,1,-10}};
+  HitPoint h = s.intersect(Ray{});
+  REQUIRE(h.did_intersect == true);
+  REQUIRE(h.t == Approx(10));
+  REQUIRE(h.name == "Katze");
+  REQUIRE(h.color.r == 0.5f);
+  REQUIRE(h.color.g == 0.5f);
+  REQUIRE(h.color.b == 0.5f);
+  REQUIRE(h.hitpoint.z == -10);
+  REQUIRE(h.hit_direction.x == 0);
+  REQUIRE(h.hit_direction.y == 0);
+  REQUIRE(h.hit_direction.z == -1);
+
+  Sphere s0{"KATZE",{0.5f,0.5f,0.5f},{0,0,-10}};
+  HitPoint h0 = s0.intersect(Ray{});
+  REQUIRE(h0.did_intersect == true);
+  REQUIRE(h0.t == Approx(9));
+  REQUIRE(h0.name == "KATZE");
+  REQUIRE(h0.color.r == 0.5f);
+  REQUIRE(h0.color.g == 0.5f);
+  REQUIRE(h0.color.b == 0.5f);
+  REQUIRE(h0.hitpoint.z == -9);
+  REQUIRE(h0.hit_direction.x == 0);
+  REQUIRE(h0.hit_direction.y == 0);
+  REQUIRE(h0.hit_direction.z == -1);
+
+  Sphere s1{"Katze123",{0.1f,0.1f,0.1f},{0,2,-10}};
+  HitPoint h1 = s1.intersect(Ray{});
+  REQUIRE(h1.did_intersect == false);
+  REQUIRE(h1.t == 0);
+  REQUIRE(h1.name == "Katze123");
+  REQUIRE(h1.color.r == 0.1f);
+  REQUIRE(h1.color.g == 0.1f);
+  REQUIRE(h1.color.b == 0.1f);
+  REQUIRE(h1.hitpoint.x == 0);
+  REQUIRE(h1.hitpoint.y == 0);
+  REQUIRE(h1.hitpoint.z == 0);
+  REQUIRE(h1.hit_direction.x == 0);
+  REQUIRE(h1.hit_direction.y == 0);
+  REQUIRE(h1.hit_direction.z == -1);
 }
 
 int main(int argc, char *argv[])

@@ -2,6 +2,9 @@
 #define SPHERE_HPP
 
 #include "shape.hpp"
+#include "ray.hpp"
+#include "hitpoint.hpp"
+#include <glm/gtx/intersect.hpp>
 
 class Sphere : public Shape {
 public:
@@ -12,6 +15,8 @@ public:
     float volume() const override;
 
     std::ostream& print(std::ostream& os) const override;
+
+    HitPoint intersect(Ray const& ray) const;
 private:
     glm::vec3 centre_;
     float radius_;
