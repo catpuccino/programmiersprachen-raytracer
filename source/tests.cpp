@@ -131,6 +131,19 @@ TEST_CASE("intersect_ray_sphere", "[intersect]")
   REQUIRE(h1.hit_direction.z == -1);
 }
 
+TEST_CASE("order of con- and destructors of class hierarchy", "[hierarchy]")
+{
+  std::cout << "\n=========================\n" << std::endl;
+  Color red{255, 0, 0};
+  glm::vec3 position{0.0f, 0.0f, 0.0f};
+  Sphere * s1 = new Sphere{"sphere0", red, position, 1.2f};
+  Shape * s2 = new Sphere{"sphere1", red, position, 1.2f};
+  s1->print(std::cout);
+  s2->print(std::cout);
+  delete s1;
+  delete s2;
+}
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
