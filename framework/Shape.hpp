@@ -2,7 +2,6 @@
 #define SHAPE_HPP
 
 #include "color.hpp"
-#include "window.hpp"
 
 class Shape
 {
