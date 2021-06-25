@@ -6,10 +6,13 @@
 #include "Shape.hpp"
 #include "color.hpp"
 
-class Sphere
+class Sphere : public Shape				//5.2
 {
 public:
 	Sphere(glm::vec3 const& newcenter_, float const& newradius_, Color const& newcolor_);
+
+	float area() const override;			
+	float volume() const override;
 
 private:
 	glm::vec3 center_;
