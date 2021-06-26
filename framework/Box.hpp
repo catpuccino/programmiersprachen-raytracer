@@ -18,7 +18,7 @@ public:								//5.3
 	float area() const override;
 	float volume() const override;
 
-	void print(Shape) const override;	//5.4
+	std::ostream& print(std::ostream& os) const override;	//5.4
 
 private:
 	glm::vec3 min_;

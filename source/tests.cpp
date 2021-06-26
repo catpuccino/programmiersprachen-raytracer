@@ -7,8 +7,8 @@
 
 TEST_CASE("Task5.2", "[Task5.2]")
 {
-	Box box1 = { {0.0f,0.0f,0.0f} , {4.0f,2.0f,0.0f} , {1.0f,0.0f,0.0f} };
-	Box box2 = { {-6.9f,-4.0f,0.0f} , {6.9f,4.2f,1.3f} , {1.0f,1.0f,0.0f} };
+	Box box1 = { {0.0f,0.0f,0.0f} , {4.0f,2.0f,0.0f}};
+	Box box2 = { {-6.9f,-4.0f,0.0f} , {6.9f,4.2f,1.3f}};
 
 	// l = 4.0f , h = 2.0f , w = 0.0f
 	REQUIRE(box1.area() == 16.0f); // 2*(4*0 + 4*2 + 0*2) = 16	(ist 2D)
@@ -21,8 +21,8 @@ TEST_CASE("Task5.2", "[Task5.2]")
 
 
 
-	Sphere sphere1 = { {0.0f,0.0f,0.0f} , 4.2f , {0.0f,1.0f,0.0f} };
-	Sphere sphere2 = { {-2.4f, 6.9f,0.0f} , -1.3f , {0.0f,1.0f,1.0f} };
+	Sphere sphere1 = { {0.0f,0.0f,0.0f} , 4.2f};
+	Sphere sphere2 = { {-2.4f, 6.9f,0.0f} , -1.3f};
 
 	REQUIRE(Approx(sphere1.area()) == 221.67f); // 4 * pi * 4.2^2
 	REQUIRE(Approx(sphere1.volume()) == 232.754f); // (4/3) * pi * 4.2^3

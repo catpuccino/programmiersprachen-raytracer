@@ -16,6 +16,8 @@ public:									//5.3
 	float area() const override;			
 	float volume() const override;
 
+	std::ostream& print(std::ostream& os) const override; //5.4
+
 private:
 	glm::vec3 center_;
 	float radius_;

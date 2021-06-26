@@ -8,16 +8,19 @@
 
 class Sphere : public Shape				//5.2
 {
-public:
-	Sphere(glm::vec3 const& newcenter_, float const& newradius_, Color const& newcolor_);
+public:									//5.3
+	Sphere();
+	Sphere(glm::vec3 const& newcenter_, float const& newradius_);
+	Sphere(glm::vec3 const& newcenter_, float const& newradius_, std::string const& newname_, Color const& newcolor_);
 
 	float area() const override;			
 	float volume() const override;
 
+	std::ostream& print(std::ostream& os) const override; //5.4
+
 private:
 	glm::vec3 center_;
 	float radius_;
-	Color color_;
 };
 
 #endif

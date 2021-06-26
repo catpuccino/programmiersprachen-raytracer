@@ -1,9 +1,8 @@
 #include "Box.hpp"
 
 //5.3
-
 Box::Box() :
-	Shape(),
+	Shape::Shape("Sphere", { 0.0f,1.0f,1.0f }),
 	min_({ 0.0f,0.0f,0.0f }),
 	max_({ 1.0f, 1.0f, 1.0f })
 {}
@@ -37,7 +36,16 @@ float Box::volume() const	// V = l*h*w
 }
 
 
-/*void Box::print(Shape s) const //5.4
+std::ostream& Box::print(std::ostream& os) const //5.4
 {
-
-}*/
+	std::ostream& osShape = Shape::print(os);
+	os << "min x: " << min_.x
+		<< "\t min y: " << min_.y
+		<< "\t min z: " << min_.z
+		<< "\n"
+		<< "max x : " << max_.x
+		<< "\t max y: " << max_.y
+		<< "\t max z: " << max_.z
+		<< "\n";
+	return osShape,os;
+}

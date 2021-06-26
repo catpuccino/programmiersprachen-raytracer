@@ -1,5 +1,11 @@
 add_executable(example example.cpp)
 
+add_executable(testmain
+ main.cpp
+ Shape.cpp
+ Sphere.cpp
+ Box.cpp)
+ 
 target_link_libraries(example ${FRAMEWORK_NAME} ${LIBRARIES})
 add_dependencies(example glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 
