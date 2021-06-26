@@ -4,6 +4,17 @@
 #include <cmath>
 
 //5.3
+Sphere::Sphere() :
+	Shape(),
+	center_({ 0.0f,0.0f,0.0f }),
+	radius_({ 1.0f })
+{}
+
+Sphere::Sphere(glm::vec3 const& newcenter_, float const& newradius_) :
+	center_(newcenter_),
+	radius_(newradius_)
+{}
+
 Sphere::Sphere(glm::vec3 const& newcenter_, float const& newradius_, std::string const& newname_, Color const& newcolor_) :
 	Shape(newname_, newcolor_),
 	center_(newcenter_),
