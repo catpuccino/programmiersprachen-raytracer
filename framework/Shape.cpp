@@ -11,3 +11,17 @@ Shape::Shape(std::string const& newname_, Color const& newcolor_):		//5.3
 	name_(newname_),
 	color_(newcolor_)
 {}
+
+
+std::ostream& operator<<(std::ostream& os, Shape const& s) {				//5.4
+	return os << s;
+}
+
+std::ostream& Shape::print(std::ostream& os) const {
+	os	<< "\n"
+		<< "name: " << name_
+		<< "\n"
+		<< "color: " << color_;
+
+	return os;
+}
