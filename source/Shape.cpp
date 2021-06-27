@@ -12,6 +12,8 @@ Shape::Shape(std::string const& newname_, Color const& newcolor_):		//5.3
 	color_(newcolor_)
 {}
 
+Shape::~Shape() {}														//5.8
+
 
 std::ostream& operator<<(std::ostream& os, Shape const& s) {				//5.4
 	return os << s;

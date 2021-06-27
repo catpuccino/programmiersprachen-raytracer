@@ -8,6 +8,8 @@ class Shape
 public:
 	Shape(std::string const& newname_, Color const& newcolor_); //5.3
 	Shape();
+	virtual ~Shape();					//-->Sphere und Box Destruktor: Die Methode mit dem Überschreibungsspezifierer
+										//"override" hat keine Basisklassenmathoden überschrieben.
 
 	virtual float area() const = 0;		//5.1 rein virtuell, daher existiert keine Implementierung!
 	virtual float volume() const = 0;	//5.1

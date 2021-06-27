@@ -13,6 +13,8 @@ public:									//5.3
 	Sphere(glm::vec3 const& newcenter_, float const& newradius_);
 	Sphere(glm::vec3 const& newcenter_, float const& newradius_, std::string const& newname_, Color const& newcolor_);
 
+	~Sphere() override;							//5.8 (virtual)
+
 	float area() const override;			
 	float volume() const override;
 

@@ -22,6 +22,9 @@ Sphere::Sphere(glm::vec3 const& newcenter_, float const& newradius_, std::string
 	radius_(newradius_)
 {}
 
+
+Sphere::~Sphere() {}						//5.8 (virtual)
+
 //5.2
 float Sphere::area() const // A = 4*pi*r^2
 {

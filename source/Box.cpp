@@ -18,6 +18,9 @@ Box::Box(glm::vec3 const& newmin_, glm::vec3 const& newmax_, std::string const& 
 	max_(newmax_)
 {}
 
+
+Box::~Box() {}				//5.8 (virtual)
+
 //5.2
 float Box::area() const  // A = 2*l*w + 2*l*h + 2*w*h
 {
