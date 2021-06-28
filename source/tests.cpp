@@ -1,14 +1,18 @@
 #define CATCH_CONFIG_RUNNER
 #include <catch.hpp>
+#include <glm/glm.hpp>				//5.6
+#include <glm/gtx/intersect.hpp>
 
 #include "Shape.hpp"
 #include "Box.hpp"
 #include "Sphere.hpp"
 
+
 TEST_CASE("Task5.2", "[Task5.2]")
 {
-	Box box1 = { {0.0f,0.0f,0.0f} , {4.0f,2.0f,0.0f}};
-	Box box2 = { {-6.9f,-4.0f,0.0f} , {6.9f,4.2f,1.3f}};
+
+	Box box1 = { {0.0f,0.0f,0.0f} , {4.0f,2.0f,0.0f} };
+	Box box2 = { {-6.9f,-4.0f,0.0f} , {6.9f,4.2f,1.3f} };
 
 	// l = 4.0f , h = 2.0f , w = 0.0f
 	REQUIRE(box1.area() == 16.0f); // 2*(4*0 + 4*2 + 0*2) = 16	(ist 2D)
@@ -21,16 +25,38 @@ TEST_CASE("Task5.2", "[Task5.2]")
 
 
 
-	Sphere sphere1 = { {0.0f,0.0f,0.0f} , 4.2f};
-	Sphere sphere2 = { {-2.4f, 6.9f,0.0f} , -1.3f};
+	Sphere sphere1 = { {0.0f,0.0f,0.0f} , 4.2f };
+	Sphere sphere2 = { {-2.4f, 6.9f,0.0f} , -1.3f };
 
 	REQUIRE(Approx(sphere1.area()) == 221.67f); // 4 * pi * 4.2^2
 	REQUIRE(Approx(sphere1.volume()) == 232.754f); // (4/3) * pi * 4.2^3
 
 	REQUIRE(Approx(sphere2.area()) == 21.237f); //4 * pi * -1.3^2
 	REQUIRE(Approx(sphere2.volume()) == 6.902f); // (4/3) * pi * -1.3^3
-
 }
+
+
+//5.6
+TEST_CASE("intersect_ray_sphere", "[intersect]")
+{
+	//Ray
+	glm::vec3 ray_origin{ 0.0f,0.0f,0.0f };
+	//ray direction has to be normalized!
+	//you can use:
+	// v = glm::normalize(some_vector)
+	glm::vec3 ray_direction{ 0.0f,0.0f,1.0f };
+
+	//sphere
+	glm::vec3 sphere_center{ 0.0f,0.0f,5.0f };
+	float sphere_radius{ 1.0f };
+	float distance = 0.0f;
+	auto result = glm::intersectRaySphere(
+		ray_origin, ray_direction, sphere_center,
+		sphere_radius * sphere_radius, //squard radius!!
+		distance);
+	REQUIRE(distance == Approx(4.0f));
+}
+
 
 int main(int argc, char *argv[])
 {

@@ -3,6 +3,10 @@
 #include "Sphere.hpp"
 #include <cmath>
 
+#include <glm/glm.hpp>				//5.6
+#include <glm/gtx/intersect.hpp>
+
+
 //5.3
 Sphere::Sphere() :
 	Shape::Shape("Sphere", { 1.0f,1.0f,0.0f }),
@@ -48,4 +52,29 @@ std::ostream& Sphere::print(std::ostream& os) const { //5.4
 		<< "radius: " << radius_
 		<< "\n";
 	return osShape, os;
+}
+
+//5.6
+HitPoint Sphere::intersect(Ray const& ray) const
+{
+	// Point p = Ray_origin + Ray_direction * time
+	// time = dot(center_sphere - ray_origin, ray_direction)
+	// float x? = length(center_sphere - Point p)
+	// float y?...
+
+	HitPoint hp;
+
+	hp.name_ = name_;
+	hp.color_ = color_;
+	hp.direction_ = ray.direction;
+
+	float distance = 0.0f;
+	hp.hit_ = glm::intersectRaySphere(
+		ray.origin, ray.direction, center_,
+		radius_ * radius_, //squard radius!!
+		distance);
+	hp.t_ = distance;
+
+	//still missing: vec3 schnittpunkt, pythagoras stuff? ray.origin and ray.direction and distance?
+	return hp;
 }

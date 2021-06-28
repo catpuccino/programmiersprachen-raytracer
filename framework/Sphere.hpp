@@ -5,6 +5,8 @@
 
 #include "Shape.hpp"
 #include "color.hpp"
+#include "Ray.hpp"	//5.6
+#include "HitPoint.hpp"
 
 class Sphere : public Shape				//5.2
 {
@@ -19,6 +21,9 @@ public:									//5.3
 	float volume() const override;
 
 	std::ostream& print(std::ostream& os) const override; //5.4
+
+	HitPoint intersect(Ray const& ray) const;
+
 
 private:
 	glm::vec3 center_;
