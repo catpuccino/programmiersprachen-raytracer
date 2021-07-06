@@ -1,6 +1,7 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
 
+#include "material.hpp"
 #include "color.hpp"
 #include "hitpoint.hpp"
 #include <glm/vec3.hpp>
@@ -21,7 +22,7 @@ class Shape {
 
   protected:
     std::string name_;
-    Color color_;
+    std::shared_ptr<Material> material_;
 };
 
 std::ostream& operator<<(std::ostream& os, Shape const& s);

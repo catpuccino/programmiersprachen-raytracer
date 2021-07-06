@@ -5,8 +5,8 @@ Box::Box(glm::vec3 const& min, glm::vec3 const& max) :
         min_{min},
         max_{max} {}
 
-Box::Box(std::string const& str, Color const& clr, glm::vec3 const& min, glm::vec3 const& max) :
-        Shape(str,clr),
+Box::Box(std::string const& str, std::shared_ptr<Material> material, glm::vec3 const& min, glm::vec3 const& max) :
+        Shape(str,material),
         min_{min},
         max_{max} {}
 

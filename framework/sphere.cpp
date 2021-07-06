@@ -9,8 +9,8 @@ Sphere::Sphere(glm::vec3 const& ctr, float r) :
         centre_{ctr},
         radius_{r} {}
 
-Sphere::Sphere(std::string const& str, Color const& clr, glm::vec3 const& ctr, float r) :
-        Shape(str,clr),
+Sphere::Sphere(std::string const& str, std::shared_ptr<Material> material, glm::vec3 const& ctr, float r) :
+        Shape(str,material),
         centre_{ctr},
         radius_{r} {}
 
@@ -31,7 +31,7 @@ HitPoint Sphere::intersect(Ray const& ray) const {
           distance);
   glm::vec3 hitpoint = ray.origin + distance * normalized_ray_direction;
 
-  return HitPoint{result,distance,name_,color_,hitpoint,normalized_ray_direction};
+  return HitPoint{result,distance,name_,material_,hitpoint,normalized_ray_direction};
 }
 
 std::ostream& Sphere::print(std::ostream& os) const {
