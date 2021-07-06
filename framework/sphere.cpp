@@ -12,9 +12,9 @@ Sphere::Sphere(glm::vec3 const& ctr, float r) :
 Sphere::Sphere(std::string const& str, Color const& clr, glm::vec3 const& ctr, float r) :
         Shape(str,clr),
         centre_{ctr},
-        radius_{r} { std::cout << "Sphere Constructor" << std::endl; }
+        radius_{r} {}
 
-Sphere::~Sphere() { std::cout << "Sphere Destructor" << std::endl; }
+Sphere::~Sphere() {}
 
 float Sphere::area() const { return 4 * float(pi) * powf(radius_,2); }
 

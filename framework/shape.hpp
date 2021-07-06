@@ -2,6 +2,7 @@
 #define SHAPE_HPP
 
 #include "color.hpp"
+#include "hitpoint.hpp"
 #include <glm/vec3.hpp>
 #include <string>
 #include <iostream>
@@ -15,6 +16,8 @@ class Shape {
     virtual float volume() const = 0;
 
     virtual std::ostream& print(std::ostream& os) const;
+
+    virtual HitPoint intersect() = 0;
 
   protected:
     std::string name_;
