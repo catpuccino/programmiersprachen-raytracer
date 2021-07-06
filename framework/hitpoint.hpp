@@ -10,7 +10,7 @@ struct HitPoint
     bool did_intersect;
     float t;
     std::string name;
-    Color color;
+    std::shared_ptr<Material> material;
     glm::vec3 hitpoint;
     glm::vec3 hit_direction;
 };

@@ -10,7 +10,7 @@
 
 class Shape {
   public:
-    Shape(std::string const& str, Color const& clr);
+    Shape(std::string const& str, std::shared_ptr<Material> material);
     ~Shape();
 
     virtual float area() const = 0;
