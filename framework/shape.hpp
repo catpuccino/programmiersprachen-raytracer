@@ -4,6 +4,7 @@
 #include "material.hpp"
 #include "color.hpp"
 #include "hitpoint.hpp"
+#include "ray.hpp"
 #include <glm/vec3.hpp>
 #include <string>
 #include <iostream>
@@ -18,7 +19,7 @@ class Shape {
 
     virtual std::ostream& print(std::ostream& os) const;
 
-    virtual HitPoint intersect() = 0;
+    virtual HitPoint intersect(Ray const& ray) const = 0;
 
   protected:
     std::string name_;
