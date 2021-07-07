@@ -1,7 +1,11 @@
 #include "box.hpp"
 
 Box::Box(glm::vec3 const& min, glm::vec3 const& max) :
-        Shape("Box",Color{0.2f,0.2f,0.2f}),
+        Shape("Box",std::make_shared<Material>(Material{"Standard",
+                                                        {0.5f,0.5f,0.5f},
+                                                        {0.5f,0.5f,0.5f},
+                                                        {0.5f,0.5f,0.5f},
+                                                        2.0f})),
         min_{min},
         max_{max} {}
 
