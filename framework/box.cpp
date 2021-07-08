@@ -1,4 +1,5 @@
 #include "box.hpp"
+#include <cmath>
 
 
 Box::Box(glm::vec3 const& min, glm::vec3 const& max) :
@@ -47,7 +48,7 @@ HitPoint Box::intersect(Ray const& ray) const {
   float t = (p_x - ray.origin.x) / ray.direction.x;
   float p_y = ray.origin.y + t * ray.direction.y;
   float p_z = ray.origin.z + t * ray.direction.z;
-  if (min_.y <= p_y <= max_.y && min_.z <= p_z <= max_.z) {
+  if (min_.y <= p_y && p_y <= max_.y && min_.z <= p_z && p_z <= max_.z) {
     smallest_t = t;
     result = true;
   }
@@ -57,7 +58,7 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_x - ray.origin.x) / ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
   p_z = ray.origin.z + t * ray.direction.z;
-  if (min_.y <= p_y <= max_.y && min_.z <= p_z <= max_.z && t < smallest_t) {
+  if (min_.y <= p_y && p_y <= max_.y && min_.z <= p_z && p_z <= max_.z && t < smallest_t) {
     smallest_t = t;
   result = true;
   }
@@ -67,7 +68,7 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_y - ray.origin.y) / ray.direction.y;
   p_x = ray.origin.x + t * ray.direction.x;
   p_z = ray.origin.z + t * ray.direction.z;
-  if (min_.x <= p_x <= max_.x && min_.z <= p_z <= max_.z && t < smallest_t) {
+  if (min_.x <= p_x && p_x <= max_.x && min_.z <= p_z && p_z <= max_.z && t < smallest_t) {
     smallest_t = t;
     result = true;
   }
@@ -77,7 +78,7 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_y - ray.origin.y) / ray.direction.y;
   p_x = ray.origin.x + t * ray.direction.x;
   p_z = ray.origin.z + t * ray.direction.z;
-  if (min_.x <= p_x <= max_.x && min_.z <= p_z <= max_.z && t < smallest_t) {
+  if (min_.x <= p_x && p_x <= max_.x && min_.z <= p_z && p_z <= max_.z && t < smallest_t) {
     smallest_t = t;
     result = true;
   }
@@ -87,7 +88,7 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_z - ray.origin.z) / ray.direction.z;
   p_x = ray.origin.x + t * ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
-  if (min_.x <= p_x <= max_.x && min_.y <= p_y <= max_.y && t < smallest_t) {
+  if (min_.x <= p_x && p_x <= max_.x && min_.y <= p_y && p_y <= max_.y && t < smallest_t) {
     smallest_t = t;
     result = true;
   }
@@ -97,7 +98,7 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_z - ray.origin.z) / ray.direction.z;
   p_x = ray.origin.x + t * ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
-  if (min_.x <= p_x <= max_.x && min_.y <= p_y <= max_.y && t < smallest_t) {
+  if (min_.x <= p_x && p_x <= max_.x && min_.y <= p_y && p_y <= max_.y && t < smallest_t) {
     smallest_t = t;
     result = true;
   }

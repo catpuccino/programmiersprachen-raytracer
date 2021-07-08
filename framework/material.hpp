@@ -5,7 +5,7 @@
 #include <string>
 
 struct Material {
-    std::string name_;
+    std::string name;
     Color ka;
     Color kd;
     Color ks;
