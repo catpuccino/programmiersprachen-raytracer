@@ -1,5 +1,6 @@
 #include "box.hpp"
 
+
 Box::Box(glm::vec3 const& min, glm::vec3 const& max) :
         Shape("Box",std::make_shared<Material>(Material{"Standard",
                                                         {0.5f,0.5f,0.5f},
@@ -38,5 +39,71 @@ std::ostream& Box::print(std::ostream& os) const {
 }
 
 HitPoint Box::intersect(Ray const& ray) const {
-  return HitPoint;
+  bool result = false;
+  float smallest_t = std::numeric_limits<float>::max();
+
+  // left side of AABB
+  float p_x = min_.x;
+  float t = (p_x - ray.origin.x) / ray.direction.x;
+  float p_y = ray.origin.y + t * ray.direction.y;
+  float p_z = ray.origin.z + t * ray.direction.z;
+  if (min_.y <= p_y <= max_.y && min_.z <= p_z <= max_.z) {
+    smallest_t = t;
+    result = true;
+  }
+
+  // right side of AABB
+  p_x = max_.x;
+  t = (p_x - ray.origin.x) / ray.direction.x;
+  p_y = ray.origin.y + t * ray.direction.y;
+  p_z = ray.origin.z + t * ray.direction.z;
+  if (min_.y <= p_y <= max_.y && min_.z <= p_z <= max_.z && t < smallest_t) {
+    smallest_t = t;
+  result = true;
+  }
+
+  // front side of AABB
+  p_y = min_.y;
+  t = (p_y - ray.origin.y) / ray.direction.y;
+  p_x = ray.origin.x + t * ray.direction.x;
+  p_z = ray.origin.z + t * ray.direction.z;
+  if (min_.x <= p_x <= max_.x && min_.z <= p_z <= max_.z && t < smallest_t) {
+    smallest_t = t;
+    result = true;
+  }
+
+  // back side of AABB
+  p_y = max_.y;
+  t = (p_y - ray.origin.y) / ray.direction.y;
+  p_x = ray.origin.x + t * ray.direction.x;
+  p_z = ray.origin.z + t * ray.direction.z;
+  if (min_.x <= p_x <= max_.x && min_.z <= p_z <= max_.z && t < smallest_t) {
+    smallest_t = t;
+    result = true;
+  }
+
+  // bottom side of AABB
+  p_z = min_.z;
+  t = (p_z - ray.origin.z) / ray.direction.z;
+  p_x = ray.origin.x + t * ray.direction.x;
+  p_y = ray.origin.y + t * ray.direction.y;
+  if (min_.x <= p_x <= max_.x && min_.y <= p_y <= max_.y && t < smallest_t) {
+    smallest_t = t;
+    result = true;
+  }
+
+  // top side of AABB
+  p_z = max_.z;
+  t = (p_z - ray.origin.z) / ray.direction.z;
+  p_x = ray.origin.x + t * ray.direction.x;
+  p_y = ray.origin.y + t * ray.direction.y;
+  if (min_.x <= p_x <= max_.x && min_.y <= p_y <= max_.y && t < smallest_t) {
+    smallest_t = t;
+    result = true;
+  }
+
+  glm::vec3 normalized_ray_direction = glm::normalize(ray.direction);
+  glm::vec3 hitpoint = ray.origin + smallest_t * normalized_ray_direction; //
+
+  return HitPoint{result,smallest_t,name_,material_,hitpoint,normalized_ray_direction};
 }

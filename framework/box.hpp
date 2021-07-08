@@ -3,6 +3,7 @@
 
 #include "shape.hpp"
 #include "ray.hpp"
+#include <glm/gtx/intersect.hpp>
 
 class Box : public Shape {
 public:
