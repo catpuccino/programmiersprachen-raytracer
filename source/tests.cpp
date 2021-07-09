@@ -2,6 +2,7 @@
 #include "shape.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
+#include "scene.hpp"
 #include <catch.hpp>
 
 
@@ -138,12 +139,26 @@ TEST_CASE("Box::intersect method", "[box_intersect]")
     REQUIRE(hp.t == 5);
     REQUIRE(hp.hitpoint.z == -5);
 
-    Ray r1{{0,0,0},{-1,0.5f,1}};
-    Box b_2{{-1.0f, 1.0f, 3.0f},{-8.0f, 6.0f, 6.0f}};
+/*    Ray r1{{0,0,0},{-1,0.5f,1}};
+    Box b_2{{-8.0f, 1.0f, 3.0f},{-1.0f, 6.0f, 6.0f}};
     auto hp_1 = b_2.intersect(r1);
     REQUIRE(hp_1.did_intersect == true);
-    REQUIRE(hp_1.t > 3);
-    REQUIRE(hp_1.hitpoint.z == 3);
+    REQUIRE(hp_1.t > 2);
+    REQUIRE(hp_1.hitpoint.z == 3);*/
+
+    Ray r2{{0,0,0},{0,-1,0.5f}};
+    Box b_3{{-2,-8,0},{2,-3,5}};
+    auto hp_2 = b_3.intersect(r2);
+    REQUIRE(hp_2.did_intersect == true);
+    REQUIRE(hp_2.t > 3);
+    REQUIRE(hp_2.hitpoint.y == -3);
+}
+
+TEST_CASE("parse should read sdf file and create and add new materials to scene","[parse]")
+{
+  Scene s;
+  std::string path = "D:\\Nextcloud\\Bauhaus Uni Weimar\\SoSe_2021\\Programmiersprachen\\Belege\\Beleg_6\\materials.sdf";
+  parse_materials(path,s);
 }
 
 int main(int argc, char *argv[])
