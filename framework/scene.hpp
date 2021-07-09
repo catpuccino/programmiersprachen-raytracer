@@ -2,15 +2,14 @@
 #define SCENE_HPP
 
 #include "material.hpp"
-#include "scene.hpp"
-#include <sstream>
 #include <vector>
+#include <sstream>
+
 
 struct Scene {
     std::vector<std::shared_ptr<Material>> material_cont;
-
 };
 
-void parse_materials(std::string file_path, Scene& scene);
+void parse_materials(std::string const& file_path, Scene& scene);
 
 #endif // #ifndef SCENE_HPP

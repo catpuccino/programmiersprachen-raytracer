@@ -1,10 +1,8 @@
 #include "scene.hpp"
 
-#include "color.hpp"
-#include "material.hpp"
 #include <fstream>
 
-void parse_materials(std::string file_path, Scene& scene) {
+void parse_materials(std::string const& file_path, Scene& scene) {
 
   std::ifstream in_sdf_file(file_path);
 
@@ -18,7 +16,7 @@ void parse_materials(std::string file_path, Scene& scene) {
     line_as_string_stream >> token_string;
     // jz was mit token_string machen
     if (!("define" == token_string)) {
-      return -1;
+      return;
     }
 
     std::string object_string = "";
@@ -52,8 +50,6 @@ void parse_materials(std::string file_path, Scene& scene) {
       scene.material_cont.push_back(material);
     }
   }
-
-
 
   in_sdf_file.close();
 }
