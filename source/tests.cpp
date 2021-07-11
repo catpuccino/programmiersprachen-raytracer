@@ -139,12 +139,12 @@ TEST_CASE("Box::intersect method", "[box_intersect]")
     REQUIRE(hp.t == 5);
     REQUIRE(hp.hitpoint.z == -5);
 
-/*    Ray r1{{0,0,0},{-1,0.5f,1}};
+    Ray r1{{0,0,0},{-1,0.5f,1}};
     Box b_2{{-8.0f, 1.0f, 3.0f},{-1.0f, 6.0f, 6.0f}};
     auto hp_1 = b_2.intersect(r1);
     REQUIRE(hp_1.did_intersect == true);
-    REQUIRE(hp_1.t > 2);
-    REQUIRE(hp_1.hitpoint.z == 3);*/
+    REQUIRE(hp_1.t > 3);
+    REQUIRE(hp_1.hitpoint.z == 3);
 
     Ray r2{{0,0,0},{0,-1,0.5f}};
     Box b_3{{-2,-8,0},{2,-3,5}};
@@ -152,13 +152,31 @@ TEST_CASE("Box::intersect method", "[box_intersect]")
     REQUIRE(hp_2.did_intersect == true);
     REQUIRE(hp_2.t > 3);
     REQUIRE(hp_2.hitpoint.y == -3);
+
+    Ray r3{{0,0,0},{0,1,0}};
+    Box  b_4{{1,1,1},{4,4,4}};
+    auto hp_3 = b_4.intersect(r3);
+    REQUIRE(hp_3.did_intersect == false);
+
+  Ray ray = { glm::vec3{ 2.58f, 2.36f, 0.0f }, glm::vec3{ -4.64f, -2.28f, 2.0f } };
+  Box b_5 = {{0.0f,0.0f,0.0f},{2.0f,2.0f,2.0f}};
+  auto hitpoint = b_5.intersect(ray);
+  REQUIRE(hitpoint.did_intersect == true);
+  REQUIRE(hitpoint.name == "Box");
+  REQUIRE(hitpoint.hit_direction.x == Approx(-0.836f).epsilon(0.01));
+  REQUIRE(hitpoint.hit_direction.y == Approx(-0.412f).epsilon(0.01));
+  REQUIRE(hitpoint.hit_direction.z == Approx(0.360f).epsilon(0.01));
+  REQUIRE(hitpoint.t == Approx(0.873f).epsilon(0.01));
+  REQUIRE(hitpoint.hitpoint.x == Approx(1.847f).epsilon(0.01));
+  REQUIRE(hitpoint.hitpoint.y == Approx(2.0f));
+  REQUIRE(hitpoint.hitpoint.z == Approx(0.3158f).epsilon(0.01));
 }
 
 TEST_CASE("parse should read sdf file and create and add new materials to scene","[parse]")
 {
   Scene s;
   parse_materials("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",s);
-  
+
 }
 
 int main(int argc, char *argv[])
