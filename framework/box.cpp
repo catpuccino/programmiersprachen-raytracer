@@ -1,13 +1,13 @@
 #include "box.hpp"
-#include <cmath>
+
 
 
 Box::Box(glm::vec3 const& min, glm::vec3 const& max) :
-        Shape("Box",std::make_shared<Material>(Material{"Standard",
+        Shape{"Box",std::make_shared<Material>(Material{"Standard",
                                                         {0.5f,0.5f,0.5f},
                                                         {0.5f,0.5f,0.5f},
                                                         {0.5f,0.5f,0.5f},
-                                                        2.0f})),
+                                                        2.0f})},
         min_{min},
         max_{max} {}
 

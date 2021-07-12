@@ -5,11 +5,11 @@
 const double pi = acos(-1);
 
 Sphere::Sphere(glm::vec3 const& ctr, float r) :
-        Shape("Sphere", std::make_shared<Material>(Material{"Standard",
+        Shape{"Sphere", std::make_shared<Material>(Material{"Standard",
                                                             {0.5f,0.5f,0.5f},
                                                             {0.5f,0.5f,0.5f},
                                                             {0.5f,0.5f,0.5f},
-                                                            2.0f})),
+                                                            2.0f})},
         centre_{ctr},
         radius_{r} {}
 

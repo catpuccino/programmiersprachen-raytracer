@@ -6,25 +6,25 @@ void parse_materials(std::string const& file_path, Scene& scene) {
 
   std::ifstream in_sdf_file(file_path);
 
-  std::string line_buffer = "";
+  std::string line_buffer;
   // loop over file and read it line by line
   while (std::getline(in_sdf_file, line_buffer)) {
 
     std::istringstream line_as_string_stream(line_buffer);
-    std::string token_string = "";
+    std::string token_string;
 
     line_as_string_stream >> token_string;
-    // jz was mit token_string machen
+
     if (!("define" == token_string)) {
       return;
     }
 
-    std::string object_string = "";
+    std::string object_string;
     line_as_string_stream >> object_string;
 
     if ("material" == object_string) {
       // read all attributes for material, than create it
-      std::string material_name = "";
+      std::string material_name;
       line_as_string_stream >> material_name;
 
       Color k_a = {0.0f, 0.0f, 0.0f};

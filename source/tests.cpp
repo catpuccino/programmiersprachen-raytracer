@@ -90,7 +90,7 @@ TEST_CASE("intersect_ray_sphere", "[intersect]")
                                                        {0,1,-10}};
   HitPoint h = s.intersect(Ray{});
   REQUIRE(h.did_intersect == true);
-  REQUIRE(h.t == Approx(10));
+  REQUIRE(h.distance == Approx(10));
   REQUIRE(h.name == "Katze");
   REQUIRE(h.hitpoint.z == -10);
   REQUIRE(h.hit_direction.x == 0);
@@ -105,7 +105,7 @@ TEST_CASE("intersect_ray_sphere", "[intersect]")
                                                         {0,0,-10}};
   HitPoint h0 = s0.intersect(Ray{});
   REQUIRE(h0.did_intersect == true);
-  REQUIRE(h0.t == Approx(9));
+  REQUIRE(h0.distance == Approx(9));
   REQUIRE(h0.name == "KATZE");
   REQUIRE(h0.hitpoint.z == -9);
   REQUIRE(h0.hit_direction.x == 0);
@@ -120,7 +120,7 @@ TEST_CASE("intersect_ray_sphere", "[intersect]")
                                                            {0,2,-10}};
   HitPoint h1 = s1.intersect(Ray{});
   REQUIRE(h1.did_intersect == false);
-  REQUIRE(h1.t == 0);
+  REQUIRE(h1.distance == 0);
   REQUIRE(h1.name == "Katze123");
   REQUIRE(h1.hitpoint.x == 0);
   REQUIRE(h1.hitpoint.y == 0);
@@ -136,21 +136,21 @@ TEST_CASE("Box::intersect method", "[box_intersect]")
     Box b_1{{-1.0f,-1.0f,-5.0f},{3.0f,5.0f,-10.0f}};
     auto hp = b_1.intersect(r);
     REQUIRE(hp.did_intersect == true);
-    REQUIRE(hp.t == 5);
+    REQUIRE(hp.distance == 5);
     REQUIRE(hp.hitpoint.z == -5);
 
     Ray r1{{0,0,0},{-1,0.5f,1}};
     Box b_2{{-8.0f, 1.0f, 3.0f},{-1.0f, 6.0f, 6.0f}};
     auto hp_1 = b_2.intersect(r1);
     REQUIRE(hp_1.did_intersect == true);
-    REQUIRE(hp_1.t > 3);
+    REQUIRE(hp_1.distance > 3);
     REQUIRE(hp_1.hitpoint.z == 3);
 
     Ray r2{{0,0,0},{0,-1,0.5f}};
     Box b_3{{-2,-8,0},{2,-3,5}};
     auto hp_2 = b_3.intersect(r2);
     REQUIRE(hp_2.did_intersect == true);
-    REQUIRE(hp_2.t > 3);
+    REQUIRE(hp_2.distance > 3);
     REQUIRE(hp_2.hitpoint.y == -3);
 
     Ray r3{{0,0,0},{0,1,0}};
@@ -166,7 +166,7 @@ TEST_CASE("Box::intersect method", "[box_intersect]")
   REQUIRE(hitpoint.hit_direction.x == Approx(-0.836f).epsilon(0.01));
   REQUIRE(hitpoint.hit_direction.y == Approx(-0.412f).epsilon(0.01));
   REQUIRE(hitpoint.hit_direction.z == Approx(0.360f).epsilon(0.01));
-  REQUIRE(hitpoint.t == Approx(0.873f).epsilon(0.01));
+  REQUIRE(hitpoint.distance == Approx(0.873f).epsilon(0.01));
   REQUIRE(hitpoint.hitpoint.x == Approx(1.847f).epsilon(0.01));
   REQUIRE(hitpoint.hitpoint.y == Approx(2.0f));
   REQUIRE(hitpoint.hitpoint.z == Approx(0.3158f).epsilon(0.01));

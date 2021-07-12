@@ -8,7 +8,7 @@
 struct HitPoint
 {
     bool did_intersect;
-    float t;
+    float distance;
     std::string name;
     std::shared_ptr<Material> material;
     glm::vec3 hitpoint;
