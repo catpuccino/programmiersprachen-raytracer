@@ -2,14 +2,19 @@
 #define SCENE_HPP
 
 #include "material.hpp"
-#include <vector>
+#include "box.hpp"
+#include "sphere.hpp"
+#include "light.hpp"
+#include "camera.hpp"
+#include <map>
 #include <sstream>
 
 
 struct Scene {
-    std::vector<std::shared_ptr<Material>> material_cont;
+    std::map<std::string,std::shared_ptr<Material>> material_cont;
+    std::map<std::string,std::shared_ptr<Shape>> shape_cont;
+    std::map<std::string,std::shared_ptr<Light>> light_cont;
+    Camera camera = {50.0f};
 };
-
-void parse_materials(std::string const& file_path, Scene& scene);
 
 #endif // #ifndef SCENE_HPP

@@ -3,6 +3,7 @@
 #include "sphere.hpp"
 #include "box.hpp"
 #include "scene.hpp"
+#include "parser.hpp"
 #include <catch.hpp>
 
 
@@ -175,7 +176,8 @@ TEST_CASE("Box::intersect method", "[box_intersect]")
 TEST_CASE("parse should read sdf file and create and add new materials to scene","[parse]")
 {
   Scene s;
-  parse_materials("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",s);
+
+  SDFParser::parse_objects("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",s);
 
 }
 
