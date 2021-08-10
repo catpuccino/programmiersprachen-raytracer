@@ -24,6 +24,12 @@ float Sphere::area() const { return 4 * float(pi) * powf(radius_,2); }
 
 float Sphere::volume() const { return 4/3.0f * float(pi) * powf(radius_,3); }
 
+glm::vec3 Sphere::normal(HitPoint const& hp) const {
+    auto normal = hp.hitpoint - centre_;
+    auto normal_normalized = glm::normalize(normal);
+    return normal_normalized;
+}
+
 HitPoint Sphere::intersect(Ray const& ray) const {
   float distance = 0.0f;
   glm::vec3 normalized_ray_direction = glm::normalize(ray.direction);

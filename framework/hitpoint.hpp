@@ -13,6 +13,10 @@ struct HitPoint
     std::shared_ptr<Material> material;
     glm::vec3 hitpoint;
     glm::vec3 hit_direction;
+
+    // directional vectors u & v needed to determine normal on box
+    glm::vec3 u = { 0.0f, 0.0f, 0.0f };
+    glm::vec3 v = { 0.0f, 0.0f, 0.0f };
 };
 
 #endif // #ifndef HITPOINT_HPP

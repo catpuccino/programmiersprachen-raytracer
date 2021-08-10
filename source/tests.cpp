@@ -178,7 +178,7 @@ TEST_CASE("parse should read sdf file and create and add new materials to scene"
 {
   Scene s;
 
-  SDFParser::parse_objects("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",s);
+  SDFParser::parse_scene("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",s);
 
 }
 
@@ -188,6 +188,56 @@ TEST_CASE("testing compute_eye_ray", "[compute_eye_ray]")
 
   Ray eye_ray = camera.compute_eye_ray(Pixel{1,3});
   REQUIRE(eye_ray.direction.x == Approx(0.169f).epsilon(0.001f));
+}
+
+TEST_CASE("testing Sphere::normal()", "[Sphere::normal()]")
+{
+    Sphere s = { {0.0f, 0.0f, 0.0f}, 4.54f };
+    HitPoint hp = { TRUE,  3.0f, "Test",
+        std::make_shared<Material>(Material{"Standard", {0.5f,0.5f,0.5f}, {0.5f,0.5f,0.5f},
+                                                        {0.5f,0.5f,0.5f}, 2.0f}),
+        {1.15f, 2.65f, 3.5f}, {0.0f, 1.0f, -1.0f} };
+
+    auto norm = s.normal(hp);
+    REQUIRE(norm.x == Approx(0.253f).epsilon(0.01f));
+    REQUIRE(norm.y == Approx(0.584f).epsilon(0.01f));
+    REQUIRE(norm.z == Approx(0.771f).epsilon(0.01f));
+
+
+    Sphere s2 = { {2.0f, 3.0f, -3.0f}, 2.95f };
+    hp = { TRUE,  3.0f, "Test2",
+        std::make_shared<Material>(Material{"Standard", {0.5f,0.5f,0.5f}, {0.5f,0.5f,0.5f},
+                                                        {0.5f,0.5f,0.5f}, 2.0f}),
+        {4.15f, 1.65f, -1.5f}, {0.0f, 1.0f, -1.0f} };
+
+    norm = s2.normal(hp);
+    REQUIRE(norm.x == Approx(0.729f).epsilon(0.001f));
+    REQUIRE(norm.y == Approx(-0.458f).epsilon(0.001f));
+    REQUIRE(norm.z == Approx(0.509f).epsilon(0.001f));
+}
+
+TEST_CASE("testing Box::normal()", "[Box::normal()]")
+{
+    Box b = { {0.0f, 0.0f, 0.0f}, {10.0f, 10.0f, 10.0f} };
+    Ray r = { {13.59f, -12.49, -4.2 }, {-27.4f, 33.12f, 9.5f} };
+
+    HitPoint hp = b.intersect(r);
+    auto norm = b.normal(hp);
+
+    REQUIRE(norm.x == Approx(0.0f));
+    REQUIRE(norm.y == Approx(0.0f));
+    REQUIRE(norm.z == Approx(1.0f));
+
+
+    b = { {3.0f, 1.0f, 5.0f}, {10.0f, 8.0f, 12.0f} };
+    r = { {15.59f, -12.49, 27.3 }, {-23.4f, 33.12f, -31.6f} };
+
+    hp = b.intersect(r);
+    norm = b.normal(hp);
+
+    REQUIRE(norm.x == Approx(0.0f));
+    REQUIRE(norm.y == Approx(0.0f));
+    REQUIRE(norm.z == Approx(1.0f));
 }
 
 int main(int argc, char *argv[])
