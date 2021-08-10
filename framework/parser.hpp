@@ -6,7 +6,7 @@
 
 class SDFParser {
   public:
-    static void parse_objects(std::string const& file_path, Scene& scene);
+    static void parse_scene(std::string const& file_path, Scene& scene);
 };
 
 #endif // PARSER_HPP

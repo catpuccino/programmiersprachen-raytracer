@@ -4,6 +4,7 @@
 #include "box.hpp"
 #include "scene.hpp"
 #include "parser.hpp"
+#include "renderer.hpp"
 #include <catch.hpp>
 
 
@@ -179,6 +180,14 @@ TEST_CASE("parse should read sdf file and create and add new materials to scene"
 
   SDFParser::parse_objects("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",s);
 
+}
+
+TEST_CASE("testing compute_eye_ray", "[compute_eye_ray]")
+{
+  Camera camera{45.0f};
+
+  Ray eye_ray = camera.compute_eye_ray(Pixel{1,3});
+  REQUIRE(eye_ray.direction.x == Approx(0.169f).epsilon(0.001f));
 }
 
 int main(int argc, char *argv[])

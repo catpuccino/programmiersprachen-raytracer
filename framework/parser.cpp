@@ -4,7 +4,7 @@
 
 #include <fstream>
 
-void SDFParser::parse_objects(std::string const& file_path, Scene& scene) {
+void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
 
   std::ifstream in_sdf_file(file_path);
 
