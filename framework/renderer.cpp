@@ -51,3 +51,28 @@ void Renderer::write(Pixel const& p)
 
   ppm_.write(p);
 }
+
+
+Color Renderer::trace_ray(Ray const& ray, Scene const& scene) const {
+    HitPoint temp_hp;
+    HitPoint closest_hp;
+    std::pair<std::string, std::shared_ptr<Shape>> closest_shape;
+    float smallest_distance = std::numeric_limits<float>::infinity();
+
+    for (auto const& shape : scene.shape_cont) {
+        temp_hp = shape.second->intersect(ray);
+        if (temp_hp.did_intersect && temp_hp.distance < smallest_distance) {
+            smallest_distance = temp_hp.distance;
+            closest_hp = temp_hp;
+            closest_shape = shape;
+        }
+    }
+
+    if (smallest_distance != std::numeric_limits<float>::infinity()) {
+        // insert function call shade(closest_shade, ray, closest_hp) here
+        return Color{ 0.5f, 0.5f, 0.5f };  
+    }
+    else {
+        return scene.background_color;
+    }
+}

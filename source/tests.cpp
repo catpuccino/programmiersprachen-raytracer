@@ -240,6 +240,51 @@ TEST_CASE("testing Box::normal()", "[Box::normal()]")
     REQUIRE(norm.z == Approx(1.0f));
 }
 
+
+TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
+{
+    Scene s;
+    Renderer renderer = { 20, 20, "Renderer" };
+
+    auto b1 = std::make_pair<std::string, std::shared_ptr<Box>>
+        (std::string{ "b1" },
+         std::make_shared<Box>(glm::vec3{-19.0f, -11.0f, 0.0f}, glm::vec3{-12.0f, -4.0f, 7.0f}));
+    auto b2 = std::make_pair<std::string, std::shared_ptr<Box>>
+        (std::string{ "b2" },
+            std::make_shared<Box>(glm::vec3{ 2.0f, -12.0f, 0.0f }, glm::vec3{ 8.0f, -6.0f, 6.0f }));
+    auto s1 = std::make_pair<std::string, std::shared_ptr<Sphere>>
+        (std::string{ "s1" },
+            std::make_shared<Sphere>(glm::vec3{ 8.0f, 3.1f, 4.3f }, 4.49f));
+    auto s2 = std::make_pair<std::string, std::shared_ptr<Sphere>>
+        (std::string{ "s2" },
+            std::make_shared<Sphere>(glm::vec3{ -8.0f, 6.2f, -5.1f }, 5.1f));
+
+    s.shape_cont.emplace(b1);
+    s.shape_cont.emplace(b2);
+    s.shape_cont.emplace(s1);
+    s.shape_cont.emplace(s2);
+    
+    Ray r1 = { {-6.4f, -17.0f, -12.4f }, {8.9f, 30.3f, 16.63f} };
+
+    auto test_tracing = renderer.trace_ray(r1, s);
+
+    // Ray should not hit
+    REQUIRE(test_tracing.r == Approx(0.85f));
+    REQUIRE(test_tracing.g == Approx(0.85f));
+    REQUIRE(test_tracing.b == Approx(0.85f));
+
+    Ray r2 = { {18.9f, -20.9f, 10.0f }, {-23.2f, 27.6f, -12.0f} };
+
+    test_tracing = renderer.trace_ray(r2, s);
+
+    // Ray should hit -- TEST WILL NOT WORK ONCE shade() HAS BEEN IMPLEMENTED --
+    REQUIRE(test_tracing.r == Approx(0.5f));
+    REQUIRE(test_tracing.g == Approx(0.5f));
+    REQUIRE(test_tracing.b == Approx(0.5f));
+
+}
+
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
