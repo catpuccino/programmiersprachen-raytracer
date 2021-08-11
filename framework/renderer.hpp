@@ -34,7 +34,7 @@ public:
     return color_buffer_;
   }
 
-  Color shade(Shape const& obj, Ray const& r, float t) const;
+  Color shade(Shape const& obj, Ray const& r, HitPoint const& hp) const;
 
 private:
   unsigned width_;

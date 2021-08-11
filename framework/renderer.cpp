@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "renderer.hpp"
+#include <algorithm>
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const& s)
   : width_(w)
@@ -53,6 +54,57 @@ void Renderer::write(Pixel const& p)
   ppm_.write(p);
 }
 
+Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) const {
+  // intersection point (fundament of illumination)
+  glm::vec3 intersect_point = hp.hitpoint;
+
+
+  // ********* (PHONG) ILLUMINATION **********
+
+  // vectors (independent of lights)
+  glm::vec3 n = obj.create_normal(hp); // normal vector on intersection point
+  glm::vec3 v = glm::normalize(ray.origin - intersect_point); // vector to the viewer (camera)
+
+
+  // *** ambient component ***
+  float ambient_intensity = scene_.ambient * hp.material->ka;
+
+
+  // *** diffuse and specular components depending on num of impacting lights ***
+  float diffuse_intensity = 0.0f;
+  float specular_intensity = 0.0f;
+
+  for (auto const& [l_name,light_o] : scene_.light_cont) {
+    glm::vec3 l = glm::normalize(light_o->position - intersect_point); // create light vector
+
+    // initialize secondary ray between intersection point and light
+    Ray sec_ray{intersect_point,l};
+
+    // test whether this specific light contributes to illumination
+    bool isIntersecting = false;
+    for (auto const& [s_name,shape_o] : scene_.shape_cont) {
+      // test if some scene obj gets intersected by sec_ray
+      HitPoint sec_ray_hp = shape_o->intersect(sec_ray);
+      if (sec_ray_hp.did_intersect) { isIntersecting = true; }
+    }
+    if (isIntersecting) { continue; }
+    // else (Light has an impact)
+
+    // compute diffuse intensity contributed by this specific light
+    float frac_diffuse_intensity = light_o->brightness * hp.material->kd * std::max(glm::dot(l,n),0.0f);
+    diffuse_intensity += frac_diffuse_intensity;
+
+    // compute specular intensity contributed by this specific light
+    glm::vec3 r = glm::normalize(2 * std::max(glm::dot(l,n),0.0f) * n - l); // reflected light vector
+    float dot_r_v = std::max(glm::dot(r,v),0.0f);
+    float frac_specular_intensity = hp.material->ks * pow(dot_r_v,hp.material->m);
+    specular_intensity += frac_specular_intensity;
+    }
+
+  float phong = ambient_intensity + diffuse_intensity + specular_intensity;
+
+  return Color{};
+  }
 
 
 Color Renderer::trace_ray(Ray const& ray, Scene const& scene) const {

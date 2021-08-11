@@ -16,7 +16,7 @@ class Shape {
 
     virtual float area() const = 0;
     virtual float volume() const = 0;
-    virtual glm::vec3 normal(HitPoint const& hp) const = 0;
+    virtual glm::vec3 create_normal(HitPoint const& hp) const = 0;
 
     virtual std::ostream& print(std::ostream& os) const;
 

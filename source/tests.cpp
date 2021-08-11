@@ -244,7 +244,7 @@ TEST_CASE("testing Box::normal()", "[Box::normal()]")
 TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
 {
     Scene s;
-    Renderer renderer = { 20, 20, "Renderer" };
+    Renderer renderer = { 20, 20, "Renderer", s };
 
     auto b1 = std::make_pair<std::string, std::shared_ptr<Box>>
         (std::string{ "b1" },

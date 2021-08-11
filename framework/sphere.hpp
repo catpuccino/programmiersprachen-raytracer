@@ -14,7 +14,7 @@ public:
 
     float area() const override;
     float volume() const override;
-    glm::vec3 normal(HitPoint const& hp) const override;
+    glm::vec3 create_normal(HitPoint const& hp) const override;
 
     std::ostream& print(std::ostream& os) const override;
 

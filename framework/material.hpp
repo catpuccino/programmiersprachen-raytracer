@@ -10,6 +10,8 @@ struct Material {
     Color kd;
     Color ks;
     float m;
+    float reflection = 0.0f;
+    float opacity = 1.0f;
 };
 
 std::ostream& operator<<(std::ostream& os, Material const& material);
