@@ -1,7 +1,5 @@
 #include "parser.hpp"
 
-#include "scene.hpp"
-
 #include <fstream>
 
 void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {

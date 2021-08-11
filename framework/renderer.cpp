@@ -51,3 +51,18 @@ void Renderer::write(Pixel const& p)
 
   ppm_.write(p);
 }
+
+Color Renderer::shade(Shape const& obj, Ray const& r, float t) const {
+  // compute intersection point as a Basis for illumination
+  glm::vec3 intersect_point = r.origin + t * r.direction;
+
+  // (phong) illumination
+
+  // diffuse illumination
+  // glm::vec3 l = glm::normalize()
+
+
+
+
+  return Color{};
+}
