@@ -178,7 +178,7 @@ TEST_CASE("parse should read sdf file and create and add new materials to scene"
 {
   Scene s;
 
-  SDFParser::parse_objects("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",s);
+  SDFParser::parse_scene("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",s);
 
 }
 
@@ -189,6 +189,101 @@ TEST_CASE("testing compute_eye_ray", "[compute_eye_ray]")
   Ray eye_ray = camera.compute_eye_ray(Pixel{1,3});
   REQUIRE(eye_ray.direction.x == Approx(0.169f).epsilon(0.001f));
 }
+
+TEST_CASE("testing Sphere::normal()", "[Sphere::normal()]")
+{
+    Sphere s = { {0.0f, 0.0f, 0.0f}, 4.54f };
+    HitPoint hp = { TRUE,  3.0f, "Test",
+        std::make_shared<Material>(Material{"Standard", {0.5f,0.5f,0.5f}, {0.5f,0.5f,0.5f},
+                                                        {0.5f,0.5f,0.5f}, 2.0f}),
+        {1.15f, 2.65f, 3.5f}, {0.0f, 1.0f, -1.0f} };
+
+    auto norm = s.normal(hp);
+    REQUIRE(norm.x == Approx(0.253f).epsilon(0.01f));
+    REQUIRE(norm.y == Approx(0.584f).epsilon(0.01f));
+    REQUIRE(norm.z == Approx(0.771f).epsilon(0.01f));
+
+
+    Sphere s2 = { {2.0f, 3.0f, -3.0f}, 2.95f };
+    hp = { TRUE,  3.0f, "Test2",
+        std::make_shared<Material>(Material{"Standard", {0.5f,0.5f,0.5f}, {0.5f,0.5f,0.5f},
+                                                        {0.5f,0.5f,0.5f}, 2.0f}),
+        {4.15f, 1.65f, -1.5f}, {0.0f, 1.0f, -1.0f} };
+
+    norm = s2.normal(hp);
+    REQUIRE(norm.x == Approx(0.729f).epsilon(0.001f));
+    REQUIRE(norm.y == Approx(-0.458f).epsilon(0.001f));
+    REQUIRE(norm.z == Approx(0.509f).epsilon(0.001f));
+}
+
+TEST_CASE("testing Box::normal()", "[Box::normal()]")
+{
+    Box b = { {0.0f, 0.0f, 0.0f}, {10.0f, 10.0f, 10.0f} };
+    Ray r = { {13.59f, -12.49, -4.2 }, {-27.4f, 33.12f, 9.5f} };
+
+    HitPoint hp = b.intersect(r);
+    auto norm = b.normal(hp);
+
+    REQUIRE(norm.x == Approx(0.0f));
+    REQUIRE(norm.y == Approx(0.0f));
+    REQUIRE(norm.z == Approx(1.0f));
+
+
+    b = { {3.0f, 1.0f, 5.0f}, {10.0f, 8.0f, 12.0f} };
+    r = { {15.59f, -12.49, 27.3 }, {-23.4f, 33.12f, -31.6f} };
+
+    hp = b.intersect(r);
+    norm = b.normal(hp);
+
+    REQUIRE(norm.x == Approx(0.0f));
+    REQUIRE(norm.y == Approx(0.0f));
+    REQUIRE(norm.z == Approx(1.0f));
+}
+
+
+TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
+{
+    Scene s;
+    Renderer renderer = { 20, 20, "Renderer" };
+
+    auto b1 = std::make_pair<std::string, std::shared_ptr<Box>>
+        (std::string{ "b1" },
+         std::make_shared<Box>(glm::vec3{-19.0f, -11.0f, 0.0f}, glm::vec3{-12.0f, -4.0f, 7.0f}));
+    auto b2 = std::make_pair<std::string, std::shared_ptr<Box>>
+        (std::string{ "b2" },
+            std::make_shared<Box>(glm::vec3{ 2.0f, -12.0f, 0.0f }, glm::vec3{ 8.0f, -6.0f, 6.0f }));
+    auto s1 = std::make_pair<std::string, std::shared_ptr<Sphere>>
+        (std::string{ "s1" },
+            std::make_shared<Sphere>(glm::vec3{ 8.0f, 3.1f, 4.3f }, 4.49f));
+    auto s2 = std::make_pair<std::string, std::shared_ptr<Sphere>>
+        (std::string{ "s2" },
+            std::make_shared<Sphere>(glm::vec3{ -8.0f, 6.2f, -5.1f }, 5.1f));
+
+    s.shape_cont.emplace(b1);
+    s.shape_cont.emplace(b2);
+    s.shape_cont.emplace(s1);
+    s.shape_cont.emplace(s2);
+    
+    Ray r1 = { {-6.4f, -17.0f, -12.4f }, {8.9f, 30.3f, 16.63f} };
+
+    auto test_tracing = renderer.trace_ray(r1, s);
+
+    // Ray should not hit
+    REQUIRE(test_tracing.r == Approx(0.85f));
+    REQUIRE(test_tracing.g == Approx(0.85f));
+    REQUIRE(test_tracing.b == Approx(0.85f));
+
+    Ray r2 = { {18.9f, -20.9f, 10.0f }, {-23.2f, 27.6f, -12.0f} };
+
+    test_tracing = renderer.trace_ray(r2, s);
+
+    // Ray should hit -- TEST WILL NOT WORK ONCE shade() HAS BEEN IMPLEMENTED --
+    REQUIRE(test_tracing.r == Approx(0.5f));
+    REQUIRE(test_tracing.g == Approx(0.5f));
+    REQUIRE(test_tracing.b == Approx(0.5f));
+
+}
+
 
 int main(int argc, char *argv[])
 {
