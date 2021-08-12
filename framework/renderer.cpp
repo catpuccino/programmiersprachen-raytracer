@@ -67,12 +67,12 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
 
 
   // *** ambient component ***
-  float ambient_intensity = scene_.ambient * hp.material->ka;
+  auto ambient_intensity = scene_.ambient * hp.material->ka;
 
 
   // *** diffuse and specular components depending on num of impacting lights ***
-  float diffuse_intensity = 0.0f;
-  float specular_intensity = 0.0f;
+  Color diffuse_intensity = {0.0f, 0.0f, 0.0f};
+  Color specular_intensity = { 0.0f, 0.0f, 0.0f };
 
   for (auto const& [l_name,light_o] : scene_.light_cont) {
     glm::vec3 l = glm::normalize(light_o->position - intersect_point); // create light vector
@@ -91,17 +91,17 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     // else (Light has an impact)
 
     // compute diffuse intensity contributed by this specific light
-    float frac_diffuse_intensity = light_o->brightness * hp.material->kd * std::max(glm::dot(l,n),0.0f);
+    auto frac_diffuse_intensity = light_o->brightness * hp.material->kd * std::max(glm::dot(l,n),0.0f);
     diffuse_intensity += frac_diffuse_intensity;
 
     // compute specular intensity contributed by this specific light
     glm::vec3 r = glm::normalize(2 * std::max(glm::dot(l,n),0.0f) * n - l); // reflected light vector
     float dot_r_v = std::max(glm::dot(r,v),0.0f);
-    float frac_specular_intensity = hp.material->ks * pow(dot_r_v,hp.material->m);
+    auto frac_specular_intensity = hp.material->ks * pow(dot_r_v,hp.material->m);
     specular_intensity += frac_specular_intensity;
     }
 
-  float phong = ambient_intensity + diffuse_intensity + specular_intensity;
+  Color phong = ambient_intensity + diffuse_intensity + specular_intensity;
 
   return Color{};
   }
