@@ -1,3 +1,4 @@
+#include "parser.hpp"
 #include <renderer.hpp>
 #include <window.hpp>
 
@@ -12,8 +13,13 @@ int main(int argc, char* argv[])
   unsigned const image_width = 800;
   unsigned const image_height = 600;
   std::string const filename = "./checkerboard.ppm";
+  std::string sdf_filepath{"D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/"
+                             "Programmiersprachen/Belege/Beleg_6/materials.sdf"};
 
-  Renderer renderer{image_width, image_height, filename};
+  Scene scene;
+  SDFParser::parse_scene(sdf_filepath,scene);
+
+  Renderer renderer{image_width, image_height, filename, scene};
 
   renderer.render();
 
