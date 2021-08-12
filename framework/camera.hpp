@@ -1,9 +1,12 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
+#define _USE_MATH_DEFINES
 #include "ray.hpp"
 #include "pixel.hpp"
 #include <glm/vec3.hpp>
+#include <math.h>
+#include <cmath>
 
 class Camera {
   public:
@@ -11,7 +14,7 @@ class Camera {
            glm::vec3 const& direction = {0.0f,0.0f,-1.0f});
     ~Camera();
 
-    Ray compute_eye_ray(Pixel const& p) const;
+    Ray compute_eye_ray(Pixel const& p, unsigned width) const;
 
   private:
     float fov_x_;
