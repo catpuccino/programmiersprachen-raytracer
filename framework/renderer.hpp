@@ -27,7 +27,7 @@ public:
 
   void render();
   void write(Pixel const& p);
-  Color trace_ray(Ray const& ray, Scene const& scene) const;
+  Color trace_ray(Ray const& ray) const;
 
   inline std::vector<Color> const& color_buffer() const
   {

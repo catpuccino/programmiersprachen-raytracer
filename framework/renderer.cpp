@@ -101,20 +101,20 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     specular_intensity += frac_specular_intensity;
     }
 
-  Color phong = ambient_intensity + diffuse_intensity + specular_intensity;
+  Color phongClr = ambient_intensity + diffuse_intensity + specular_intensity;
 
-  return Color{};
+  return phongClr;
   }
 
 
-Color Renderer::trace_ray(Ray const& ray, Scene const& scene) const {
+Color Renderer::trace_ray(Ray const& ray) const {
     HitPoint temp_hp;
     HitPoint closest_hp;
-    std::pair<std::string, std::shared_ptr<Shape>> closest_shape;
+    std::shared_ptr<Shape> closest_shape;
     float smallest_distance = std::numeric_limits<float>::infinity();
 
-    for (auto const& shape : scene.shape_cont) {
-        temp_hp = shape.second->intersect(ray);
+    for (auto const& [s_name,shape] : scene_.shape_cont) {
+        temp_hp = shape->intersect(ray);
         if (temp_hp.did_intersect && temp_hp.distance < smallest_distance) {
             smallest_distance = temp_hp.distance;
             closest_hp = temp_hp;
@@ -123,10 +123,9 @@ Color Renderer::trace_ray(Ray const& ray, Scene const& scene) const {
     }
 
     if (smallest_distance != std::numeric_limits<float>::infinity()) {
-        // insert function call shade(closest_shade, ray, closest_hp) here
-        return Color{ 0.5f, 0.5f, 0.5f };  
+        return shade(*closest_shape,ray,closest_hp);
     }
     else {
-        return scene.background_color;
+        return scene_.background_color;
     }
 }

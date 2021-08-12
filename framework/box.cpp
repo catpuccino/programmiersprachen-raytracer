@@ -55,9 +55,10 @@ HitPoint Box::intersect(Ray const& ray) const {
   float distance = 0.0f;
   float smallest_dist = std::numeric_limits<float>::max(); /* smallest distance between intersection
                                                               and ray origin */
-  // dircetional vectors for normal
+  // directional vectors for normal
   glm::vec3 u = { 0.0f, 0.0f, 0.0f };
   glm::vec3 v = { 0.0f, 0.0f, 0.0f };
+
   // left side of AABB
   float p_x = min_.x;
   float t = (p_x - ray.origin.x) / ray.direction.x;
