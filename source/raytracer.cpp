@@ -13,10 +13,11 @@ int main(int argc, char* argv[])
   unsigned const image_width = 800;
   unsigned const image_height = 600;
   std::string const filename = "./checkerboard.ppm";
-  std::string sdf_filepath{"D:/Ernst des Lebens/Uni/Informatik/Semester 2/Programmiersprachen/Übung/Raytracer/materials.sdf"};
+  std::string t_sdf_filepath{"D:/Ernst des Lebens/Uni/Informatik/Semester 2/Programmiersprachen/ï¿½bung/Raytracer/materials.sdf"};
+  std::string h_sdf_filepath{"D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf"};
 
   Scene scene;
-  SDFParser::parse_scene(sdf_filepath,scene);
+  SDFParser::parse_scene(t_sdf_filepath,scene);
 
   Renderer renderer{image_width, image_height, filename, scene};
 
