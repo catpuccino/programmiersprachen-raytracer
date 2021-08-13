@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
   std::string h_sdf_filepath{"D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf"};
 
   Scene scene;
-  SDFParser::parse_scene(t_sdf_filepath,scene);
+  SDFParser::parse_scene(h_sdf_filepath,scene);
 
   Renderer renderer{image_width, image_height, filename, scene};
 

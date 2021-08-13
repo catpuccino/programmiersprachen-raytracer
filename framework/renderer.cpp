@@ -23,22 +23,28 @@ void Renderer::render()
 {
   //std::size_t const checker_pattern_size = 20;
 
-  float aspect_ratio = height_ / width_;
+  //float aspect_ratio = (float)height_ / (float)width_;
+  float distance = scene_.camera.compute_screen_distance(width_);
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
 
       Pixel p(x,y);
 
-      Ray current_eye_ray = scene_.camera.compute_eye_ray(
-          (x / float(width_) - 0.5f), (y / float(height_) - 0.5f), width_
-      );
+/*      Ray current_eye_ray = scene_.camera.compute_eye_ray((x / float(width_) - 0.5f),
+                                                          aspect_ratio * (y / float(height_) - 0.5f),
+                                                          distance);*/
+
+      Ray current_eye_ray = scene_.camera.compute_eye_ray((float)x - ((float)width_ / 2),
+                                                          (float)y - ((float)height_/ 2),
+                                                          distance);
 
 /*      if ( ((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
         p.color = Color{0.0f, 1.0f, float(x)/height_};
       } else {
         p.color = Color{1.0f, 0.0f, float(y)/width_};
       }*/
+
       p.color = trace_ray(current_eye_ray);
       write(p);
     }
