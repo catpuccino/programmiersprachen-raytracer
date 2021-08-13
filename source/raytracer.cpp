@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
   unsigned const image_height = 600;
   std::string const filename = "./checkerboard.ppm";
   std::string sdf_filepath{"D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/"
-                             "Programmiersprachen/Belege/Beleg_6/materials.sdf"};
+                           "Programmiersprachen/Belege/Beleg_6/materials.sdf"};
 
   Scene scene;
   SDFParser::parse_scene(sdf_filepath,scene);
