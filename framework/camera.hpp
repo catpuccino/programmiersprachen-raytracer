@@ -14,7 +14,7 @@ class Camera {
            glm::vec3 const& direction = {0.0f,0.0f,-1.0f});
     ~Camera();
 
-    Ray compute_eye_ray(Pixel const& p, unsigned width) const;
+    Ray compute_eye_ray(float pix_x, float pix_y, unsigned width) const;
 
   private:
     float fov_x_;

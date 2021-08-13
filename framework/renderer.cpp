@@ -23,12 +23,16 @@ void Renderer::render()
 {
   std::size_t const checker_pattern_size = 20;
 
+  float aspect_ratio = height_ / width_;
+
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
 
       Pixel p(x,y);
 
-      Ray current_eye_ray = scene_.camera.compute_eye_ray(p,width_);
+      Ray current_eye_ray = scene_.camera.compute_eye_ray(
+          (x / float(width_) - 0.5f), (y / float(height_) - 0.5f), width_
+      );
 
 /*      if ( ((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
         p.color = Color{0.0f, 1.0f, float(x)/height_};
