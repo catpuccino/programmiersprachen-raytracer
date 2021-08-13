@@ -21,14 +21,18 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const&
 
 void Renderer::render()
 {
-  std::size_t const checker_pattern_size = 20;
+  //std::size_t const checker_pattern_size = 20;
 
+  float aspect_ratio = (float)height_ / (float)width_;
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
 
-      Pixel p(x,y);
+      Ray current_eye_ray = scene_.camera.compute_eye_ray((float)x / (float)width_ - 0.5f,
+                                                          aspect_ratio * ((float)y / (float)height_ - 0.5f),
+                                                          width_);
 
-      Ray current_eye_ray = scene_.camera.compute_eye_ray(p,width_);
+      Pixel p(x,y);
+      //Ray current_eye_ray_2 = scene_.camera.compute_eye_ray(p.x,p.y,width_);
 
 /*      if ( ((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
         p.color = Color{0.0f, 1.0f, float(x)/height_};

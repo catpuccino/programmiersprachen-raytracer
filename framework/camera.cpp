@@ -9,10 +9,12 @@ Camera::Camera(float angle, const glm::vec3 &origin, const glm::vec3 &direction)
 
 Camera::~Camera() {}
 
-Ray Camera::compute_eye_ray(Pixel const& p, unsigned width) const {
+Ray Camera::compute_eye_ray(float x, float y, unsigned width) const {
   int distance = (width / 2) / tan(fov_x_ * M_PI / 180);
-  glm::vec3 pixel_3DPoint{p.x, p.y, -distance };
+  distance = 4;
+  glm::vec3 pixel_3DPoint{x, y, -1*distance };
   glm::vec3 eye_ray_dir = glm::normalize(pixel_3DPoint - origin_);
   return Ray{ origin_, eye_ray_dir };
+
 }
 
