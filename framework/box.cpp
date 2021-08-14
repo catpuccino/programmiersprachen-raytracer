@@ -33,13 +33,10 @@ float Box::volume() const {
 }
 
 glm::vec3 Box::create_normal(HitPoint const& hp) const {
-    auto u = hp.u;
-    auto v = hp.v;
-    glm::vec3 normal = glm::normalize(glm::vec3{ 
-                        (u.y * v.z - u.z * v.y),
-                        (u.z * v.x - u.x * v.z),
-                        (u.x * v.y - u.y * v.x)
-        });
+    auto normal = glm::cross(hp.u,hp.v);
+    normal.x = fabsf(normal.x);
+    normal.y = fabsf(normal.y);
+    normal.z = fabsf(normal.z);
     return normal;
 }
 
