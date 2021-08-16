@@ -120,8 +120,8 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     }
 
   Color c_hdr = ambient_intensity + diffuse_intensity + specular_intensity; // High Dynamic Range
-  //Color c_ldr = c_hdr / (c_hdr + 1); // Low Dynamic Range
-  return c_hdr;
+  Color c_ldr = c_hdr / (c_hdr + 1); // Low Dynamic Range
+  return c_ldr;
   }
 
 

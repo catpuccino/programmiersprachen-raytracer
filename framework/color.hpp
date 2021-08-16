@@ -106,8 +106,9 @@ struct Color
       return c * v;
   }
 
-  Color& operator+(float i)
+  Color operator+(float i)
   {
+    Color temp;
     r += i;
     g += i;
     b += i;
