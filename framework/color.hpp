@@ -106,13 +106,19 @@ struct Color
       return c * v;
   }
 
-  Color operator+(float i)
+  Color& operator+=(float i)
   {
-    Color temp;
-    r += i;
-    g += i;
-    b += i;
-    return *this;
+      r += i;
+      g += i;
+      b += i;
+      return *this;
+  }
+
+  friend Color operator+(Color const& c, float i)
+  {
+    auto tmp(c);
+    tmp += i;
+    return tmp;
   }
 
   Color& operator/(Color const& other)
