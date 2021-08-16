@@ -23,7 +23,7 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
     line_as_string_stream >> object_string;
 
     if ("material" == object_string) {
-      // read all attributes for material, than create it
+      // read all attributes for material, then create it
       std::string material_name;
       line_as_string_stream >> material_name;
 
@@ -45,8 +45,19 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
       float m = 0.0f;
       line_as_string_stream >> m;
 
+      float reflection = 0.0f;
+      line_as_string_stream >> reflection;
+
+      float opacity = 0.0f;
+      line_as_string_stream >> opacity;
+
+      float refraction_index = 0.0f;
+      line_as_string_stream >> refraction_index;
+
       std::shared_ptr<Material> material = std::make_shared<Material>(Material{material_name,
-                                                                               k_a, k_d, k_s, m});
+                                                                               k_a, k_d, k_s, m,
+                                                                               reflection, opacity,
+                                                                               refraction_index});
       scene.material_cont.try_emplace(material_name,material);
     }
 

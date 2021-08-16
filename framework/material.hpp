@@ -12,6 +12,7 @@ struct Material {
     float m;
     float reflection = 0.0f;
     float opacity = 1.0f;
+    float refraction_index = 0.0f;
 };
 
 std::ostream& operator<<(std::ostream& os, Material const& material);
