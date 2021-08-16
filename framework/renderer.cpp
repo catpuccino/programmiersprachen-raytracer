@@ -80,7 +80,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
   glm::vec3 v = glm::normalize(ray.origin - intersect_point); // vector to the viewer (camera)
 
 
-  intersect_point += 0.0001f * n; /* add little offset to intersection point to prevent shape from
+  intersect_point += 0.001f * n; /* add little offset to intersection point to prevent shape from
                                      intersecting with itself (shadow acne) */
 
 
@@ -119,9 +119,9 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     specular_intensity += frac_specular_intensity;
     }
 
-  Color phongClr = ambient_intensity + diffuse_intensity + specular_intensity;
-
-  return phongClr;
+  Color c_hdr = ambient_intensity + diffuse_intensity + specular_intensity; // High Dynamic Range
+  //Color c_ldr = c_hdr / (c_hdr + 1); // Low Dynamic Range
+  return c_hdr;
   }
 
 

@@ -106,6 +106,22 @@ struct Color
       return c * v;
   }
 
+  Color& operator+(float i)
+  {
+    r += i;
+    g += i;
+    b += i;
+    return *this;
+  }
+
+  Color& operator/(Color const& other)
+  {
+    r /= other.r;
+    g /= other.g;
+    b /= other.b;
+    return *this;
+  }
+
   float r;
   float g;
   float b;

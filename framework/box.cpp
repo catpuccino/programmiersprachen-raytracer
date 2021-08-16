@@ -33,11 +33,7 @@ float Box::volume() const {
 }
 
 glm::vec3 Box::create_normal(HitPoint const& hp) const {
-    auto normal = glm::cross(hp.u,hp.v);
-    normal.x = fabsf(normal.x);
-    normal.y = fabsf(normal.y);
-    normal.z = fabsf(normal.z);
-    return normal;
+    return hp.normal;
 }
 
 std::ostream& Box::print(std::ostream& os) const {
@@ -52,9 +48,8 @@ HitPoint Box::intersect(Ray const& ray) const {
   float distance = 0.0f;
   float smallest_dist = std::numeric_limits<float>::max(); /* smallest distance between intersection
                                                               and ray origin */
-  // directional vectors for normal
-  glm::vec3 u = { 0.0f, 0.0f, 0.0f };
-  glm::vec3 v = { 0.0f, 0.0f, 0.0f };
+  // normal vector for intersection point
+  glm::vec3 n = { 0.0f, 0.0f, 0.0f };
 
   // left side of AABB
   float p_x = min_.x;
@@ -66,8 +61,7 @@ HitPoint Box::intersect(Ray const& ray) const {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-back & left-back edges
-    u = { 0.0f, 1.0f, 0.0f };
-    v = { 0.0f, 0.0f, 1.0f };
+    n = { -1.0f, 0.0f, 0.0f };
   }
 
   // right side of AABB
@@ -80,8 +74,7 @@ HitPoint Box::intersect(Ray const& ray) const {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-back & right-back edges
-    u = { 0.0f, 1.0f, 0.0f };
-    v = { 0.0f, 0.0f, 1.0f };
+    n = { 1.0f, 0.0f, 0.0f };
   }
 
   // front side of AABB
@@ -94,8 +87,7 @@ HitPoint Box::intersect(Ray const& ray) const {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-left & back-left edges
-    u = { 1.0f, 0.0f, 0.0f };
-    v = { 0.0f, 0.0f, 1.0f };
+    n = { 0.0f, -1.0f, 0.0f };
   }
 
   // back side of AABB
@@ -108,8 +100,7 @@ HitPoint Box::intersect(Ray const& ray) const {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-right & back-right edges
-    u = { 1.0f, 0.0f, 0.0f };
-    v = { 0.0f, 0.0f, 1.0f };
+    n = { 0.0f, 1.0f, 0.0f };
   }
 
   // bottom side of AABB
@@ -122,8 +113,7 @@ HitPoint Box::intersect(Ray const& ray) const {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-left & bottom-back edges
-    u = { 1.0f, 0.0f, 0.0f };
-    v = { 0.0f, 1.0f, 0.0f };
+    n = { 0.0f, 0.0f, -1.0f };
   }
 
   // top side of AABB
@@ -136,13 +126,12 @@ HitPoint Box::intersect(Ray const& ray) const {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along top-left & top-back edges
-    u = { 1.0f, 0.0f, 0.0f };
-    v = { 0.0f, 1.0f, 0.0f };
+    n = { 0.0f, 0.0f, 1.0f };
   }
 
   glm::vec3 normalized_ray_direction = glm::normalize(ray.direction);
   glm::vec3 hitpoint = ray.origin + smallest_dist * normalized_ray_direction; //
 
-  return HitPoint{result,smallest_dist,name_,material_,hitpoint,normalized_ray_direction, u, v};
+  return HitPoint{result,smallest_dist,name_,material_,hitpoint,normalized_ray_direction, n};
 }
 
