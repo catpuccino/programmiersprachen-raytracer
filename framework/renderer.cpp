@@ -87,13 +87,45 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
 
     // test whether this specific light contributes to illumination
     bool isIntersecting = false;
+    bool isTransparent = false;
+    std::vector<float> opacities;
     for (auto const& [s_name,shape_o] : scene_.shape_cont) {
       // test if some scene obj gets intersected by sec_ray
       HitPoint sec_ray_hp = shape_o->intersect(sec_ray);
-      if (sec_ray_hp.did_intersect) { isIntersecting = true; }
+      
+      if (sec_ray_hp.did_intersect) { 
+          isIntersecting = true; 
+          if (sec_ray_hp.material->opacity < 1.0f) {
+              isTransparent = true;
+              opacities.push_back(sec_ray_hp.material->opacity);
+          }
+      }
     }
+    
+    if (isIntersecting && isTransparent) { 
+
+        // compute diffuse intensity contributed by this specific light
+        auto frac_diffuse_intensity = light_o->brightness * hp.material->kd * std::max(glm::dot(l, n), 0.0f);
+        for (auto obj : opacities) {
+            (1 - obj)* frac_diffuse_intensity;
+        }
+        diffuse_intensity += frac_diffuse_intensity;
+
+        // compute specular intensity contributed by this specific light
+        glm::vec3 r = glm::normalize(2 * std::max(glm::dot(l, n), 0.0f) * n - l); // reflected light vector
+        float dot_r_v = std::max(glm::dot(r, v), 0.0f);
+        auto frac_specular_intensity = hp.material->ks * pow(dot_r_v, hp.material->m);
+        for (auto obj : opacities) {
+            (1 - obj)* frac_specular_intensity;
+        }
+        specular_intensity += frac_specular_intensity;
+        
+    }
+    
+
     if (isIntersecting) { continue; }
     // else (Light has an impact)
+    else {
 
     // compute diffuse intensity contributed by this specific light
     auto frac_diffuse_intensity = light_o->brightness * hp.material->kd * std::max(glm::dot(l,n),0.0f);
@@ -105,11 +137,153 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     auto frac_specular_intensity = hp.material->ks * pow(dot_r_v,hp.material->m);
     specular_intensity += frac_specular_intensity;
     }
+  }
 
-  Color c_hdr = ambient_intensity + diffuse_intensity + specular_intensity; // High Dynamic Range
+
+  Color c_hdr = ambient_intensity + diffuse_intensity + specular_intensity; // high dynamic range
+  
+  // if object is transparent, calculates refracted part of the color
+  if (hp.material->opacity < 1.0f) {
+      
+      // adds together regular color and refracted part, depending on opacity of object
+      c_hdr = hp.material->opacity * c_hdr + (1.0f - hp.material->opacity) * refract(ray, hp, n);
+  }
+
   Color c_ldr = c_hdr / (c_hdr + 1); // Low Dynamic Range
+  
   return c_ldr;
   }
+
+
+// method to compute refract ray, doesn't allow for intersecting objects
+Color Renderer::refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const {
+    
+    // checks depth of recursion
+    if (ray.counter < 10) {
+
+        // initialize variables
+        auto intersection_point = hp.hitpoint;
+        auto ray_refract_index = ray.current_refraction_index;
+        auto hp_refract_index = hp.material->refraction_index;
+        auto I = ray.direction; // directional vector of ray
+        auto N = normal;
+        auto N_dot_I = glm::dot(N, I); // angle between normal and ray
+        glm::vec3 refract_direction; // direction of refracted ray
+
+        // ray comes from inside the object:
+        if (N_dot_I > 0) {
+
+            // reverse normal, so that it points inwards
+            N = { normal.x * -1, normal.x * -1, normal.x * -1 };
+
+            // swap material refract indexes of ray and material
+            std::swap(ray_refract_index, hp_refract_index);
+
+            // add offset to intersection point to prevent acne
+            intersection_point += 0.001f * normal;
+        }
+
+        // ray comes from outside the object
+        else {
+
+            // subtract offset from intersection point to prevent acne
+            intersection_point -= 0.001f * normal;
+
+            // N-dot_i is smaller than 0, reverse sign to ensure it's positive
+            N_dot_I = -N_dot_I;
+        }
+
+        // calculate relation between refract index of material that's left and material that's entered
+        float relative_refract_index = ray_refract_index / hp_refract_index;
+
+        auto k = 1.0f - pow(relative_refract_index, 2) * (1.0f - pow(N_dot_I, 2));
+        // if critical angle is reached, -> total internal reflection -> no refraction occurs
+        if (k < 0.0f) {
+            refract_direction = { 0.0f, 0.0f, 0.0f };
+        }
+        // else, calculate direction of refracted ray
+        else {
+            refract_direction =
+                relative_refract_index * I + float((relative_refract_index * N_dot_I - sqrt(k))) * N;
+        }
+
+        // initialize refraction ray with refraction index == 1.0f (air)
+        Ray refraction_ray = { intersection_point, refract_direction, 1.0f, ray.counter + 1 };
+
+        // trace refraction ray
+        return trace_ray(refraction_ray);
+    }
+
+    // if recursion limit is reached, return background color
+    else {
+        return scene_.background_color;
+    }
+    
+
+
+
+
+    /*
+    // add offset to intersection point to prevent acne
+    auto intersection_point = hp.hitpoint;
+    //intersection_point -= 0.001f * normal;
+
+    auto ray_refract_index = ray.current_refraction_index;
+    auto hp_refract_index = hp.material->refraction_index;
+    
+    // inverted ray direction vector
+    glm::vec3 i = {ray.direction};
+    //glm::vec3 i = { ray.direction.x * -1, ray.direction.y * -1,  ray.direction.z * -1 };
+
+    auto n = normal;
+    float NdotI;
+    // ray comes from inside material, reverse normal, set mat refract index to index of air
+    if (glm::dot(normal, i) > 0) {
+        n = { normal.x * -1, normal.x * -1, normal.x * -1 };
+        hp_refract_index = 1.0f;
+        NdotI = glm::dot(n, i);
+        intersection_point += 0.001f * normal;
+
+    }
+    // ray comes from outside the material
+    else {
+        NdotI = glm::dot(n, i) * -1;
+        intersection_point -= 0.001f * normal;
+    }
+    /*
+    // checks if refract indexes are equal, meaning ray travels through object
+    if (ray.current_refraction_index == hp.material->refraction_index) {
+
+        // set material refract index to index of air because ray will leave object
+        hp.material->refraction_index = 1.0f; 
+    }
+    
+
+    // calcuslate relation between refract index of material that's left and material that's entered
+    float relative_refract_index = ray_refract_index / hp_refract_index;
+
+    /*
+    glm::vec3 refract_ray_direction = relative_refract_index * i + 
+        float((relative_refract_index * NdotI -
+        sqrt(1 - pow(relative_refract_index, 2) *
+            (1 - pow(NdotI, 2))))) *
+        n;    
+    
+
+    auto refract_ray_direction = glm::refract(i, n, relative_refract_index);
+    //auto refract_ray_dir_norm = glm::normalize(refract_ray_direction);
+
+    Ray refraction_ray = { intersection_point, refract_ray_direction, hp.material->refraction_index, ray.counter + 1};
+    
+    // recursion counter
+    if (refraction_ray.counter < 10) {
+        return trace_ray(refraction_ray);
+    }
+    else {
+        return scene_.background_color;
+    }
+    */
+}
 
 
 Color Renderer::trace_ray(Ray const& ray) const {

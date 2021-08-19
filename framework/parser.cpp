@@ -48,10 +48,10 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
       float reflection = 0.0f;
       line_as_string_stream >> reflection;
 
-      float opacity = 0.0f;
+      float opacity = 1.0f;
       line_as_string_stream >> opacity;
 
-      float refraction_index = 0.0f;
+      float refraction_index = 1.0f;
       line_as_string_stream >> refraction_index;
 
       std::shared_ptr<Material> material = std::make_shared<Material>(Material{material_name,

@@ -18,6 +18,7 @@
 #include "ppmwriter.hpp"
 #include <string>
 #include <limits>
+#include <vector>
 #include <glm/glm.hpp>
 
 class Renderer
@@ -34,7 +35,11 @@ public:
     return color_buffer_;
   }
 
-  Color shade(Shape const& obj, Ray const& r, HitPoint const& hp) const;
+  Color shade(Shape const& obj, Ray const& ray, HitPoint const& hp) const;
+
+  Color transparency(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const;
+
+  Color refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const;
 
 private:
   unsigned width_;
