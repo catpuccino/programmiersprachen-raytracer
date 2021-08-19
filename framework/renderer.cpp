@@ -107,7 +107,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
         // compute diffuse intensity contributed by this specific light
         auto frac_diffuse_intensity = light_o->brightness * hp.material->kd * std::max(glm::dot(l, n), 0.0f);
         for (auto obj : opacities) {
-            (1 - obj)* frac_diffuse_intensity;
+            frac_diffuse_intensity = (1 - obj) * frac_diffuse_intensity;
         }
         diffuse_intensity += frac_diffuse_intensity;
 
@@ -116,7 +116,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
         float dot_r_v = std::max(glm::dot(r, v), 0.0f);
         auto frac_specular_intensity = hp.material->ks * pow(dot_r_v, hp.material->m);
         for (auto obj : opacities) {
-            (1 - obj)* frac_specular_intensity;
+            frac_specular_intensity = (1 - obj) * frac_specular_intensity;
         }
         specular_intensity += frac_specular_intensity;
         
@@ -138,7 +138,6 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     specular_intensity += frac_specular_intensity;
     }
   }
-
 
   Color c_hdr = ambient_intensity + diffuse_intensity + specular_intensity; // high dynamic range
   
