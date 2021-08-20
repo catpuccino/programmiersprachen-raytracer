@@ -27,14 +27,14 @@ public:
 
   void render();
   void write(Pixel const& p);
-  Color trace_ray(Ray const& ray) const;
+  Color trace_ray(Ray const& ray, unsigned recursionDepth) const;
 
   inline std::vector<Color> const& color_buffer() const
   {
     return color_buffer_;
   }
 
-  Color shade(Shape const& obj, Ray const& r, HitPoint const& hp) const;
+  Color shade(Shape const& obj, Ray const& r, HitPoint const& hp, unsigned recursionDepth) const;
 
 private:
   unsigned width_;

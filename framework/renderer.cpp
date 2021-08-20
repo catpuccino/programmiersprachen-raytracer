@@ -32,7 +32,7 @@ void Renderer::render()
                                                           (float)y - ((float)height_/ 2),
                                                           distance);
 
-      p.color = trace_ray(current_eye_ray);
+      p.color = trace_ray(current_eye_ray, 0);
       write(p);
     }
   }
@@ -55,7 +55,7 @@ void Renderer::write(Pixel const& p)
   ppm_.write(p);
 }
 
-Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) const {
+Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp, unsigned recursionDepth) const {
   // intersection point (fundament of illumination)
   glm::vec3 intersect_point = hp.hitpoint;
 
@@ -108,11 +108,21 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
 
   Color c_hdr = ambient_intensity + diffuse_intensity + specular_intensity; // High Dynamic Range
   Color c_ldr = c_hdr / (c_hdr + 1); // Low Dynamic Range
+
+  if (hp.material->reflection > 0.0f && recursionDepth < 10) {
+    // generate and trace reflected ray (reflected on normal)
+    glm::vec3 reflected_vec = glm::normalize(
+            hp.hit_direction - 2 * glm::dot(hp.hit_direction,n) * n);
+    Ray reflected_ray = {intersect_point,reflected_vec};
+    c_ldr = (1 - hp.material->reflection) * c_ldr +
+            hp.material->reflection * trace_ray(reflected_ray, recursionDepth + 1);
+  }
+
   return c_ldr;
   }
 
 
-Color Renderer::trace_ray(Ray const& ray) const {
+Color Renderer::trace_ray(Ray const& ray, unsigned recursionDepth) const {
     HitPoint temp_hp;
     HitPoint closest_hp;
     std::shared_ptr<Shape> closest_shape;
@@ -128,7 +138,7 @@ Color Renderer::trace_ray(Ray const& ray) const {
     }
 
     if (smallest_distance != std::numeric_limits<float>::infinity()) {
-        return shade(*closest_shape,ray,closest_hp);
+        return shade(*closest_shape,ray,closest_hp, recursionDepth);
     }
     else {
         return scene_.background_color;

@@ -186,7 +186,7 @@ TEST_CASE("testing compute_eye_ray", "[compute_eye_ray]")
 {
   Camera camera{45.0f};
 
-  Ray eye_ray = camera.compute_eye_ray(Pixel{1,1},200);
+  //Ray eye_ray = camera.compute_eye_ray(Pixel{1,1},200);
   //REQUIRE(eye_ray.direction.x == Approx(1).epsilon(0.001f)); //not working
 }
 
@@ -267,7 +267,7 @@ TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
     
     Ray r1 = { {-6.4f, -17.0f, -12.4f }, {8.9f, 30.3f, 16.63f} };
 
-    auto test_tracing = renderer.trace_ray(r1);
+    auto test_tracing = renderer.trace_ray(r1,0);
 
     // Ray should not hit
     REQUIRE(test_tracing.r == Approx(0.85f));
@@ -276,13 +276,21 @@ TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
 
     Ray r2 = { {18.9f, -20.9f, 10.0f }, {-23.2f, 27.6f, -12.0f} };
 
-    test_tracing = renderer.trace_ray(r2);
+    test_tracing = renderer.trace_ray(r2,0);
 
     // Ray should hit -- TEST WILL NOT WORK ONCE shade() HAS BEEN IMPLEMENTED --
     //REQUIRE(test_tracing.r == Approx(0.5f));
     //REQUIRE(test_tracing.g == Approx(0.5f));
     //REQUIRE(test_tracing.b == Approx(0.5f));
 
+}
+
+TEST_CASE("test reflector vec calculation","[Renderer::shade]")
+{
+  glm::vec3 s1{0,0,-1};
+  glm::vec3 n{0,0,1};
+  glm::vec3 reflected_vec = glm::normalize(
+          2 * std::max(glm::dot(s1,n),0.0f) * n - s1);
 }
 
 
