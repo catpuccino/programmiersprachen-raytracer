@@ -37,7 +37,7 @@ public:
 
   Color shade(Shape const& obj, Ray const& ray, HitPoint const& hp) const;
 
-  Color transparency(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const;
+  Color reflect(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const;
 
   Color refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const;
 

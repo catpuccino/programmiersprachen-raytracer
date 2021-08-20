@@ -82,6 +82,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
   for (auto const& [l_name,light_o] : scene_.light_cont) {
     glm::vec3 l = glm::normalize(light_o->position - intersect_point); // create light vector
 
+    auto hp_light_distance = glm::distance(light_o->position, intersect_point);
     // initialize secondary ray between intersection point and light
     Ray sec_ray{intersect_point,l};
 
@@ -92,6 +93,11 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     for (auto const& [s_name,shape_o] : scene_.shape_cont) {
       // test if some scene obj gets intersected by sec_ray
       HitPoint sec_ray_hp = shape_o->intersect(sec_ray);
+      
+      // checks if intersected shape is located behind light source
+      if (sec_ray_hp.distance > hp_light_distance) {
+          continue;
+      }
       
       if (sec_ray_hp.did_intersect) { 
           isIntersecting = true; 
@@ -142,6 +148,11 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
 
   Color c_hdr = ambient_intensity + diffuse_intensity + specular_intensity; // high dynamic range
   
+  if (hp.material->reflection > 0.0f) {
+      c_hdr = (1 - hp.material->reflection) * c_hdr + hp.material->reflection * reflect(ray, hp, n);
+  }
+
+
   // if object is transparent, calculates refracted part of the color
   if (hp.material->opacity < 1.0f) {
       
@@ -154,6 +165,20 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
   return c_ldr;
   }
 
+  
+  Color Renderer::reflect(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const {
+      if (ray.counter < 10) {
+          auto intersection_point = hp.hitpoint + 0.001f * normal;
+          auto reflect_ray_direction = ray.direction - 2 * glm::dot(normal, ray.direction) * normal;
+          Ray reflect_ray{ intersection_point, reflect_ray_direction, 1.0f, ray.counter + 1 };
+          return trace_ray(reflect_ray);  
+      }
+      else {
+          return scene_.background_color;
+      }
+  }
+
+  
 
 // method to compute refract ray, doesn't allow for intersecting objects
 Color Renderer::refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const {
