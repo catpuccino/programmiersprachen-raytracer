@@ -158,7 +158,22 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
       float camera_angle = 0.0f;
       line_as_string_stream >> camera_angle;
 
-      Camera camera{camera_angle};
+      glm::vec3 position{ 0.0f,0.0f,0.0f };
+      line_as_string_stream >> position.x;
+      line_as_string_stream >> position.y;
+      line_as_string_stream >> position.z;
+
+      glm::vec3 direction{ 0.0f, 0.0f, -1.0f };
+      line_as_string_stream >> direction.x;
+      line_as_string_stream >> direction.y;
+      line_as_string_stream >> direction.z;
+
+      glm::vec3 up{ 0.0f, 1.0f, 0.0f };
+      line_as_string_stream >> up.x;
+      line_as_string_stream >> up.y;
+      line_as_string_stream >> up.z;
+
+      Camera camera{camera_angle, position, direction, up};
 
       scene.camera = camera;
     }
