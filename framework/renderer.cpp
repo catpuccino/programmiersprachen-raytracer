@@ -23,6 +23,9 @@ void Renderer::render()
 {
   float distance = scene_.camera.compute_screen_distance(width_);
 
+  // compute transformation matrix to fit to camera position
+  glm::mat3x4 camera_transform = scene_.camera.compute_camera_transform_matrix();
+
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
 
@@ -30,7 +33,7 @@ void Renderer::render()
 
       Ray current_eye_ray = scene_.camera.compute_eye_ray((float)x - ((float)width_ / 2),
                                                           (float)y - ((float)height_/ 2),
-                                                          distance);
+                                                          distance, camera_transform);
 
       p.color = trace_ray(current_eye_ray);
       write(p);
