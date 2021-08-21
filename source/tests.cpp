@@ -285,13 +285,6 @@ TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
 
 }
 
-TEST_CASE("test reflector vec calculation","[Renderer::shade]")
-{
-  glm::vec3 s1{0,0,-1};
-  glm::vec3 n{0,0,1};
-  glm::vec3 reflected_vec = glm::normalize(
-          2 * std::max(glm::dot(s1,n),0.0f) * n - s1);
-}
 
 
 int main(int argc, char *argv[])

@@ -18,6 +18,7 @@
 #include "ppmwriter.hpp"
 #include <string>
 #include <limits>
+#include <vector>
 #include <glm/glm.hpp>
 
 class Renderer
@@ -27,14 +28,19 @@ public:
 
   void render();
   void write(Pixel const& p);
-  Color trace_ray(Ray const& ray, unsigned recursionDepth) const;
+  Color trace_ray(Ray const& ray) const;
 
   inline std::vector<Color> const& color_buffer() const
   {
     return color_buffer_;
   }
 
-  Color shade(Shape const& obj, Ray const& r, HitPoint const& hp, unsigned recursionDepth) const;
+  Color shade(Shape const& obj, Ray const& ray, HitPoint const& hp) const;
+
+  Color reflect(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const;
+
+  Color refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const;
+
 
 private:
   unsigned width_;
