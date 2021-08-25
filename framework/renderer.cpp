@@ -85,6 +85,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
   for (auto const& [l_name,light_o] : scene_.light_cont) {
     glm::vec3 l = glm::normalize(light_o->position - intersect_point); // create light vector
 
+    // calculate distance from Hitpoint to lightsource
     auto hp_light_distance = glm::distance(light_o->position, intersect_point);
     // initialize secondary ray between intersection point and light
     Ray sec_ray{intersect_point,l};
@@ -202,8 +203,9 @@ Color Renderer::refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& nor
         if (N_dot_I > 0) {
 
             // reverse normal, so that it points inwards
-            N = { normal.x * -1, normal.x * -1, normal.x * -1 };
-
+            glm::vec3 N_inverted = { normal.x * -1, normal.x * -1, normal.x * -1 };
+            N = { normal.x * -1, normal.y * -1, normal.z * -1 };
+            
             // swap material refract indexes of ray and material
             std::swap(ray_refract_index, hp_refract_index);
 
