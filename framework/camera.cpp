@@ -30,7 +30,6 @@ glm::mat3x4 Camera::compute_camera_transform_matrix() const {
 	};
 
 	return transform_matrix;
-
 }
 
 
@@ -40,17 +39,17 @@ Ray Camera::compute_eye_ray(float pix_x, float pix_y, float distance, glm::mat3x
   glm::vec4 pixel_3DPoint_vec4{pix_x, pix_y,-1* distance, 1.0f};
   glm::vec4 camera_position_vec4{ position_.x, position_.y, position_.z, 1.0f };
 
-  // mulitplicate points with transformation matrix
+  // multiply points with transformation matrix
   auto pix_transformed = pixel_3DPoint_vec4 * transform_mat;
   auto pos_transformed = camera_position_vec4 * transform_mat;
   
   // change points in vec3
   glm::vec3 pixel_position{ pix_transformed.x, pix_transformed.y, pix_transformed.z };
-  glm::vec3 camera_posítion{ pos_transformed.x, pos_transformed.y, pos_transformed.z };
+  glm::vec3 camera_position{ pos_transformed.x, pos_transformed.y, pos_transformed.z };
 
   // calculate ray direction & return ray
-  glm::vec3 eye_ray_dir = glm::normalize(pixel_position - camera_posítion);
-  return Ray{ camera_posítion, eye_ray_dir };
+  glm::vec3 eye_ray_dir = glm::normalize(pixel_position - camera_position);
+  return Ray{ camera_position, eye_ray_dir };
 }
 
 
