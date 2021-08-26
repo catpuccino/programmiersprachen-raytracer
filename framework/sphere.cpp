@@ -51,3 +51,8 @@ std::ostream& Sphere::print(std::ostream& os) const {
   return os;
 }
 
+void Sphere::set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 const& transform_matrix_inv) {
+    world_transformation_ = transform_matrix;
+    world_transformation_inv_ = transform_matrix_inv;
+}
+

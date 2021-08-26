@@ -177,6 +177,66 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
 
       scene.camera = camera;
     }
+
+    if ("transform" == object_string) {
+        std::string object_name;
+        line_as_string_stream >> object_name;
+
+        std::string transform_string;
+        line_as_string_stream >> transform_string;
+
+        glm::mat4 unit_matrix{
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+        }; 
+
+        auto translate_matrix = unit_matrix;
+        auto translate_matrix_inv = unit_matrix;
+
+        auto scale_matrix = unit_matrix;
+        auto scale_matrix_inv = unit_matrix;
+
+        auto rotation_matrix = unit_matrix;
+        auto rotation_matrix_inv = unit_matrix;
+
+        // inistantiate translate matrix
+        if ("translate" == transform_string) {
+            float translate_x;
+            float translate_y;
+            float translate_z;
+            line_as_string_stream >> translate_x;
+            line_as_string_stream >> translate_y;
+            line_as_string_stream >> translate_z;
+
+            translate_matrix = {
+                1.0f, 0.0f, 0.0f, translate_x,
+                0.0f, 1.0f, 0.0f, translate_y,
+                0.0f, 0.0f, 1.0f, translate_z,
+                0.0f, 0.0f, 0.0f, 1.0f
+            };
+
+            translate_matrix_inv = {
+                1.0f, 0.0f, 0.0f, -translate_x,
+                0.0f, 1.0f, 0.0f, -translate_y,
+                0.0f, 0.0f, 1.0f, -translate_z,
+                0.0f, 0.0f, 0.0f, 1.0f
+            };
+
+
+        }
+
+        // calculate world transformation matrix
+        glm::mat4 transform_mat = translate_matrix * scale_matrix * rotation_matrix;
+        glm::mat4 tranform_mat_inv = translate_matrix_inv;
+        
+
+
+        // find shape to transform and set tranformation matrices
+        auto transform_shape = scene.shape_cont.find(object_name);
+        (*(*transform_shape).second).set_transform_matrix(transform_mat, tranform_mat_inv);
+    }
   }
 
   in_sdf_file.close();

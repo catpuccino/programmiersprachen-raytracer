@@ -183,7 +183,6 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
   }
 
   
-
 // method to compute refract ray, doesn't allow for intersecting objects
 Color Renderer::refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const {
     

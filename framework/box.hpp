@@ -18,6 +18,8 @@ public:
 
     HitPoint intersect(Ray const& ray) const override;
 
+    void set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 const& transform_matrix_inv) override;
+
 private:
     glm::vec3 min_;
     glm::vec3 max_;
