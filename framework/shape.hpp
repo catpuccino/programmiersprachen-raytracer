@@ -6,6 +6,7 @@
 #include "hitpoint.hpp"
 #include "ray.hpp"
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 #include <string>
 #include <iostream>
 
@@ -22,9 +23,13 @@ class Shape {
 
     virtual HitPoint intersect(Ray const& ray) const = 0;
 
+    virtual void set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 const& transform_matrix_inv) = 0;
+
   protected:
     std::string name_;
     std::shared_ptr<Material> material_;
+    glm::mat4 world_transformation_;
+    glm::mat4 world_transformation_inv_;
 };
 
 std::ostream& operator<<(std::ostream& os, Shape const& s);

@@ -135,3 +135,8 @@ HitPoint Box::intersect(Ray const& ray) const {
   return HitPoint{result,smallest_dist,name_,material_,hitpoint,normalized_ray_direction, n};
 }
 
+void Box::set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 const& transform_matrix_inv) {
+    world_transformation_ = transform_matrix;
+    world_transformation_inv_ = transform_matrix_inv;
+}
+
