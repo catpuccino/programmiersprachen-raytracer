@@ -7,6 +7,7 @@
 #include "ray.hpp"
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
+#include <glm/gtx/intersect.hpp>
 #include <string>
 #include <iostream>
 
@@ -27,7 +28,7 @@ class Shape {
 
     Ray transformRay(Ray const& ray) const;
 
-    HitPoint transform_objSpace_hp_to_wrldSpace(HitPoint const& hp, Ray const& wrldSpace_ray) const;
+    HitPoint transform_objSpace_hp_to_wrldSpace(HitPoint const& hp) const;
 
   protected:
     std::string name_;

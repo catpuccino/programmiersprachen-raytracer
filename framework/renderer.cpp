@@ -168,9 +168,8 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
 
   return c_ldr;
   }
-
-  
-  Color Renderer::reflect(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const {
+ 
+ Color Renderer::reflect(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const  {
       if (ray.counter < 10) {
           auto intersection_point = hp.hitpoint + 0.001f * normal;
           auto reflect_ray_direction = ray.direction - 2 * glm::dot(normal, ray.direction) * normal;
@@ -182,7 +181,6 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
       }
   }
 
-  
 // method to compute refract ray, doesn't allow for intersecting objects
 Color Renderer::refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const {
     
@@ -249,7 +247,6 @@ Color Renderer::refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& nor
     }
 }
 
-
 Color Renderer::trace_ray(Ray const& ray) const {
     HitPoint temp_hp;
     HitPoint closest_hp;
@@ -265,7 +262,7 @@ Color Renderer::trace_ray(Ray const& ray) const {
 
         if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
             // calculate hitpoint in world-space
-            temp_hp = shape->transform_objSpace_hp_to_wrldSpace(os_temp_hp,ray);
+            temp_hp = shape->transform_objSpace_hp_to_wrldSpace(os_temp_hp);
 
             smallest_distance = temp_hp.distance;
             closest_hp = temp_hp;
