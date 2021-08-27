@@ -41,7 +41,11 @@ HitPoint Sphere::intersect(Ray const& ray) const {
           distance);
   glm::vec3 hitpoint = ray.origin + distance * normalized_ray_direction;
 
-  return HitPoint{result,distance,name_,material_,hitpoint,normalized_ray_direction};
+  // create normal
+  auto normal = hitpoint - centre_;
+  auto normal_normalized = glm::normalize(normal);
+
+  return HitPoint{result,distance,name_,material_,hitpoint,normalized_ray_direction,normal_normalized};
 }
 
 std::ostream& Sphere::print(std::ostream& os) const {

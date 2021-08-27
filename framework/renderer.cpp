@@ -66,7 +66,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
   // ********* (PHONG) ILLUMINATION **********
 
   // vectors (independent of lights)
-  glm::vec3 n = obj.create_normal(hp); // normal vector on intersection point
+  glm::vec3 n = hp.normal; // normal vector on intersection point
   glm::vec3 v = glm::normalize(ray.origin - intersect_point); // vector to the viewer (camera)
 
 
@@ -96,7 +96,12 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     std::vector<float> opacities;
     for (auto const& [s_name,shape_o] : scene_.shape_cont) {
       // test if some scene obj gets intersected by sec_ray
-      HitPoint sec_ray_hp = shape_o->intersect(sec_ray);
+
+      // transform ray to object-space
+      Ray os_sec_ray = shape_o->transformRay(sec_ray); // object-space second-ray
+      HitPoint os_sec_ray_hp = shape_o->intersect(os_sec_ray);
+      // calculate hitpoint in world-space
+      HitPoint sec_ray_hp = shape_o->transform_objSpace_hp_to_wrldSpace(os_sec_ray_hp);
       
       // checks if intersected shape is located behind light source
       if (sec_ray_hp.distance > hp_light_distance) {
