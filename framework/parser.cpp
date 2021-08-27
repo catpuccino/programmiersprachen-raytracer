@@ -304,12 +304,16 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
       }
 
         // calculate world transformation matrices
-        glm::mat4 w_transform_mat = translate_matrix * scale_matrix * rotation_matrix;
+        glm::mat4 w_transform_mat = rotation_matrix * scale_matrix * translate_matrix;
         glm::mat4 w_transform_mat_inv = translate_matrix_inv * scale_matrix_inv * rotation_matrix_inv;
 
-        // find given shape to set transformation matrices
-        auto related_shape_it = scene.shape_cont.find(object_name);
-        related_shape_it->second->set_transform_matrix(w_transform_mat, w_transform_mat_inv);
+        auto i = scene.shape_cont.find(object_name);
+        if (i != scene.shape_cont.end()) {
+          i->second->add_to_world_transformation(w_transform_mat,w_transform_mat_inv);
+        } else {
+          return;
+        }
+
     }
   }
 

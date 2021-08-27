@@ -24,7 +24,7 @@ class Shape {
 
     virtual HitPoint intersect(Ray const& ray) const = 0;
 
-    void set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 const& transform_matrix_inv);
+    void add_to_world_transformation(glm::mat4 const& frac_transform_mat, glm::mat4 const& frac_transform_mat_inv);
 
     Ray transformRay(Ray const& ray) const;
 

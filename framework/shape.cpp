@@ -16,9 +16,9 @@ std::ostream& operator<<(std::ostream& os, Shape const& s) {
   return s.print(os);
 }
 
-void Shape::set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 const& transform_matrix_inv) {
-  world_transformation_ = transform_matrix;
-  world_transformation_inv_ = transform_matrix_inv;
+void Shape::add_to_world_transformation(const glm::mat4 &frac_transform_mat, const glm::mat4 &frac_transform_mat_inv) {
+  world_transformation_ *= frac_transform_mat;
+  world_transformation_inv_ *= frac_transform_mat_inv;
 }
 
 Ray Shape::transformRay(Ray const& ray) const {
