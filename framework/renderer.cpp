@@ -256,9 +256,17 @@ Color Renderer::trace_ray(Ray const& ray) const {
     std::shared_ptr<Shape> closest_shape;
     float smallest_distance = std::numeric_limits<float>::infinity();
 
+
     for (auto const& [s_name,shape] : scene_.shape_cont) {
-        temp_hp = shape->intersect(ray);
-        if (temp_hp.did_intersect && temp_hp.distance < smallest_distance) {
+        // transform ray to object-space
+        Ray os_ray = shape->transformRay(ray); // object-space ray
+
+        HitPoint os_temp_hp = shape->intersect(os_ray); // object-space temporary hitpoint
+
+        if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
+            // calculate hitpoint in world-space
+            temp_hp = shape->transform_objSpace_hp_to_wrldSpace(os_temp_hp,ray);
+
             smallest_distance = temp_hp.distance;
             closest_hp = temp_hp;
             closest_shape = shape;

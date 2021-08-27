@@ -23,7 +23,11 @@ class Shape {
 
     virtual HitPoint intersect(Ray const& ray) const = 0;
 
-    virtual void set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 const& transform_matrix_inv) = 0;
+    void set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 const& transform_matrix_inv);
+
+    Ray transformRay(Ray const& ray) const;
+
+    HitPoint transform_objSpace_hp_to_wrldSpace(HitPoint const& hp, Ray const& wrldSpace_ray) const;
 
   protected:
     std::string name_;
