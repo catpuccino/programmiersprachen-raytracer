@@ -21,7 +21,7 @@ void Shape::set_transform_matrix(glm::mat4 const& transform_matrix, glm::mat4 co
   world_transformation_inv_ = transform_matrix_inv;
 }
 
-Ray Shape::transformRay(Ray  const& ray) const {
+Ray Shape::transformRay(Ray const& ray) const {
   // express ray origin and direction as homogenous coordinates (vec4)
   glm::vec4 ray_origin_vec4 = {ray.origin.x,ray.origin.y,ray.origin.z, 1.0f};
   glm::vec4 ray_dir_vec4 = {ray.direction.x,ray.direction.y,ray.direction.z, 0.0f};

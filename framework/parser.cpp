@@ -189,16 +189,14 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
         std::string transform_type;
         line_as_string_stream >> transform_type;
 
-        glm::mat4 unit_matrix;
+        glm::mat4 translate_matrix;
+        glm::mat4 translate_matrix_inv;
 
-        auto translate_matrix = unit_matrix;
-        auto translate_matrix_inv = unit_matrix;
+        glm::mat4 scale_matrix;
+        glm::mat4 scale_matrix_inv;
 
-        auto scale_matrix = unit_matrix;
-        auto scale_matrix_inv = unit_matrix;
-
-        auto rotation_matrix = unit_matrix;
-        auto rotation_matrix_inv = unit_matrix;
+        glm::mat4 rotation_matrix;
+        glm::mat4 rotation_matrix_inv;
 
         // instantiate translate matrix
         if ("translate" == transform_type) {
