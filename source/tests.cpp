@@ -267,7 +267,7 @@ TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
     
     Ray r1 = { {-6.4f, -17.0f, -12.4f }, {8.9f, 30.3f, 16.63f} };
 
-    auto test_tracing = renderer.trace_ray(r1,0);
+    auto test_tracing = renderer.trace_ray(r1);
 
     // Ray should not hit
     REQUIRE(test_tracing.r == Approx(0.85f));
@@ -276,7 +276,7 @@ TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
 
     Ray r2 = { {18.9f, -20.9f, 10.0f }, {-23.2f, 27.6f, -12.0f} };
 
-    test_tracing = renderer.trace_ray(r2,0);
+    test_tracing = renderer.trace_ray(r2);
 
     // Ray should hit -- TEST WILL NOT WORK ONCE shade() HAS BEEN IMPLEMENTED --
     //REQUIRE(test_tracing.r == Approx(0.5f));
@@ -285,7 +285,11 @@ TEST_CASE("testing Renderer::trace_ray()", "[Renderer::trace_ray()]")
 
 }
 
-
+TEST_CASE("test transpose matrix","[tanspose]")
+{
+  glm::mat4 m = {{1,1,1,1},{0,0,0,0},{1,1,1,1},{0,0,0,0}};
+  glm::mat4 m_t = glm::transpose(m);
+}
 
 int main(int argc, char *argv[])
 {
