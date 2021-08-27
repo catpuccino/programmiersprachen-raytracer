@@ -205,7 +205,6 @@ Color Renderer::refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& nor
         if (N_dot_I > 0) {
 
             // reverse normal, so that it points inwards
-            glm::vec3 N_inverted = { normal.x * -1, normal.x * -1, normal.x * -1 };
             N = { normal.x * -1, normal.y * -1, normal.z * -1 };
             
             // swap material refract indexes of ray and material
