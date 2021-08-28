@@ -31,18 +31,21 @@ glm::vec3 Sphere::create_normal(HitPoint const& hp) const {
 }
 
 HitPoint Sphere::intersect(Ray const& ray) const {
+  glm::vec3 obs_center = {0.0f, 0.0f, 0.0f}; // object-space center_
+  float obs_radius = 1.0f; // object-space radius_
+
   float distance = 0.0f;
   glm::vec3 normalized_ray_direction = glm::normalize(ray.direction);
   auto result = glm::intersectRaySphere(
           ray.origin,
           normalized_ray_direction,
-          centre_,
-          radius_ * radius_,
+          obs_center,
+          obs_radius * obs_radius,
           distance);
   glm::vec3 hitpoint = ray.origin + distance * normalized_ray_direction;
 
   // create normal
-  auto normal = hitpoint - centre_;
+  auto normal = hitpoint - obs_center;
   auto normal_normalized = glm::normalize(normal);
 
   return HitPoint{result,distance,name_,material_,hitpoint,normalized_ray_direction,normal_normalized};

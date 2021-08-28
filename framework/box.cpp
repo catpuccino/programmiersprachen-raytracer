@@ -44,6 +44,9 @@ std::ostream& Box::print(std::ostream& os) const {
 }
 
 HitPoint Box::intersect(Ray const& ray) const {
+  glm::vec3 obs_min = {0.0f, 0.0f, 0.0f}; // object-space min_
+  glm::vec3 obs_max = {1.0f, 1.0f, 1.0f}; // object-space max_
+
   bool result = false;
   float distance = 0.0f;
   float smallest_dist = std::numeric_limits<float>::max(); /* smallest distance between intersection
@@ -52,12 +55,12 @@ HitPoint Box::intersect(Ray const& ray) const {
   glm::vec3 n = { 0.0f, 0.0f, 0.0f };
 
   // left side of AABB
-  float p_x = min_.x;
+  float p_x = obs_min.x;
   float t = (p_x - ray.origin.x) / ray.direction.x;
   float p_y = ray.origin.y + t * ray.direction.y;
   float p_z = ray.origin.z + t * ray.direction.z;
   distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (min_.y <= p_y && p_y <= max_.y && min_.z <= p_z && p_z <= max_.z && t >= 0) {
+  if (obs_min.y <= p_y && p_y <= obs_max.y && obs_min.z <= p_z && p_z <= obs_max.z && t >= 0) {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-back & left-back edges
@@ -65,12 +68,12 @@ HitPoint Box::intersect(Ray const& ray) const {
   }
 
   // right side of AABB
-  p_x = max_.x;
+  p_x = obs_max.x;
   t = (p_x - ray.origin.x) / ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
   p_z = ray.origin.z + t * ray.direction.z;
   distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (min_.y <= p_y && p_y <= max_.y && min_.z <= p_z && p_z <= max_.z && distance < smallest_dist && t >= 0) {
+  if (obs_min.y <= p_y && p_y <= obs_max.y && obs_min.z <= p_z && p_z <= obs_max.z && distance < smallest_dist && t >= 0) {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-back & right-back edges
@@ -78,12 +81,12 @@ HitPoint Box::intersect(Ray const& ray) const {
   }
 
   // front side of AABB
-  p_y = min_.y;
+  p_y = obs_min.y;
   t = (p_y - ray.origin.y) / ray.direction.y;
   p_x = ray.origin.x + t * ray.direction.x;
   p_z = ray.origin.z + t * ray.direction.z;
   distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (min_.x <= p_x && p_x <= max_.x && min_.z <= p_z && p_z <= max_.z && distance < smallest_dist && t >= 0) {
+  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.z <= p_z && p_z <= obs_max.z && distance < smallest_dist && t >= 0) {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-left & back-left edges
@@ -91,12 +94,12 @@ HitPoint Box::intersect(Ray const& ray) const {
   }
 
   // back side of AABB
-  p_y = max_.y;
+  p_y = obs_max.y;
   t = (p_y - ray.origin.y) / ray.direction.y;
   p_x = ray.origin.x + t * ray.direction.x;
   p_z = ray.origin.z + t * ray.direction.z;
   distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (min_.x <= p_x && p_x <= max_.x && min_.z <= p_z && p_z <= max_.z && distance < smallest_dist && t >= 0) {
+  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.z <= p_z && p_z <= obs_max.z && distance < smallest_dist && t >= 0) {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-right & back-right edges
@@ -104,12 +107,12 @@ HitPoint Box::intersect(Ray const& ray) const {
   }
 
   // bottom side of AABB
-  p_z = min_.z;
+  p_z = obs_min.z;
   t = (p_z - ray.origin.z) / ray.direction.z;
   p_x = ray.origin.x + t * ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
   distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (min_.x <= p_x && p_x <= max_.x && min_.y <= p_y && p_y <= max_.y && distance < smallest_dist && t >= 0) {
+  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.y <= p_y && p_y <= obs_max.y && distance < smallest_dist && t >= 0) {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along bottom-left & bottom-back edges
@@ -117,12 +120,12 @@ HitPoint Box::intersect(Ray const& ray) const {
   }
 
   // top side of AABB
-  p_z = max_.z;
+  p_z = obs_max.z;
   t = (p_z - ray.origin.z) / ray.direction.z;
   p_x = ray.origin.x + t * ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
   distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (min_.x <= p_x && p_x <= max_.x && min_.y <= p_y && p_y <= max_.y && distance < smallest_dist && t >= 0) {
+  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.y <= p_y && p_y <= obs_max.y && distance < smallest_dist && t >= 0) {
     smallest_dist = distance;
     result = true;
     // sets dir-vectors along top-left & top-back edges

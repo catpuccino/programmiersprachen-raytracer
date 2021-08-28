@@ -258,30 +258,30 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
           rotation_matrix = {
                   1.0f, 0.0f, 0.0f, 0.0f,
                   0.0f, cos(rotation_degree), -sin(rotation_degree), 0.0f,
-                  0.0f, sin(rotation_degree), -cos(rotation_degree), 0.0f,
+                  0.0f, sin(rotation_degree), cos(rotation_degree), 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f
           };
 
           rotation_matrix_inv = {
                   1.0f, 0.0f, 0.0f, 0.0f,
                   0.0f, cos(-rotation_degree), -sin(-rotation_degree), 0.0f,
-                  0.0f, sin(-rotation_degree), -cos(-rotation_degree), 0.0f,
+                  0.0f, sin(-rotation_degree), cos(-rotation_degree), 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f
           };
         }
 
         if (rotation_axis.y != 0) {
           rotation_matrix = {
-                  cos(rotation_degree), 0.0f, -sin(rotation_degree), 0.0f,
+                  cos(rotation_degree), 0.0f, sin(rotation_degree), 0.0f,
                   0.0f, 1.0f, 0.0f, 0.0f,
-                  sin(rotation_degree), 1.0f, -cos(rotation_degree), 0.0f,
+                  -sin(rotation_degree), 1.0f, cos(rotation_degree), 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f
           };
 
           rotation_matrix_inv = {
-                  cos(-rotation_degree), 0.0f, -sin(-rotation_degree), 0.0f,
+                  cos(-rotation_degree), 0.0f, sin(-rotation_degree), 0.0f,
                   0.0f, 1.0f, 0.0f, 0.0f,
-                  sin(-rotation_degree), 1.0f, -cos(-rotation_degree), 0.0f,
+                  -sin(-rotation_degree), 1.0f, cos(-rotation_degree), 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f
           };
         }
@@ -289,14 +289,14 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
         if (rotation_axis.z != 0) {
           rotation_matrix = {
                   cos(rotation_degree), -sin(rotation_degree), 0.0f, 0.0f,
-                  sin(rotation_degree), -cos(rotation_degree), 0.0f, 0.0f,
+                  sin(rotation_degree), cos(rotation_degree), 0.0f, 0.0f,
                   0.0f, 0.0f, 1.0f, 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f
           };
 
           rotation_matrix_inv = {
                   cos(-rotation_degree), -sin(-rotation_degree), 0.0f, 0.0f,
-                  sin(-rotation_degree), -cos(-rotation_degree), 0.0f, 0.0f,
+                  sin(-rotation_degree), cos(-rotation_degree), 0.0f, 0.0f,
                   0.0f, 0.0f, 1.0f, 0.0f,
                   0.0f, 0.0f, 0.0f, 1.0f
           };
