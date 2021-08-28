@@ -2,6 +2,56 @@
 
 #include <fstream>
 
+glm::mat4 SDFParser::make_translate(float t_x, float t_y, float t_z) {
+  glm::mat4 translate_matrix = {
+          1.0f, 0.0f, 0.0f, t_x,
+          0.0f, 1.0f, 0.0f, t_y,
+          0.0f, 0.0f, 1.0f, t_z,
+          0.0f, 0.0f, 0.0f, 1.0f
+  };
+  return translate_matrix;
+}
+
+glm::mat4 SDFParser::make_rotate(float r_degree, glm::vec3 const& r_axis) {
+  glm::mat4 rotation_matrix;
+  if (r_axis.x != 0) {
+    rotation_matrix = {
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, cos(r_degree), -sin(r_degree), 0.0f,
+            0.0f, sin(r_degree), cos(r_degree), 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+    };
+  }
+  if (r_axis.y != 0) {
+    rotation_matrix = {
+            cos(r_degree), 0.0f, sin(r_degree), 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            -sin(r_degree), 1.0f, cos(r_degree), 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+    };
+  }
+  if (r_axis.z != 0) {
+    rotation_matrix = {
+            cos(r_degree), -sin(r_degree), 0.0f, 0.0f,
+            sin(r_degree), cos(r_degree), 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+    };
+  }
+  return rotation_matrix;
+}
+
+glm::mat4 SDFParser::make_scale(float s_x, float s_y, float s_z) {
+  glm::mat4 scale_matrix = {
+          s_x, 0.0f, 0.0f, 0.0f,
+          0.0f, s_y, 0.0f, 0.0f,
+          0.0f, 0.0f, s_z, 0.0f,
+          0.0f, 0.0f, 0.0f, 1.0f
+  };
+  return scale_matrix;
+}
+
+
 void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
 
   std::ifstream in_sdf_file(file_path);
@@ -200,26 +250,15 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
 
         // instantiate translate matrix
         if ("translate" == transform_type) {
-            float translate_x = 0.0f;
-            float translate_y = 0.0f;
-            float translate_z = 0.0f;
-            line_as_string_stream >> translate_x;
-            line_as_string_stream >> translate_y;
-            line_as_string_stream >> translate_z;
+          float translate_x = 0.0f;
+          float translate_y = 0.0f;
+          float translate_z = 0.0f;
+          line_as_string_stream >> translate_x;
+          line_as_string_stream >> translate_y;
+          line_as_string_stream >> translate_z;
 
-            translate_matrix = {
-                1.0f, 0.0f, 0.0f, translate_x,
-                0.0f, 1.0f, 0.0f, translate_y,
-                0.0f, 0.0f, 1.0f, translate_z,
-                0.0f, 0.0f, 0.0f, 1.0f
-            };
-
-            translate_matrix_inv = {
-                1.0f, 0.0f, 0.0f, -translate_x,
-                0.0f, 1.0f, 0.0f, -translate_y,
-                0.0f, 0.0f, 1.0f, -translate_z,
-                0.0f, 0.0f, 0.0f, 1.0f
-            };
+          translate_matrix = make_translate(translate_x,translate_y,translate_z);
+          translate_matrix_inv = make_translate(-translate_x,-translate_y,-translate_z);
         }
 
       if ("scale" == transform_type) {
@@ -229,20 +268,9 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
         line_as_string_stream >> scale_x;
         line_as_string_stream >> scale_y;
         line_as_string_stream >> scale_z;
-
-        scale_matrix = {
-                scale_x, 0.0f, 0.0f, 0.0f,
-                0.0f, scale_y, 0.0f, 0.0f,
-                0.0f, 0.0f, scale_z, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f
-        };
-
-        scale_matrix_inv = {
-                1 / scale_x, 0.0f, 0.0f, 0.0f,
-                0.0f, 1 / scale_y, 0.0f, 0.0f,
-                0.0f, 0.0f, 1 / scale_z, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f
-        };
+        
+        scale_matrix = make_scale(scale_x,scale_y,scale_z);
+        scale_matrix_inv = make_scale(1/scale_x,1/scale_y,1/scale_z);
       }
 
       if ("rotate" == transform_type) {
@@ -254,53 +282,8 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
         line_as_string_stream >> rotation_axis.y;
         line_as_string_stream >> rotation_axis.z;
 
-        if (rotation_axis.x != 0) {
-          rotation_matrix = {
-                  1.0f, 0.0f, 0.0f, 0.0f,
-                  0.0f, cos(rotation_degree), -sin(rotation_degree), 0.0f,
-                  0.0f, sin(rotation_degree), cos(rotation_degree), 0.0f,
-                  0.0f, 0.0f, 0.0f, 1.0f
-          };
-
-          rotation_matrix_inv = {
-                  1.0f, 0.0f, 0.0f, 0.0f,
-                  0.0f, cos(-rotation_degree), -sin(-rotation_degree), 0.0f,
-                  0.0f, sin(-rotation_degree), cos(-rotation_degree), 0.0f,
-                  0.0f, 0.0f, 0.0f, 1.0f
-          };
-        }
-
-        if (rotation_axis.y != 0) {
-          rotation_matrix = {
-                  cos(rotation_degree), 0.0f, sin(rotation_degree), 0.0f,
-                  0.0f, 1.0f, 0.0f, 0.0f,
-                  -sin(rotation_degree), 1.0f, cos(rotation_degree), 0.0f,
-                  0.0f, 0.0f, 0.0f, 1.0f
-          };
-
-          rotation_matrix_inv = {
-                  cos(-rotation_degree), 0.0f, sin(-rotation_degree), 0.0f,
-                  0.0f, 1.0f, 0.0f, 0.0f,
-                  -sin(-rotation_degree), 1.0f, cos(-rotation_degree), 0.0f,
-                  0.0f, 0.0f, 0.0f, 1.0f
-          };
-        }
-
-        if (rotation_axis.z != 0) {
-          rotation_matrix = {
-                  cos(rotation_degree), -sin(rotation_degree), 0.0f, 0.0f,
-                  sin(rotation_degree), cos(rotation_degree), 0.0f, 0.0f,
-                  0.0f, 0.0f, 1.0f, 0.0f,
-                  0.0f, 0.0f, 0.0f, 1.0f
-          };
-
-          rotation_matrix_inv = {
-                  cos(-rotation_degree), -sin(-rotation_degree), 0.0f, 0.0f,
-                  sin(-rotation_degree), cos(-rotation_degree), 0.0f, 0.0f,
-                  0.0f, 0.0f, 1.0f, 0.0f,
-                  0.0f, 0.0f, 0.0f, 1.0f
-          };
-        }
+        rotation_matrix = make_rotate(rotation_degree,rotation_axis);
+        rotation_matrix_inv = make_rotate(-rotation_degree,rotation_axis);
       }
 
         // calculate world transformation matrices
