@@ -1,9 +1,5 @@
 #include "sphere.hpp"
 
-#include <cmath>
-
-const double pi = acos(-1);
-
 Sphere::Sphere(glm::vec3 const& ctr, float r) :
         Shape{"Sphere", std::make_shared<Material>(Material{"Standard",
                                                             {0.5f,0.5f,0.5f},
@@ -20,9 +16,6 @@ Sphere::Sphere(std::string const& str, std::shared_ptr<Material> material, glm::
 
 Sphere::~Sphere() {}
 
-float Sphere::area() const { return 4 * float(pi) * powf(radius_,2); }
-
-float Sphere::volume() const { return 4/3.0f * float(pi) * powf(radius_,3); }
 
 glm::vec3 Sphere::create_normal(HitPoint const& hp) const {
     auto normal = hp.hitpoint - centre_;
@@ -51,11 +44,5 @@ HitPoint Sphere::intersect(Ray const& ray) const {
   return HitPoint{result,distance,name_,material_,hitpoint,normalized_ray_direction,normal_normalized};
 }
 
-std::ostream& Sphere::print(std::ostream& os) const {
-  Shape::print(os);
-  os << "Centre: {" << centre_.x << ", " << centre_.y << ", " << centre_.z << "}" << std::endl;
-  os << "Radius: " << radius_ << std::endl;
-  return os;
-}
 
 

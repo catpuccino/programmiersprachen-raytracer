@@ -268,7 +268,7 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
         line_as_string_stream >> scale_x;
         line_as_string_stream >> scale_y;
         line_as_string_stream >> scale_z;
-        
+
         scale_matrix = make_scale(scale_x,scale_y,scale_z);
         scale_matrix_inv = make_scale(1/scale_x,1/scale_y,1/scale_z);
       }

@@ -16,11 +16,7 @@ class Shape {
     Shape(std::string const& str, std::shared_ptr<Material> material);
     ~Shape();
 
-    virtual float area() const = 0;
-    virtual float volume() const = 0;
     virtual glm::vec3 create_normal(HitPoint const& hp) const = 0;
-
-    virtual std::ostream& print(std::ostream& os) const;
 
     virtual HitPoint intersect(Ray const& ray) const = 0;
 
@@ -36,8 +32,5 @@ class Shape {
     glm::mat4 world_transformation_;
     glm::mat4 world_transformation_inv_;
 };
-
-std::ostream& operator<<(std::ostream& os, Shape const& s);
-
 
 #endif // #ifndef SHAPE_HPP
