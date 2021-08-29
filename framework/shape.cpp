@@ -9,7 +9,7 @@ Shape::~Shape() {}
 
 void Shape::add_to_world_transformation(const glm::mat4 &frac_transform_mat, const glm::mat4 &frac_transform_mat_inv) {
   world_transformation_ = frac_transform_mat * world_transformation_;
-  world_transformation_inv_ = frac_transform_mat_inv * world_transformation_inv_;
+  world_transformation_inv_ = glm::inverse(world_transformation_);
 }
 
 Ray Shape::transformRay(Ray const& ray) const {
@@ -37,11 +37,11 @@ HitPoint Shape::transform_objSpace_hp_to_wrldSpace(HitPoint const& hp) const {
   glm::vec4 os_hit_dir_vec4 = { hp.hit_direction.x, hp.hit_direction.y, hp.hit_direction.z, 0.0f };
   glm::vec4 os_normal_vec4 = {hp.normal.x, hp.normal.y, hp.normal.z, 0.0f};
 
-  // apply transformation to object-space hitpoint & normal
+  // apply transformation to object-space hitpoint & normal  
   glm::vec4 ws_hitpoint_vec4 = world_transformation_ * os_hitpoint_vec4;
   glm::vec4 ws_hit_dir_vec4 = world_transformation_ * os_hit_dir_vec4;
   glm::vec4 ws_normal_vec4 = glm::transpose(world_transformation_inv_) * os_normal_vec4;
-
+  
   // cast origin & direction vectors back to 3D (ws = world-space)
   glm::vec3 ws_hitpoint = { ws_hitpoint_vec4.x, ws_hitpoint_vec4.y, ws_hitpoint_vec4.z };
   glm::vec3 ws_hit_dir = glm::normalize(glm::vec3{ ws_hit_dir_vec4.x, ws_hit_dir_vec4.y, ws_hit_dir_vec4.z});
