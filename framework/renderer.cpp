@@ -106,11 +106,11 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
       // checks if intersected shape is located behind light source
       if (sec_ray_hp.distance > hp_light_distance) { continue; }
 
-      /* checks if second ray accidentally intersects with the shape it belongs to
-         (problem since object-space intersection test) */
-      if (sec_ray_hp.name == s_name) { continue; }
-      
-      if (sec_ray_hp.did_intersect) { 
+      if (sec_ray_hp.did_intersect) {
+          /* checks if second ray accidentally intersects with the shape it belongs to
+          (problem since object-space intersection test) */
+          if (sec_ray_hp.name == s_name) { continue; }
+
           isIntersecting = true; 
           if (sec_ray_hp.material->opacity < 1.0f) {
               isTransparent = true;

@@ -9,11 +9,15 @@ glm::mat4 SDFParser::make_translate(float t_x, float t_y, float t_z) {
           0.0f, 0.0f, 1.0f, t_z,
           0.0f, 0.0f, 0.0f, 1.0f
   };
-  return translate_matrix;
+  glm::mat4 unit;
+  glm::mat4 ta2 = glm::translate(unit,{t_x,t_y,t_z});
+  return ta2;
 }
 
-glm::mat4 SDFParser::make_rotate(float r_degree, glm::vec3 const& r_axis) {
+glm::mat4 SDFParser::make_rotate(float degree, glm::vec3 const& r_axis) {
   glm::mat4 rotation_matrix;
+  glm::mat4 ro2;
+  float r_degree = degree * float(M_PI / 180); // convert degree into radian measure
   if (r_axis.x != 0) {
     rotation_matrix = {
             1.0f, 0.0f, 0.0f, 0.0f,
@@ -21,14 +25,18 @@ glm::mat4 SDFParser::make_rotate(float r_degree, glm::vec3 const& r_axis) {
             0.0f, sin(r_degree), cos(r_degree), 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
     };
+    ro2 = glm::rotate(degree,r_axis);
+    glm::mat4 ha;
   }
   if (r_axis.y != 0) {
     rotation_matrix = {
             cos(r_degree), 0.0f, sin(r_degree), 0.0f,
             0.0f, 1.0f, 0.0f, 0.0f,
-            -sin(r_degree), 1.0f, cos(r_degree), 0.0f,
+            -sin(r_degree), 0.0f, cos(r_degree), 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
     };
+    ro2 = glm::rotate(degree,r_axis);
+    glm::mat4 ha;
   }
   if (r_axis.z != 0) {
     rotation_matrix = {
@@ -37,8 +45,10 @@ glm::mat4 SDFParser::make_rotate(float r_degree, glm::vec3 const& r_axis) {
             0.0f, 0.0f, 1.0f, 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
     };
+    ro2 = glm::rotate(degree,r_axis);
+    glm::mat4 ha;
   }
-  return rotation_matrix;
+  return ro2;
 }
 
 glm::mat4 SDFParser::make_scale(float s_x, float s_y, float s_z) {
@@ -48,7 +58,9 @@ glm::mat4 SDFParser::make_scale(float s_x, float s_y, float s_z) {
           0.0f, 0.0f, s_z, 0.0f,
           0.0f, 0.0f, 0.0f, 1.0f
   };
-  return scale_matrix;
+  glm::mat4 unit;
+  glm::mat4 scale_m = glm::scale(unit,{s_x,s_y,s_z});
+  return scale_m;
 }
 
 
