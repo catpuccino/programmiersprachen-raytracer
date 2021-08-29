@@ -13,8 +13,6 @@ struct HitPoint
     std::shared_ptr<Material> material;
     glm::vec3 hitpoint;
     glm::vec3 hit_direction;
-
-    // normal vector for box
     glm::vec3 normal = { 0.0f, 0.0f, 0.0f };
 };
 
