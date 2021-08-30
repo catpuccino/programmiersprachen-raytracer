@@ -16,7 +16,7 @@ struct Scene {
     std::map<std::string,std::shared_ptr<Light>> light_cont;
     Color ambient = {0.2f,0.2f,0.2f};
     Color background_color = { 0.0f, 0.0f, 0.0f };
-    Camera camera = {50.0f};
+    std::pair<std::string,Camera> camera = std::make_pair("camera",Camera{50.0f});
 };
 
 #endif // #ifndef SCENE_HPP

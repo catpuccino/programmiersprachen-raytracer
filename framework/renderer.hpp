@@ -41,6 +41,9 @@ public:
 
   Color refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& normal) const;
 
+  void set_new_scene(Scene const& s);
+  void set_filename(std::string const& fname);
+
 
 private:
   unsigned width_;

@@ -16,17 +16,20 @@ class Camera {
         glm::vec3 const& up = {0.0f, 1.0f, 0.0f});
     ~Camera();
 
-    glm::mat3x4 compute_camera_transform_matrix() const;
+    glm::mat4 compute_camera_transform_matrix() const;
 
-    Ray compute_eye_ray(float pix_x, float pix_y, float distance, glm::mat3x4 const& transform_mat) const;
+    Ray compute_eye_ray(float pix_x, float pix_y, float distance, glm::mat4 const& camera_transform_mat) const;
 
     float compute_screen_distance(unsigned width) const;
+
+    void add_to_world_transformation(glm::mat4 const& mat);
 
   private:
     float fov_x_;
     glm::vec3 position_;
     glm::vec3 direction_;
     glm::vec3 up_;
+    glm::mat4 add_camera_transformation_; // additional camera transformation
 };
 
 #endif // CAMERA_HPP

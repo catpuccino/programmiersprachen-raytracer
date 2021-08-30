@@ -20,11 +20,11 @@ class Shape {
 
     virtual HitPoint intersect(Ray const& ray) const = 0;
 
-    void add_to_world_transformation(glm::mat4 const& frac_transform_mat, glm::mat4 const& frac_transform_mat_inv);
+    void add_to_world_transformation(glm::mat4 const& frac_transform_mat);
 
-    Ray transformRay(Ray const& ray) const;
+    Ray transform_ray(Ray const& ray) const;
 
-    HitPoint transform_objSpace_hp_to_wrldSpace(HitPoint const& hp) const;
+    HitPoint transform_hp_from_os_to_ws(HitPoint const& hp) const;
 
   protected:
     std::string name_;

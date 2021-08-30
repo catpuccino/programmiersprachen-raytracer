@@ -21,17 +21,17 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const&
 
 void Renderer::render()
 {
-  float distance = scene_.camera.compute_screen_distance(width_);
+  float distance = scene_.camera.second.compute_screen_distance(width_);
 
   // compute transformation matrix to fit to camera position
-  glm::mat3x4 camera_transform = scene_.camera.compute_camera_transform_matrix();
+  glm::mat4 camera_transform = scene_.camera.second.compute_camera_transform_matrix();
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
 
       Pixel p(x,y);
 
-      Ray current_eye_ray = scene_.camera.compute_eye_ray((float)x - ((float)width_ / 2),
+      Ray current_eye_ray = scene_.camera.second.compute_eye_ray((float)x - ((float)width_ / 2),
                                                           (float)y - ((float)height_/ 2),
                                                           distance, camera_transform);
 
@@ -87,6 +87,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
 
     // calculate distance from Hitpoint to lightsource
     auto hp_light_distance = glm::distance(light_o->position, intersect_point);
+
     // initialize secondary ray between intersection point and light
     Ray sec_ray{intersect_point,l};
 
@@ -98,10 +99,10 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
       // test if some scene obj gets intersected by sec_ray
 
       // transform ray to object-space
-      Ray os_sec_ray = shape_o->transformRay(sec_ray); // object-space second-ray
+      Ray os_sec_ray = shape_o->transform_ray(sec_ray); // object-space second-ray
       HitPoint os_sec_ray_hp = shape_o->intersect(os_sec_ray);
       // calculate hitpoint in world-space
-      HitPoint sec_ray_hp = shape_o->transform_objSpace_hp_to_wrldSpace(os_sec_ray_hp);
+      HitPoint sec_ray_hp = shape_o->transform_hp_from_os_to_ws(os_sec_ray_hp);
       
       // checks if intersected shape is located behind light source
       if (sec_ray_hp.distance > hp_light_distance) { continue; }
@@ -262,13 +263,13 @@ Color Renderer::trace_ray(Ray const& ray) const {
 
     for (auto const& [s_name,shape] : scene_.shape_cont) {
         // transform ray to object-space
-        Ray os_ray = shape->transformRay(ray); // object-space ray
+        Ray os_ray = shape->transform_ray(ray); // object-space ray
 
         HitPoint os_temp_hp = shape->intersect(os_ray); // object-space temporary hitpoint
 
         if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
             // calculate hitpoint in world-space
-            temp_hp = shape->transform_objSpace_hp_to_wrldSpace(os_temp_hp);
+            temp_hp = shape->transform_hp_from_os_to_ws(os_temp_hp);
 
             smallest_distance = temp_hp.distance;
             closest_hp = temp_hp;
@@ -282,4 +283,13 @@ Color Renderer::trace_ray(Ray const& ray) const {
     else {
         return scene_.background_color;
     }
+}
+
+
+void Renderer::set_new_scene(Scene const& s) {
+  scene_ = s;
+}
+
+void Renderer::set_filename(const std::string &fname) {
+  filename_ = fname;
 }
