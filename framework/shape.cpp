@@ -9,7 +9,7 @@ Shape::~Shape() {}
 
 void Shape::add_to_world_transformation(const glm::mat4 &frac_transform_mat, const glm::mat4 &frac_transform_mat_inv) {
   world_transformation_ = frac_transform_mat * world_transformation_;
-  world_transformation_inv_ = frac_transform_mat_inv * world_transformation_inv_;
+  world_transformation_inv_ = glm::inverse(world_transformation_);
 }
 
 Ray Shape::transformRay(Ray const& ray) const {
@@ -23,7 +23,7 @@ Ray Shape::transformRay(Ray const& ray) const {
 
   // cast origin & direction vectors back to 3D
   glm::vec3 new_ray_origin = {ray_origin_transformed.x,ray_origin_transformed.y,ray_origin_transformed.z};
-  glm::vec3 new_ray_dir = glm::normalize(glm::vec3({ray_dir_transformed.x,ray_dir_transformed.y,ray_dir_transformed.z}));
+  glm::vec3 new_ray_dir = glm::vec3({ray_dir_transformed.x,ray_dir_transformed.y,ray_dir_transformed.z});
 
   return Ray{new_ray_origin,new_ray_dir};
 }

@@ -23,8 +23,8 @@ glm::vec3 Box::create_normal(HitPoint const& hp) const {
 
 
 HitPoint Box::intersect(Ray const& ray) const {
-  glm::vec3 obs_min = {0.0f, 0.0f, 0.0f}; // object-space min_
-  glm::vec3 obs_max = {1.0f, 1.0f, 1.0f}; // object-space max_
+  glm::vec3 obs_min = {-0.5f, -0.5f, -0.5f}; // object-space min_
+  glm::vec3 obs_max = {0.5f, 0.5f, 0.5f}; // object-space max_
 
   bool result = false;
   float distance = 0.0f;
