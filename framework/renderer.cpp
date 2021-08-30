@@ -87,6 +87,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
 
     // calculate distance from Hitpoint to lightsource
     auto hp_light_distance = glm::distance(light_o->position, intersect_point);
+
     // initialize secondary ray between intersection point and light
     Ray sec_ray{intersect_point,l};
 
@@ -98,10 +99,10 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
       // test if some scene obj gets intersected by sec_ray
 
       // transform ray to object-space
-      Ray os_sec_ray = shape_o->transformRay(sec_ray); // object-space second-ray
+      Ray os_sec_ray = shape_o->transform_ray(sec_ray); // object-space second-ray
       HitPoint os_sec_ray_hp = shape_o->intersect(os_sec_ray);
       // calculate hitpoint in world-space
-      HitPoint sec_ray_hp = shape_o->transform_objSpace_hp_to_wrldSpace(os_sec_ray_hp);
+      HitPoint sec_ray_hp = shape_o->transform_hp_from_os_to_ws(os_sec_ray_hp);
       
       // checks if intersected shape is located behind light source
       if (sec_ray_hp.distance > hp_light_distance) { continue; }
@@ -262,13 +263,13 @@ Color Renderer::trace_ray(Ray const& ray) const {
 
     for (auto const& [s_name,shape] : scene_.shape_cont) {
         // transform ray to object-space
-        Ray os_ray = shape->transformRay(ray); // object-space ray
+        Ray os_ray = shape->transform_ray(ray); // object-space ray
 
         HitPoint os_temp_hp = shape->intersect(os_ray); // object-space temporary hitpoint
 
         if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
             // calculate hitpoint in world-space
-            temp_hp = shape->transform_objSpace_hp_to_wrldSpace(os_temp_hp);
+            temp_hp = shape->transform_hp_from_os_to_ws(os_temp_hp);
 
             smallest_distance = temp_hp.distance;
             closest_hp = temp_hp;

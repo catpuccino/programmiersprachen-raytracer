@@ -1,0 +1,73 @@
+# define material name, <ka_r ka_g ka_b>, <kd_r kd_g kd_b>, <ks_r ks_g ks_b>, m, reflection, opacity, refract_index
+define material red 0.1 0 0 0.8 0 0 0.7 0.7 0.7 30 0 1 1
+define material green 0 0.2 0 0 0.2 0 0 0.2 0 10 0 0.1 1.5
+define material blue 0 0 0.1 0 0 0.8 0.8 0.8 0.8 200
+define material purple 0.5 0 0.5 0.5 0 0.5 0.3 0.3 0.03 29 1 1 1
+define material cyan 0 0.5 0.5 0 0.5 0.5 0.3 0.3 0.03 29 0 1 1
+define material yellow 0.5 0.5 0 0.5 0.5 0 0.3 0.3 0.03 29 
+define material white 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 10 0.5 1 1
+
+# geometry
+# define shape box ground -40 -15 -200 40 -14 0 white
+# define shape box backwall -40 -15 10 40 15 11 white
+# define shape box leftwall -40 -15 -200 -39 15 0 red
+# define shape box abox -11 -7 -30 -8 -4 -20 blue
+# define shape box bbox 8 -7 -30 11 -4 -20 yellow
+# define shape box cbox -4 -4 -30 4 4 -20 green
+# define shape sphere asphere 0 0 -8 2 green
+# define shape sphere bsphere 0 0 -60 10 red
+# define shape sphere csphere -15 0 -60 5 purple 
+# define shape sphere dsphere 15 0 -60 5 cyan
+
+# define shape sphere asphere 0 0 0 2 green
+# define shape sphere bsphere 0 0 0 10 red
+# define shape sphere csphere 0 0 0 5 purple 
+# define shape sphere dsphere 0 0 0 5 cyan
+# transform asphere translate 0 0 -8
+# transform bsphere translate 0 0 -60
+# transform csphere translate -15 0 -60
+# transform dsphere translate 15 0 -60
+	
+define shape box ground -0.5 -0.5 -0.5 0.5 0.5 0.5 cyan
+transform ground scale 10 3 5
+transform ground rotate -45 0 1 0
+transform ground translate -8 2 -45
+
+# transform name tranformation parameter
+define shape sphere bubble 0 0 0 1 green
+transform bubble scale 2 1 1
+transform bubble rotate 60 0 1 0
+transform bubble translate 0 1 -8
+
+define shape sphere abubble 0 0 0 1 red
+transform abubble scale 1 1 1
+transform abubble translate 0 -1 -10
+
+define shape sphere bbubble 0 0 0 1 purple 
+transform bbubble scale 2 2 2
+transform bbubble translate 0 5 -15
+
+define shape box aground 0 0 0 1 1 1 white
+transform aground scale 100 1 100
+transform aground translate 0 -5 0
+
+define shape box backwall 0 0 0 1 1 1 blue 
+transform backwall scale 50 50 1
+transform backwall translate 0 -10 -70
+
+define shape box abox 0 0 0 1 1 1 yellow
+transform abox scale 3 2 3
+transform abox rotate -45 0 1 0
+transform abox translate 2 0 -25
+
+
+# light
+define light sun 0 10 0 .2 .2 .2 5
+# define light sun2 10 -30 -20 .2 .2 .2 20
+# define light sun3 -80 0 -60 .2 .2 .2 20
+# define light sun4 -12 -12 -20 .2 .2 .2 20
+# define light sun5 -12 -5 -35 .2 .2 .2 10
+
+# camera <name> <fov-x>, position, direction, up
+define camera origin 60.0 0 0 0 0 0 -1 0 1 0
+# define camera eye 60.0 -2 15 -5 1 -10 -10 -1 1 -4

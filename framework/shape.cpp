@@ -7,12 +7,12 @@ Shape::Shape(std::string const& str, std::shared_ptr<Material> material) :
 Shape::~Shape() {}
 
 
-void Shape::add_to_world_transformation(const glm::mat4 &frac_transform_mat, const glm::mat4 &frac_transform_mat_inv) {
+void Shape::add_to_world_transformation(const glm::mat4 &frac_transform_mat) {
   world_transformation_ = frac_transform_mat * world_transformation_;
   world_transformation_inv_ = glm::inverse(world_transformation_);
 }
 
-Ray Shape::transformRay(Ray const& ray) const {
+Ray Shape::transform_ray(Ray const& ray) const {
   // express ray origin and direction as homogenous coordinates (vec4)
   glm::vec4 ray_origin_vec4 = {ray.origin.x,ray.origin.y,ray.origin.z, 1.0f};
   glm::vec4 ray_dir_vec4 = {ray.direction.x,ray.direction.y,ray.direction.z, 0.0f};
@@ -23,12 +23,12 @@ Ray Shape::transformRay(Ray const& ray) const {
 
   // cast origin & direction vectors back to 3D
   glm::vec3 new_ray_origin = {ray_origin_transformed.x,ray_origin_transformed.y,ray_origin_transformed.z};
-  glm::vec3 new_ray_dir = glm::normalize(glm::vec3({ray_dir_transformed.x,ray_dir_transformed.y,ray_dir_transformed.z}));
+  glm::vec3 new_ray_dir = glm::vec3({ray_dir_transformed.x,ray_dir_transformed.y,ray_dir_transformed.z});
 
   return Ray{new_ray_origin,new_ray_dir};
 }
 
-HitPoint Shape::transform_objSpace_hp_to_wrldSpace(HitPoint const& hp) const {
+HitPoint Shape::transform_hp_from_os_to_ws(HitPoint const& hp) const {
   /* now transform object-space hitpoint and normal to world-space
      by using world_transformation_ matrix */
 
