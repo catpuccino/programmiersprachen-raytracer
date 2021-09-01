@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
   std::string sdf_filepath{"../../source/scene.sdf"};
 
   Scene scene;
-  SDFParser::parse_scene(h_sdf_filepath,scene);
+  SDFToolbox::parse_scene(h_sdf_filepath,scene);
 
   Renderer renderer{image_width, image_height, filename, scene};
 

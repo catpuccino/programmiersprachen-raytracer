@@ -3,7 +3,7 @@
 #include <fstream>
 
 
-void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
+void SDFToolbox::parse_scene(std::string const& file_path, Scene& scene) {
 
     std::ifstream in_sdf_file(file_path);
 
@@ -251,11 +251,10 @@ void SDFParser::parse_scene(std::string const& file_path, Scene& scene) {
     in_sdf_file.close();
 }
 
-void SDFParser::write_scene(unsigned current_frame, std::string const& filename, float rotation_degree) {
+void SDFToolbox::write_scene(unsigned current_frame, std::string const& filename, float rotation_degree) {
 
   std::ofstream out_sdf_file;
-  out_sdf_file.open("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",
-                    std::ios::app);
+  out_sdf_file.open(filename, std::ios::app);
 
   out_sdf_file << "transform origin rotate " << std::to_string(rotation_degree) << " 0 1 0\n";
 

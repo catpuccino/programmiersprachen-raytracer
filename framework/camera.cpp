@@ -44,7 +44,7 @@ Ray Camera::compute_eye_ray(float pix_x, float pix_y, float distance, glm::mat4 
   
   // instantiate pixel and camera position as vec4 to enable matrix multiplication 
   glm::vec4 pixel_3DPoint_vec4{pix_x, pix_y,-1* distance, 1.0f};
-  glm::vec4 camera_position_vec4{ position_.x, position_.y, position_.z, 1.0f };
+  glm::vec4 camera_position_vec4{ 0, 0, 0, 1.0f };
 
   // multiply points with transformation matrix
   auto pix_transformed = add_camera_transformation_ * camera_transform_mat * pixel_3DPoint_vec4;

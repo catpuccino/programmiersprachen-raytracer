@@ -35,6 +35,7 @@
 [Bb]uild
 .idea
 cmake-build-*
+images
 
 CMakeCache.txt
 cmake_install.cmake
