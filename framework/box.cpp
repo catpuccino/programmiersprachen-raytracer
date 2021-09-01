@@ -27,7 +27,8 @@ HitPoint Box::intersect(Ray const& ray) const {
   glm::vec3 obs_max = { 0.5f, 0.5f, 0.5f }; // object-space max_
 
   bool result = false;
-  float distance = 0.0f;
+  float os_distance = 0.0f;
+  float ws_distance = 0.0f;
   float smallest_dist = std::numeric_limits<float>::max(); /* smallest distance between intersection
                                                               and ray origin */
   // normal vector for intersection point
@@ -38,9 +39,11 @@ HitPoint Box::intersect(Ray const& ray) const {
   float t = (p_x - ray.origin.x) / ray.direction.x;
   float p_y = ray.origin.y + t * ray.direction.y;
   float p_z = ray.origin.z + t * ray.direction.z;
-  distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
+  //distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  ws_distance = distance_in_ws(glm::vec3{p_x,p_y,p_z},ray.origin);
+  os_distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
   if (obs_min.y <= p_y && p_y <= obs_max.y && obs_min.z <= p_z && p_z <= obs_max.z && t >= 0) {
-    smallest_dist = distance;
+    smallest_dist = os_distance;
     result = true;
     // sets dir-vectors along bottom-back & left-back edges
     n = { -1.0f, 0.0f, 0.0f };
@@ -51,9 +54,11 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_x - ray.origin.x) / ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
   p_z = ray.origin.z + t * ray.direction.z;
-  distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (obs_min.y <= p_y && p_y <= obs_max.y && obs_min.z <= p_z && p_z <= obs_max.z && distance < smallest_dist && t >= 0) {
-    smallest_dist = distance;
+  //distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  ws_distance = distance_in_ws(glm::vec3{p_x,p_y,p_z},ray.origin);
+  os_distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  if (obs_min.y <= p_y && p_y <= obs_max.y && obs_min.z <= p_z && p_z <= obs_max.z && ws_distance < smallest_dist && t >= 0) {
+    smallest_dist = os_distance;
     result = true;
     // sets dir-vectors along bottom-back & right-back edges
     n = { 1.0f, 0.0f, 0.0f };
@@ -64,9 +69,11 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_y - ray.origin.y) / ray.direction.y;
   p_x = ray.origin.x + t * ray.direction.x;
   p_z = ray.origin.z + t * ray.direction.z;
-  distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.z <= p_z && p_z <= obs_max.z && distance < smallest_dist && t >= 0) {
-    smallest_dist = distance;
+  //distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  ws_distance = distance_in_ws(glm::vec3{p_x,p_y,p_z},ray.origin);
+  os_distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.z <= p_z && p_z <= obs_max.z && ws_distance < smallest_dist && t >= 0) {
+    smallest_dist = os_distance;
     result = true;
     // sets dir-vectors along bottom-left & back-left edges
     n = { 0.0f, -1.0f, 0.0f };
@@ -77,9 +84,11 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_y - ray.origin.y) / ray.direction.y;
   p_x = ray.origin.x + t * ray.direction.x;
   p_z = ray.origin.z + t * ray.direction.z;
-  distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.z <= p_z && p_z <= obs_max.z && distance < smallest_dist && t >= 0) {
-    smallest_dist = distance;
+  //distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  ws_distance = distance_in_ws(glm::vec3{p_x,p_y,p_z},ray.origin);
+  os_distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.z <= p_z && p_z <= obs_max.z && ws_distance < smallest_dist && t >= 0) {
+    smallest_dist = os_distance;
     result = true;
     // sets dir-vectors along bottom-right & back-right edges
     n = { 0.0f, 1.0f, 0.0f };
@@ -90,9 +99,11 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_z - ray.origin.z) / ray.direction.z;
   p_x = ray.origin.x + t * ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
-  distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.y <= p_y && p_y <= obs_max.y && distance < smallest_dist && t >= 0) {
-    smallest_dist = distance;
+  //distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  ws_distance = distance_in_ws(glm::vec3{p_x,p_y,p_z},ray.origin);
+  os_distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.y <= p_y && p_y <= obs_max.y && ws_distance < smallest_dist && t >= 0) {
+    smallest_dist = os_distance;
     result = true;
     // sets dir-vectors along bottom-left & bottom-back edges
     n = { 0.0f, 0.0f, -1.0f };
@@ -103,9 +114,11 @@ HitPoint Box::intersect(Ray const& ray) const {
   t = (p_z - ray.origin.z) / ray.direction.z;
   p_x = ray.origin.x + t * ray.direction.x;
   p_y = ray.origin.y + t * ray.direction.y;
-  distance = glm::distance(glm::vec3{p_x,p_y,p_z},ray.origin);
-  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.y <= p_y && p_y <= obs_max.y && distance < smallest_dist && t >= 0) {
-    smallest_dist = distance;
+  //distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  ws_distance = distance_in_ws(glm::vec3{p_x,p_y,p_z},ray.origin);
+  os_distance = glm::distance(glm::vec3{ p_x,p_y,p_z }, ray.origin);
+  if (obs_min.x <= p_x && p_x <= obs_max.x && obs_min.y <= p_y && p_y <= obs_max.y && ws_distance < smallest_dist && t >= 0) {
+    smallest_dist = os_distance;
     result = true;
     // sets dir-vectors along top-left & top-back edges
     n = { 0.0f, 0.0f, 1.0f };
