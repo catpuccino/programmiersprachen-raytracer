@@ -253,7 +253,6 @@ Color Renderer::refract(Ray const& ray, HitPoint const& hp, glm::vec3 const& nor
 }
 
 Color Renderer::trace_ray(Ray const& ray) const {
-    HitPoint temp_hp;
     HitPoint closest_hp;
     std::shared_ptr<Shape> closest_shape;
     float smallest_distance = std::numeric_limits<float>::infinity();
@@ -266,11 +265,14 @@ Color Renderer::trace_ray(Ray const& ray) const {
         HitPoint os_temp_hp = shape->intersect(os_ray); // object-space temporary hitpoint
 
         if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
-            // calculate hitpoint in world-space
-            temp_hp = shape->transform_hp_from_os_to_ws(os_temp_hp);
+            // calc hitpoint in world-space
+            HitPoint ws_temp_hp = shape->transform_hp_from_os_to_ws(os_temp_hp);
 
-            smallest_distance = temp_hp.distance;
-            closest_hp = temp_hp;
+            // calc world-space distance
+            float ws_distance = glm::distance(ray.origin,ws_temp_hp.hitpoint);
+
+            smallest_distance = ws_distance;
+            closest_hp = ws_temp_hp;
             closest_shape = shape;
         }
     }

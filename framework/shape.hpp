@@ -16,8 +16,6 @@ class Shape {
     Shape(std::string const& str, std::shared_ptr<Material> material);
     ~Shape();
 
-    virtual glm::vec3 create_normal(HitPoint const& hp) const = 0;
-
     virtual HitPoint intersect(Ray const& ray) const = 0;
 
     void add_to_world_transformation(glm::mat4 const& frac_transform_mat);

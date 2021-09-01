@@ -17,12 +17,6 @@ Sphere::Sphere(std::string const& str, std::shared_ptr<Material> material, glm::
 Sphere::~Sphere() {}
 
 
-glm::vec3 Sphere::create_normal(HitPoint const& hp) const {
-    auto normal = hp.hitpoint - centre_;
-    auto normal_normalized = glm::normalize(normal);
-    return normal_normalized;
-}
-
 HitPoint Sphere::intersect(Ray const& ray) const {
   glm::vec3 obs_center = {0.0f, 0.0f, 0.0f}; // object-space center_
   float obs_radius = 1.0f; // object-space radius_

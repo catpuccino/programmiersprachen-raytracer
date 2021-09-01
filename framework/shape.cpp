@@ -55,21 +55,3 @@ HitPoint Shape::transform_hp_from_os_to_ws(HitPoint const& hp) const {
 
   return world_hp;
 }
-
-float Shape::distance_in_ws(glm::vec3 const& hitpoint, glm::vec3 const& origin) const {
-    
-    // points in os
-    glm::vec4 os_hitpoint_vec4 = { hitpoint.x, hitpoint.y, hitpoint.z, 1.0f };
-    glm::vec4 os_origin_vec4 = { origin.x, origin.y, origin.z, 1.0f };
-
-    // apply transformation to object-space hitpoint & normal  
-    glm::vec4 ws_hitpoint_vec4 = world_transformation_ * os_hitpoint_vec4;
-    glm::vec4 ws_origin_vec4 = world_transformation_ * os_origin_vec4;
-
-    // cast origin & direction vectors back to 3D (ws = world-space)
-    glm::vec3 ws_hitpoint = { ws_hitpoint_vec4.x, ws_hitpoint_vec4.y, ws_hitpoint_vec4.z };
-    glm::vec3 ws_origin = { ws_origin_vec4.x, ws_origin_vec4.y, ws_origin_vec4.z };
-
-    auto distance = glm::distance(ws_hitpoint, ws_origin);
-    return distance;
-}

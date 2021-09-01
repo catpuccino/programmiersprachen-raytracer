@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
   Renderer renderer{image_width, image_height, filename, scene};
 
   //Application app{renderer};
-  //app.createCameraRotAnim(120);
+  //app.createCameraRotAnim(240);
 
   renderer.render();
 
