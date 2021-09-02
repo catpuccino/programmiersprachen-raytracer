@@ -7,7 +7,7 @@
 class Application {
   public:
     Application(Renderer const& renderer);
-    void createRotationAnim(unsigned num_frames, float max_degree, std::string const& obj_name, glm::vec3 const& axes);
+    void createAnimation(unsigned num_frames);
   private:
     Renderer renderer_;
 };

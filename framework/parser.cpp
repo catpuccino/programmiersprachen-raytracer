@@ -251,8 +251,10 @@ void SDFToolbox::parse_scene(std::string const& file_path, Scene& scene) {
     in_sdf_file.close();
 }
 
-void SDFToolbox::write_animation(std::string const& filename, std::string const& obj, float rotation_degree, glm::vec3 const& axes) {
+void SDFToolbox::write_rot_animation(std::string const& filename, unsigned num_frames, float max_degree,
+                                    std::string const& obj, glm::vec3 const& axes) {
 
+  auto rotation_degree = max_degree / num_frames;
   std::ofstream out_sdf_file;
   out_sdf_file.open(filename, std::ios::app);
 

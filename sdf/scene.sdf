@@ -1,6 +1,6 @@
 define material name, <ka_r ka_g ka_b>, <kd_r kd_g kd_b>, <ks_r ks_g ks_b>, m, reflection, opacity, refract_index
 define material red 0.1 0 0 0.8 0 0 0.7 0.7 0.7 30 0 1 1
-define material green 0 0.2 0 0 0.2 0 0 0.2 0 10 0 0 1.5
+define material green 0 0.2 0 0 0.2 0 0 0.2 0 10 1 1 1
 define material blue 0 0 0.1 0 0 0.8 0.5 0.5 0.5 30
 define material purple 0.5 0 0.5 0.5 0 0.5 0.3 0.3 0.03 29
 define material cyan 0 0.5 0.5 0 0.5 0.5 0.3 0.3 0.03 29
@@ -12,19 +12,19 @@ define shape box ground 0 0 0 1 1 1 white
 transform ground scale 20 1 20
 
 
-# define shape box boxi 0 0 0 1 1 1 blue
-# transfrom boxi scale 2 2 2
-# transform boxi translate -5 6 7
+define shape box boxi 0 0 0 1 1 1 blue
+transfrom boxi scale 2 2 2
+transform boxi translate -5 6 3
 
 # define shape sphere bubble 0 0 0 1 cyan
 # transform bubble translate -3 5 0
 
-# define shape sphere kugel 0 0 0 1 yellow
-# transform kugel translate 3 5 0
+define shape sphere kugel 0 0 0 1 green
+transform kugel translate 0 5 0
 
-# define shape sphere rund 0 0 0 1 blue
-# transform rund scale 2 2 2
-# transform rund translate 0 6 0
+define shape sphere rund 0 0 0 1 cyan
+transform rund scale 2 2 2
+transform rund translate 4 6 0
 
 # light
 define light sun 0 25 0 .2 .2 .2 20
@@ -38,8 +38,7 @@ define light f 0 50 50 .2 .2 .2 10
 # define camera origin 60.0 0 3 15 0 -0.3 -1 0 0.3 -1
 define camera origin 60.0 0 0 0 0 0 -1 0 1 0
 
-transform origin translate 0 6 20
-transform origin rotate 5 1 0 0
+transform origin translate 0 0 30
 
 
 
