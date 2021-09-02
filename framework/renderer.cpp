@@ -270,7 +270,7 @@ Color Renderer::trace_ray(Ray const& ray) const {
         // calc world-space distance
         float ws_distance = glm::distance(ray.origin,ws_temp_hp.hitpoint);
 
-        if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
+        if (ws_temp_hp.did_intersect && ws_distance < smallest_distance) {
 
             smallest_distance = ws_distance;
             closest_hp = ws_temp_hp;

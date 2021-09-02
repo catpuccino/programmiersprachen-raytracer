@@ -11,20 +11,20 @@ define material mirrow 0.1 0.1 0.1 0.1 0.1 0.1 1 1 1 60 1
 define shape box ground 0 0 0 1 1 1 white
 transform ground scale 20 1 20
 
-
 define shape box boxi 0 0 0 1 1 1 blue
 transfrom boxi scale 2 2 2
-transform boxi translate -5 6 3
+transform boxi translate -6 6 3
 
 # define shape sphere bubble 0 0 0 1 cyan
 # transform bubble translate -3 5 0
 
-define shape sphere kugel 0 0 0 1 green
-transform kugel translate 0 5 0
+define shape sphere kugel 0 0 0 1 yellow
+transform kugel scale 2 2 2
+transform kugel translate 5 7 0
 
 define shape sphere rund 0 0 0 1 cyan
-transform rund scale 2 2 2
-transform rund translate 4 6 0
+transform rund scale 3 3 3
+transform rund translate -7 7 -5
 
 # light
 define light sun 0 25 0 .2 .2 .2 20
@@ -38,7 +38,9 @@ define light f 0 50 50 .2 .2 .2 10
 # define camera origin 60.0 0 3 15 0 -0.3 -1 0 0.3 -1
 define camera origin 60.0 0 0 0 0 0 -1 0 1 0
 
+# transform origin rotate -90 1 0 0
 transform origin translate 0 0 30
+# transform origin translate 0 0 20
 
 
 

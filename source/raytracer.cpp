@@ -30,11 +30,13 @@ int main(int argc, char* argv[])
   Application app{renderer};
 
   // write animation description in separate file
-  SDFToolbox::write_rot_animation(animation_filepath, num_frames, 180.0f, "origin", glm::vec3{ 0, 1, 0 });
-  SDFToolbox::write_rot_animation(animation_filepath, num_frames, -360.0f, "ground", glm::vec3{ 1, 0, 0 });
+  SDFToolbox::write_rot_animation(animation_filepath, num_frames, 360.0f, "origin", glm::vec3{ 1, 0, 0 });
+  //SDFToolbox::write_rot_animation(animation_filepath, num_frames, -360.0f, "ground", glm::vec3{ 1, 0, 0 });
 
   // create animation files
   app.createAnimation(num_frames);
+  
+  
   
 
   //renderer.render();
