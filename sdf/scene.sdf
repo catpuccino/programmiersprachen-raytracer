@@ -12,7 +12,7 @@ define shape box ground 0 0 0 1 1 1 white
 transform ground scale 20 1 20
 
 define shape box boxi 0 0 0 1 1 1 blue
-transfrom boxi scale 2 2 2
+transform boxi scale 4 2 2
 transform boxi translate -6 6 3
 
 # define shape sphere bubble 0 0 0 1 cyan
@@ -39,8 +39,7 @@ define light f 0 50 50 .2 .2 .2 10
 define camera origin 60.0 0 0 0 0 0 -1 0 1 0
 
 # transform origin rotate -90 1 0 0
-transform origin translate 0 0 30
+transform origin translate 0 5 40
 # transform origin translate 0 0 20
-
 
 

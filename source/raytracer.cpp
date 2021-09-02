@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 {
   unsigned const image_width = 800;
   unsigned const image_height = 600;
-  std::string const filename = "../../rendered_image.ppm";
+  std::string const filename = "../../images/rendered_image.ppm";
   std::string t_sdf_filepath{"D:/Ernst des Lebens/Uni/Informatik/Semester 2/Programmiersprachen/Uebung/Raytracer/materials.sdf"};
   std::string h_sdf_filepath{ "D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf" };
   std::string sdf_filepath{"../../sdf/scene.sdf"};
@@ -30,11 +30,17 @@ int main(int argc, char* argv[])
   Application app{renderer};
 
   // write animation description in separate file
-  SDFToolbox::write_rot_animation(animation_filepath, num_frames, 360.0f, "origin", glm::vec3{ 1, 0, 0 });
-  //SDFToolbox::write_rot_animation(animation_filepath, num_frames, -360.0f, "ground", glm::vec3{ 1, 0, 0 });
+  //SDFToolbox::write_rot_animation(animation_filepath, num_frames, "origin", 360.0f, glm::vec3{ 0, 1, 0 });
+  SDFToolbox::write_rot_animation(animation_filepath, num_frames, "boxi", 45.0f, glm::vec3{ 0, 0, 1 });
+
+  SDFToolbox::write_trans_animation(animation_filepath, num_frames, "origin", glm::vec3{ 0, 0, -30 });
+  //SDFToolbox::write_trans_animation(animation_filepath, num_frames, "boxi", glm::vec3{ 10, 0, 0 });
+  SDFToolbox::write_trans_animation(animation_filepath, num_frames, "rund", glm::vec3{ 0, 10, 0 });
+  //SDFToolbox::write_trans_animation(animation_filepath, num_frames, "kugel", glm::vec3{ -9, 0, 15 });
 
   // create animation files
   app.createAnimation(num_frames);
+  
   
   
   
