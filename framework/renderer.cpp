@@ -71,7 +71,7 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
   glm::vec3 v = glm::normalize(ray.origin - intersect_point); // vector to the viewer (camera)
 
 
-  intersect_point += 0.001f * n; /* add little offset to intersection point to prevent shape from
+  intersect_point += 0.0001f * n; /* add little offset to intersection point to prevent shape from
                                      intersecting with itself (shadow acne) */
 
 
@@ -264,12 +264,13 @@ Color Renderer::trace_ray(Ray const& ray) const {
 
         HitPoint os_temp_hp = shape->intersect(os_ray); // object-space temporary hitpoint
 
-        if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
-            // calc hitpoint in world-space
-            HitPoint ws_temp_hp = shape->transform_hp_from_os_to_ws(os_temp_hp);
+        // calc hitpoint in world-space
+        HitPoint ws_temp_hp = shape->transform_hp_from_os_to_ws(os_temp_hp);
 
-            // calc world-space distance
-            float ws_distance = glm::distance(ray.origin,ws_temp_hp.hitpoint);
+        // calc world-space distance
+        float ws_distance = glm::distance(ray.origin,ws_temp_hp.hitpoint);
+
+        if (ws_temp_hp.did_intersect && ws_distance < smallest_distance) {
 
             smallest_distance = ws_distance;
             closest_hp = ws_temp_hp;

@@ -24,10 +24,10 @@ int main(int argc, char* argv[])
 
   Renderer renderer{image_width, image_height, filename, scene};
 
-  Application app{renderer};
-  app.createCameraRotAnim(30);
+  //Application app{renderer};
+  //app.createCameraRotAnim(30);
 
-  //renderer.render();
+  renderer.render();
 
   Window window{{image_width, image_height}};
 
