@@ -7,7 +7,7 @@
 
 struct HitPoint
 {
-    bool did_intersect;
+    bool did_intersect = false;
     float distance;
     std::string name;
     std::shared_ptr<Material> material;

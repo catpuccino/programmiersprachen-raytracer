@@ -1,12 +1,13 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
+#include "parser.hpp"
 #include "renderer.hpp"
 
 class Application {
   public:
     Application(Renderer const& renderer);
-    void createCameraRotAnim(unsigned num_frames);
+    void createRotationAnim(unsigned num_frames, float max_degree, std::string const& obj_name, glm::vec3 const& axes);
   private:
     Renderer renderer_;
 };

@@ -251,12 +251,16 @@ void SDFToolbox::parse_scene(std::string const& file_path, Scene& scene) {
     in_sdf_file.close();
 }
 
-void SDFToolbox::write_scene(unsigned current_frame, std::string const& filename, float rotation_degree) {
+void SDFToolbox::write_animation(std::string const& filename, std::string const& obj, float rotation_degree, glm::vec3 const& axes) {
 
   std::ofstream out_sdf_file;
   out_sdf_file.open(filename, std::ios::app);
 
-  out_sdf_file << "transform origin rotate " << std::to_string(rotation_degree) << " 0 1 0\n";
+  auto x = std::to_string(axes.x);
+  auto y = std::to_string(axes.y);
+  auto z = std::to_string(axes.z);
+
+  out_sdf_file << "transform " << obj << " rotate " << std::to_string(rotation_degree) << " " << x << " " << y << " " << z << "\n";
 
   out_sdf_file.close();
 }

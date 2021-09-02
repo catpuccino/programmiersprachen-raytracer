@@ -20,12 +20,13 @@ int main(int argc, char* argv[])
   std::string sdf_filepath{"../../source/scene.sdf"};
 
   Scene scene;
-  SDFToolbox::parse_scene(h_sdf_filepath,scene);
+  SDFToolbox::parse_scene(sdf_filepath,scene);
 
   Renderer renderer{image_width, image_height, filename, scene};
 
   Application app{renderer};
-  app.createCameraRotAnim(30);
+  //app.createRotationAnim(30, 180.0f, "origin", glm::vec3{ 0, 1, 0 });
+  app.createRotationAnim(30, 360.0f, "ground", glm::vec3{1, 0, 0});
 
   //renderer.render();
 

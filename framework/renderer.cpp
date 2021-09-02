@@ -264,12 +264,13 @@ Color Renderer::trace_ray(Ray const& ray) const {
 
         HitPoint os_temp_hp = shape->intersect(os_ray); // object-space temporary hitpoint
 
-        if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
-            // calc hitpoint in world-space
-            HitPoint ws_temp_hp = shape->transform_hp_from_os_to_ws(os_temp_hp);
+        // calc hitpoint in world-space
+        HitPoint ws_temp_hp = shape->transform_hp_from_os_to_ws(os_temp_hp);
 
-            // calc world-space distance
-            float ws_distance = glm::distance(ray.origin,ws_temp_hp.hitpoint);
+        // calc world-space distance
+        float ws_distance = glm::distance(ray.origin,ws_temp_hp.hitpoint);
+
+        if (os_temp_hp.did_intersect && os_temp_hp.distance < smallest_distance) {
 
             smallest_distance = ws_distance;
             closest_hp = ws_temp_hp;
