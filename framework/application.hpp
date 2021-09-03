@@ -1,12 +1,13 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
+#include "parser.hpp"
 #include "renderer.hpp"
 
 class Application {
   public:
     Application(Renderer const& renderer);
-    void createCameraRotAnim(unsigned num_frames);
+    void createAnimation(unsigned num_frames);
   private:
     Renderer renderer_;
 };
