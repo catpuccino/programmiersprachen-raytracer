@@ -30,12 +30,42 @@ void Renderer::render()
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
 
-      Pixel p(x,y);
+      // instantiate subpixel
+      /*Pixel upper_left((float)x - 0.75f, (float)y - 0.25f);
+      Pixel upper_right((float)x - 0.25f, (float)y - 0.25f);
+      Pixel lower_left((float)x - 0.75f, (float)y - 0.75f);
+      Pixel lower_right((float)x - 0.25f, (float)y - 0.75f);
+
+      Ray upper_left_ray = scene_.camera.second.compute_eye_ray(upper_left.x - ((float)width_ / 2),
+                                                                upper_left.y - ((float)height_/ 2),
+                                                                distance, camera_transform);
+
+      Ray upper_right_ray = scene_.camera.second.compute_eye_ray(upper_right.x - ((float)width_ / 2),
+                                                                 upper_right.y - ((float)height_/ 2),
+                                                                 distance, camera_transform);
+
+      Ray lower_left_ray = scene_.camera.second.compute_eye_ray(lower_left.x - ((float)width_ / 2),
+                                                                lower_left.y - ((float)height_/ 2),
+                                                                distance, camera_transform);
+
+      Ray lower_right_ray = scene_.camera.second.compute_eye_ray(lower_right.x - ((float)width_ / 2),
+                                                                 lower_right.y - ((float)height_/ 2),
+                                                                 distance, camera_transform);
+
+      upper_left.color = trace_ray(upper_left_ray);
+      upper_right.color = trace_ray(upper_right_ray);
+      lower_left.color = trace_ray(lower_left_ray);
+      lower_right.color = trace_ray(lower_right_ray);
+
+      // interpolate colors
+      Pixel p((float)x,(float)y);
+      p.color = (upper_left.color + upper_right.color + lower_left.color + lower_right.color) * 0.25f;*/
 
       Ray current_eye_ray = scene_.camera.second.compute_eye_ray((float)x - ((float)width_ / 2),
                                                           (float)y - ((float)height_/ 2),
                                                           distance, camera_transform);
 
+      Pixel p((float)x,(float)y);
       p.color = trace_ray(current_eye_ray);
       write(p);
     }
@@ -156,18 +186,22 @@ Color Renderer::shade(Shape const& obj, Ray const& ray, HitPoint const& hp) cons
     }
   }
 
+
   Color c_hdr = ambient_intensity + diffuse_intensity + specular_intensity; // high dynamic range
   
   if (hp.material->reflection > 0.0f) {
       c_hdr = (1 - hp.material->reflection) * c_hdr + hp.material->reflection * reflect(ray, hp, n);
+      // add specular highlight afterwards to protect it from potentially getting decimated
+      c_hdr += specular_intensity;
   }
-
 
   // if object is transparent, calculates refracted part of the color
   if (hp.material->opacity < 1.0f) {
       
       // adds together regular color and refracted part, depending on opacity of object
       c_hdr = hp.material->opacity * c_hdr + (1.0f - hp.material->opacity) * refract(ray, hp, n);
+      // add specular highlight afterwards to protect it from potentially getting decimated
+      c_hdr += specular_intensity;
   }
 
   Color c_ldr = c_hdr / (c_hdr + 1); // Low Dynamic Range

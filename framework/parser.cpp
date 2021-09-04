@@ -251,8 +251,8 @@ void SDFToolbox::parse_scene(std::string const& file_path, Scene& scene) {
     in_sdf_file.close();
 }
 
-void SDFToolbox::write_rot_animation(std::string const& filename, unsigned num_frames, float max_degree,
-                                    std::string const& obj, glm::vec3 const& axes) {
+void SDFToolbox::write_rot_animation(std::string const& filename, unsigned num_frames,
+                                     std::string const& obj, float max_degree, glm::vec3 const& axes) {
 
   auto rotation_degree = max_degree / num_frames;
   std::ofstream out_sdf_file;
@@ -265,4 +265,21 @@ void SDFToolbox::write_rot_animation(std::string const& filename, unsigned num_f
   out_sdf_file << "transform " << obj << " rotate " << std::to_string(rotation_degree) << " " << x << " " << y << " " << z << "\n";
 
   out_sdf_file.close();
+}
+
+void SDFToolbox::write_trans_animation(std::string const& filename, unsigned num_frames,
+                                        std::string const& obj, glm::vec3 const& translate) {
+
+
+    std::ofstream out_sdf_file;
+    out_sdf_file.open(filename, std::ios::app);
+
+    auto trans_x = std::to_string(translate.x / num_frames);
+    auto trans_y = std::to_string(translate.y / num_frames);
+    auto trans_z = std::to_string(translate.z / num_frames);
+
+    out_sdf_file << "transform " << obj << " translate " << trans_x << " " << trans_y << " " << trans_z << "\n";
+
+    out_sdf_file.close();
+
 }

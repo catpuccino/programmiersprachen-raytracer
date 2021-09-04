@@ -20,11 +20,11 @@ class Pixel
 {
 public :
 
-  Pixel(unsigned int = 0, unsigned int = 0);
+  Pixel(float = 0.0f, float = 0.0f);
   void print(std::ostream&) const;
 
-  unsigned int x = 0;
-  unsigned int y = 0;
+  float x = 0;
+  float y = 0;
   Color color = {1.0, 1.0, 1.0};
 };
 
