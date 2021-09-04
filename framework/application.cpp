@@ -9,7 +9,7 @@ void Application::createAnimation(unsigned num_frames) {
 
   // initialize scene requisites
   Scene scene;
-  SDFToolbox::parse_scene("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",
+  SDFToolbox::parse_scene("../../sdf/scene.sdf",
                           scene);
 
   // create SDF file for each frame
@@ -17,7 +17,7 @@ void Application::createAnimation(unsigned num_frames) {
 
     if (current_frame >= 2) {
         // apply animation step to existing scene
-        SDFToolbox::parse_scene("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/animation_description.txt",
+        SDFToolbox::parse_scene("../../sdf/animation_description.sdf",
                                 scene);
         renderer_.set_new_scene(scene);
 

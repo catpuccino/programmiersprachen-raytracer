@@ -1,45 +1,187 @@
-define material name, <ka_r ka_g ka_b>, <kd_r kd_g kd_b>, <ks_r ks_g ks_b>, m, reflection, opacity, refract_index
+#define material name, <ka_r ka_g ka_b>, <kd_r kd_g kd_b>, <ks_r ks_g ks_b>, m, reflection, opacity, refract_index
 define material red 0.1 0 0 0.8 0 0 0.7 0.7 0.7 30 0 1 1
-define material green 0 0.2 0 0 0.2 0 0 0.2 0 10 1 1 1
-define material blue 0 0 0.1 0 0 0.8 0.5 0.5 0.5 30
+define material green 0 0.2 0 0 0.2 0 0 0.2 0 10 0 0 1.5
+define material blue 0 0 0.1 0 0 0.8 0.5 0.5 0.5 20
 define material purple 0.5 0 0.5 0.5 0 0.5 0.3 0.3 0.03 29
 define material cyan 0 0.5 0.5 0 0.5 0.5 0.3 0.3 0.03 29
-define material yellow 0.5 0.5 0 0.5 0.5 0 0.3 0.3 0.03 29 0 1 1
-define material white 0.9 0.9 0.9 0.2 0.2 0.2 0.1 0.1 0.1 30 0.8 1 1
-define material mirrow 0.1 0.1 0.1 0.1 0.1 0.1 1 1 1 60 1
 
-define shape box ground 0 0 0 1 1 1 white
-transform ground scale 20 1 20
+define material light_green 0 0.2 0.016 0 1 0.16 0.3 0.3 0.03 29 0 1 1
 
-define shape box boxi 0 0 0 1 1 1 blue
-transform boxi scale 4 2 2
-transform boxi translate -6 6 3
+define material grey 0.1 0.1 0.1 0.2 0.2 0.2 0.1 0.1 0.1 30 0.8 1 1
 
-# define shape sphere bubble 0 0 0 1 cyan
-# transform bubble translate -3 5 0
+define material mirror_green 0.1 0.1 0.1 0 0.25 0.1 1 1 1 140 0.97 
 
-define shape sphere kugel 0 0 0 1 yellow
-transform kugel scale 2 2 2
-transform kugel translate 5 7 0
+define material mirror_red 0.1 0.1 0.1 0.4 0 0 1 1 1 140 0.97
 
-define shape sphere rund 0 0 0 1 cyan
-transform rund scale 3 3 3
-transform rund translate -7 7 -5
+define material mirror_blue 0 0 0.1 0 0 0.8 1 1 1 140 0.97
+
+define material mirror 0.1 0.1 0.1 0.4 0 0 1 1 1 140 1
+
+define material mamor 0 0 0 0.992157 0.992157 0.992157 0.0255 0.0255 0.0255 12.8 0.8
+define material black 0 0 0 0.01 0.01 0.01 0.0155 0.0155 0.0155 12.8 0.8
+
+define material emerald 0.0215 0.1745 0.0215 0.55 0.07568 0.61424 0.07568 0.55 0.633 0.727811 0.633 0.55 76.8
+
+define material obsidian 0.05375 0.05 0.06625 0.82 0.18275 0.17 0.22525 0.82 0.332741 0.328634 0.346435 0.82 38.4
+define material rubin 0.1745 0.01175 0.01175 0.55 0.61424 0.04136 0.04136 0.55 0.727811 0.626959 0.626959 0.55 76.8
+
+define material glass 0 0 0 0 0 0 0.9 0.9 0.9 30 0 0 1.5 
+
+
+
+# ===============================================
+
+define shape box ground1 0 0 0 1 1 1 mamor
+transform ground1 scale 4 0.5 4
+transform ground1 translate 0 0.75 0
+
+define shape box ground2 0 0 0 1 1 1 black
+transform ground2 scale 4 0.5 4
+transform ground2 translate 4 0.75 0
+
+define shape box ground3 0 0 0 1 1 1 black
+transform ground3 scale 4 0.5 4
+transform ground3 translate -4 0.75 0
+
+define shape box ground4 0 0 0 1 1 1 black
+transform ground4 scale 4 0.5 4
+transform ground4 translate 0 0.75 -4
+
+define shape box ground5 0 0 0 1 1 1 black
+transform ground5 scale 4 0.5 4
+transform ground5 translate 0 0.75 4
+
+define shape box ground6 0 0 0 1 1 1 mamor
+transform ground6 scale 4 0.5 4
+transform ground6 translate 4 0.75 -4
+
+define shape box ground7 0 0 0 1 1 1 mamor
+transform ground7 scale 4 0.5 4
+transform ground7 translate 4 0.75 4
+
+define shape box ground8 0 0 0 1 1 1 mamor
+transform ground8 scale 4 0.5 4
+transform ground8 translate -4 0.75 4
+
+define shape box ground9 0 0 0 1 1 1 mamor
+transform ground9 scale 4 0.5 4
+transform ground9 translate -4 0.75 -4
+
+define shape box ground10 0 0 0 1 1 1 mamor
+transform ground10 scale 4 0.5 4
+transform ground10 translate 0 0.75 8
+
+define shape box ground11 0 0 0 1 1 1 mamor
+transform ground11 scale 4 0.5 4
+transform ground11 translate 0 0.75 -8
+
+define shape box ground12 0 0 0 1 1 1 mamor
+transform ground12 scale 4 0.5 4
+transform ground12 translate 8 0.75 0
+
+define shape box ground13 0 0 0 1 1 1 mamor
+transform ground13 scale 4 0.5 4
+transform ground13 translate -8 0.75 0
+
+define shape box ground14 0 0 0 1 1 1 black
+transform ground14 scale 4 0.5 4
+transform ground14 translate 8 0.75 -4
+
+define shape box ground15 0 0 0 1 1 1 black
+transform ground15 scale 4 0.5 4
+transform ground15 translate 8 0.75 4
+
+define shape box ground16 0 0 0 1 1 1 black
+transform ground16 scale 4 0.5 4
+transform ground16 translate -8 0.75 -4
+
+define shape box ground17 0 0 0 1 1 1 black
+transform ground17 scale 4 0.5 4
+transform ground17 translate -8 0.75 4
+
+define shape box ground18 0 0 0 1 1 1 black
+transform ground18 scale 4 0.5 4
+transform ground18 translate 4 0.75 8
+
+define shape box ground19 0 0 0 1 1 1 black
+transform ground19 scale 4 0.5 4
+transform ground19 translate 4 0.75 -8
+
+define shape box ground20 0 0 0 1 1 1 black
+transform ground20 scale 4 0.5 4
+transform ground20 translate -4 0.75 8
+
+define shape box ground21 0 0 0 1 1 1 black
+transform ground21 scale 4 0.5 4
+transform ground21 translate -4 0.75 -8
+
+define shape box ground22 0 0 0 1 1 1 mamor
+transform ground22 scale 4 0.5 4
+transform ground22 translate 8 0.75 8
+
+define shape box ground23 0 0 0 1 1 1 mamor
+transform ground23 scale 4 0.5 4
+transform ground23 translate 8 0.75 -8
+
+define shape box ground24 0 0 0 1 1 1 mamor
+transform ground24 scale 4 0.5 4
+transform ground24 translate -8 0.75 8
+
+define shape box ground25 0 0 0 1 1 1 mamor
+transform ground25 scale 4 0.5 4
+transform ground25 translate -8 0.75 -8
+
+define shape box bottom_plate 0 0 0 1 1 1 mamor
+transform bottom_plate scale 20 0.5 20
+transform bottom_plate translate 0 0.25 0
+
+
+# ===============================================
+
+# define shape box bground 0 0 0 1 1 1 grey
+# transform bground scale 20 1 20
+# transform bground rotate 45 0 1 0
+# transform bground translate 0 0.5 0
+
+define shape sphere green_sphere 0 0 0 1 mirror_green
+transform green_sphere scale 3 3 3
+transform green_sphere translate 0 4 -7
+
+define shape sphere mirrow_sphere 0 0 0 1 mirror_red
+transform mirrow_sphere scale 2 2 2
+transform mirrow_sphere translate -3.5 3 6
+
+define shape sphere blue_egg 0 0 0 1 blue
+transform blue_egg scale 1.5 2 1.5
+transform blue_egg rotate 45 0 0 1
+transform blue_egg translate 6 5 0
+
+# define shape sphere blue_sphere 0 0 0 1 mirror_blue
+# transform blue_sphere scale 1.5 1.5 1.5
+# transform blue_sphere translate 0 2.5 0
+
+
+define shape box red_box 0 0 0 1 1 1 red
+transform red_box scale 2 2 2
+transform red_box rotate 60 0 1 0
+transform red_box translate 5 2 6
+
+define shape box green_box 0 0 0 1 1 1 light_green
+transform green_box scale 2 1 2
+transform green_box rotate 20 0 1 0
+transform green_box translate 0 1.5 0
+
 
 # light
-define light sun 0 25 0 .2 .2 .2 20
-define light f 0 50 50 .2 .2 .2 10
+define light sun 0 20 10 .2 .2 .2 15
+# define light sun2 0 20 -20 .2 .2 .2 20
 # define light sun2 10 -30 -20 .2 .2 .2 20
 # define light sun3 -80 0 -60 .2 .2 .2 20
 # define light sun4 -12 -12 -20 .2 .2 .2 20
 # define light sun5 -12 -5 -35 .2 .2 .2 10
 
 # camera <name> <fov-x>, position, direction, up
-# define camera origin 60.0 0 3 15 0 -0.3 -1 0 0.3 -1
-define camera origin 60.0 0 0 0 0 0 -1 0 1 0
-
-# transform origin rotate -90 1 0 0
-transform origin translate 0 5 30
-# transform origin translate 0 0 20
-
-
+define camera origin 60.0 0 12 26.5 0 -0.4 -1 0 0.4 -1
+# define camera top 60.0 0 40 0 0 -1 -0 0 0 1
+# define camera front 60.0 0 0 30 0 0 -1 0 1 0
+# transform origin rotate 90 0 1 0

@@ -23,7 +23,7 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const&
 void Renderer::render()
 {
   // string that decides whether Anti-Aliasing is "on" or "off"
-  std::string const AA_MODE = "on";
+  std::string const AA_MODE = "off";
 
   float distance = scene_.camera.second.compute_screen_distance(width_);
 
