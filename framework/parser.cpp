@@ -251,6 +251,11 @@ void SDFToolbox::parse_scene(std::string const& file_path, Scene& scene) {
     in_sdf_file.close();
 }
 
+void SDFToolbox::clear_file(std::string const& file_path) {
+    std::ofstream out_sdf_file(file_path, std::ofstream::out | std::ofstream::trunc);
+    out_sdf_file.close();
+}
+
 void SDFToolbox::write_rot_animation(std::string const& filename, unsigned num_frames,
                                      std::string const& obj, float max_degree, glm::vec3 const& axes) {
 

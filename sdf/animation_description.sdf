@@ -1,4 +1,2 @@
-
-transform boxi rotate 0.375000 0.000000 0.000000 1.000000
-transform origin translate 0.000000 0.000000 -0.250000
-transform rund translate 0.000000 0.083333 0.000000
+transform boxi rotate 1.500000 0.000000 1.000000 0.000000
+transform boxi translate 0.125000 0.000000 0.000000

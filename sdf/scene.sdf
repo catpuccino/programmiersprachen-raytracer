@@ -39,7 +39,7 @@ define light f 0 50 50 .2 .2 .2 10
 define camera origin 60.0 0 0 0 0 0 -1 0 1 0
 
 # transform origin rotate -90 1 0 0
-transform origin translate 0 5 40
+transform origin translate 0 5 30
 # transform origin translate 0 0 20
 
 

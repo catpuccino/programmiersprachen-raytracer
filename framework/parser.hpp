@@ -8,6 +8,7 @@
 class SDFToolbox {
   public:
     static void parse_scene(std::string const& file_path, Scene& scene);
+    static void clear_file(std::string const& file_path);
     static void write_rot_animation(std::string const& filename, unsigned num_frames,
         std::string const& obj, float max_degree, glm::vec3 const& axes);
     static void write_trans_animation(std::string const& filename, unsigned num_frames,
