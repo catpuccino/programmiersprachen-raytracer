@@ -44,6 +44,9 @@ public:
   void set_new_scene(Scene const& s);
   void set_filename(std::string const& fname);
 
+  Color apply_anti_aliasing(unsigned pixel_pos_x, unsigned pixel_pos_y, unsigned num_of_subpixel,
+                            float cam_distance, glm::mat4 const& cam_transform) const;
+
 
 private:
   unsigned width_;

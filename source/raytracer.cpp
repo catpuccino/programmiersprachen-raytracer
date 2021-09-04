@@ -16,14 +16,14 @@ int main(int argc, char* argv[])
   unsigned const image_height = 600;
   std::string const filename = "../../images/rendered_image.ppm";
   std::string t_sdf_filepath{"D:/Ernst des Lebens/Uni/Informatik/Semester 2/Programmiersprachen/Uebung/Raytracer/materials.sdf"};
-  std::string h_sdf_filepath{ "D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf" };
+  std::string h_sdf_filepath{ "D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/scene.sdf" };
   std::string sdf_filepath{"../../sdf/scene.sdf"};
-  std::string animation_filepath{ "D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/animation_description.txt" };
+  std::string animation_filepath{ "../../sdf/animation_description.sdf"};
 
   unsigned const num_frames = 120;
 
   Scene scene;
-  SDFToolbox::parse_scene(h_sdf_filepath,scene);
+  SDFToolbox::parse_scene(sdf_filepath,scene);
 
   Renderer renderer{image_width, image_height, filename, scene};
 
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
   // write animation description in separate file
 
-  SDFToolbox::write_rot_animation(animation_filepath, num_frames, "origin", 360.0f, glm::vec3{ 0, 1, 0 });
+  //SDFToolbox::write_rot_animation(animation_filepath, num_frames, "origin", 360.0f, glm::vec3{ 0, 1, 0 });
   //SDFToolbox::write_rot_animation(animation_filepath, num_frames, "boxi", 180.0f, glm::vec3{ 0, 1, 0 });
 
   //SDFToolbox::write_trans_animation(animation_filepath, num_frames, "origin", glm::vec3{ 0, 0, -30 });
