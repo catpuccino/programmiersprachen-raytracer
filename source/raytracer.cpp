@@ -27,25 +27,25 @@ int main(int argc, char* argv[])
 
   Renderer renderer{image_width, image_height, filename, scene};
 
-  Application app{renderer};
+  //Application app{renderer};
 
-  SDFToolbox::clear_file(animation_filepath);
+  //SDFToolbox::clear_file(animation_filepath);
 
   // write animation description in separate file
 
-  //SDFToolbox::write_rot_animation(animation_filepath, num_frames, "origin", 360.0f, glm::vec3{ 0, 1, 0 });
-  SDFToolbox::write_rot_animation(animation_filepath, num_frames, "boxi", 180.0f, glm::vec3{ 0, 1, 0 });
+  SDFToolbox::write_rot_animation(animation_filepath, num_frames, "origin", 360.0f, glm::vec3{ 0, 1, 0 });
+  //SDFToolbox::write_rot_animation(animation_filepath, num_frames, "boxi", 180.0f, glm::vec3{ 0, 1, 0 });
 
   //SDFToolbox::write_trans_animation(animation_filepath, num_frames, "origin", glm::vec3{ 0, 0, -30 });
-  SDFToolbox::write_trans_animation(animation_filepath, num_frames, "boxi", glm::vec3{ 15, 0, 0 });
+  //SDFToolbox::write_trans_animation(animation_filepath, num_frames, "boxi", glm::vec3{ 15, 0, 0 });
   //SDFToolbox::write_trans_animation(animation_filepath, num_frames, "rund", glm::vec3{ 0, 10, 0 });
   //SDFToolbox::write_trans_animation(animation_filepath, num_frames, "kugel", glm::vec3{ -9, 0, 15 });
 
   // create animation files
-  app.createAnimation(num_frames);
+  //app.createAnimation(num_frames);
   
   
-  //renderer.render();
+  renderer.render();
 
 
   Window window{{image_width, image_height}};
