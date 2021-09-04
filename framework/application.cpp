@@ -5,19 +5,19 @@ Application::Application(Renderer const& renderer) :
         renderer_{renderer} {}
 
 
-void Application::createAnimation(unsigned num_frames) {
+void Application::createAnimation(unsigned num_frames, int start_frame) {
 
   // initialize scene requisites
   Scene scene;
-  SDFToolbox::parse_scene("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/materials.sdf",
+  SDFToolbox::parse_scene("../../sdf/scene.sdf",
                           scene);
 
   // create SDF file for each frame
-  for (unsigned current_frame = 1; current_frame <= num_frames; ++current_frame) {
+  for (unsigned current_frame = start_frame; current_frame <= num_frames; ++current_frame) {
 
     if (current_frame >= 2) {
         // apply animation step to existing scene
-        SDFToolbox::parse_scene("D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/animation_description.txt",
+        SDFToolbox::parse_scene("../../sdf/animation_description.sdf",
                                 scene);
         renderer_.set_new_scene(scene);
 

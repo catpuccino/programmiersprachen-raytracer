@@ -7,7 +7,7 @@
 class Application {
   public:
     Application(Renderer const& renderer);
-    void createAnimation(unsigned num_frames);
+    void createAnimation(unsigned num_frames, int start_frame);
   private:
     Renderer renderer_;
 };
