@@ -17,7 +17,11 @@ define material mirror_blue 0 0 0.1 0 0 0.8 1 1 1 140 0.97
 
 define material mirror 0.1 0.1 0.1 0.4 0 0 1 1 1 140 1
 
+<<<<<<< HEAD
 define material mamor 0 0 0 0.992157 0.992157 0.992157 0.0255 0.0255 0.0255 12.8 0.9
+=======
+define material mamor 0 0 0 0.992157 0.992157 0.992157 0.0255 0.0255 0.0255 12.8 0.8
+>>>>>>> 46f91d8aaca6e4a45b950a28bebebea416971937
 define material black 0 0 0 0.01 0.01 0.01 0.0155 0.0155 0.0155 12.8 0.8
 
 define material emerald 0.0215 0.1745 0.0215 0.55 0.07568 0.61424 0.07568 0.55 0.633 0.727811 0.633 0.55 76.8
