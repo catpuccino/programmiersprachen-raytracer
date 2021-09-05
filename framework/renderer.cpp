@@ -23,7 +23,7 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const&
 void Renderer::render()
 {
   // string that decides whether Anti-Aliasing is "on" or "off"
-  std::string const AA_MODE = "off";
+  std::string const AA_MODE = "on";
 
   float distance = scene_.camera.second.compute_screen_distance(width_);
 
@@ -32,101 +32,6 @@ void Renderer::render()
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
-
-      // AA 4
-      // instantiate subpixel
-      /*Pixel upper_left((float)pixel_pos_x - 0.75f, (float)pixel_pos_y - 0.25f);
-      Pixel upper_right((float)pixel_pos_x - 0.25f, (float)pixel_pos_y - 0.25f);
-      Pixel lower_left((float)pixel_pos_x - 0.75f, (float)pixel_pos_y - 0.75f);
-      Pixel lower_right((float)pixel_pos_x - 0.25f, (float)pixel_pos_y - 0.75f);
-
-      Ray upper_left_ray = scene_.camera.second.compute_eye_ray(upper_left.pixel_pos_x - ((float)width_ / 2),
-                                                                upper_left.pixel_pos_y - ((float)height_/ 2),
-                                                                cam_distance, camera_transform);
-
-      Ray upper_right_ray = scene_.camera.second.compute_eye_ray(upper_right.pixel_pos_x - ((float)width_ / 2),
-                                                                 upper_right.pixel_pos_y - ((float)height_/ 2),
-                                                                 cam_distance, camera_transform);
-
-      Ray lower_left_ray = scene_.camera.second.compute_eye_ray(lower_left.pixel_pos_x - ((float)width_ / 2),
-                                                                lower_left.pixel_pos_y - ((float)height_/ 2),
-                                                                cam_distance, camera_transform);
-
-      Ray lower_right_ray = scene_.camera.second.compute_eye_ray(lower_right.pixel_pos_x - ((float)width_ / 2),
-                                                                 lower_right.pixel_pos_y - ((float)height_/ 2),
-                                                                 cam_distance, camera_transform);
-
-      upper_left.color = trace_ray(upper_left_ray);
-      upper_right.color = trace_ray(upper_right_ray);
-      lower_left.color = trace_ray(lower_left_ray);
-      lower_right.color = trace_ray(lower_right_ray);
-
-      // interpolate colors
-      Pixel p((float)pixel_pos_x,(float)pixel_pos_y);
-      p.color = (upper_left.color + upper_right.color + lower_left.color + lower_right.color) * 0.25f;*/
-
-      // AA 9
-      /*Pixel upper_left((float)x - 0.835f, (float)y - 0.165f);
-      Pixel upper_mid((float)x - 0.5f, (float)y - 0.165f);
-      Pixel upper_right((float)x - 0.165f, (float)y - 0.165f);
-      Pixel mid_left((float)x - 0.835f, (float)y - 0.5f);
-      Pixel mid_mid((float)x - 0.5f, (float)y - 0.5f);
-      Pixel mid_right((float)x - 0.165f, (float)y - 0.5f);
-      Pixel lower_left((float)x - 0.835f, (float)y - 0.835f);
-      Pixel lower_mid((float)x - 0.5f, (float)y - 0.835f);
-      Pixel lower_right((float)x - 0.165f, (float)y - 0.835f);
-
-      Ray upper_left_ray = scene_.camera.second.compute_eye_ray(upper_left.x - ((float)width_ / 2),
-                                                                upper_left.y - ((float)height_/ 2),
-                                                                distance, camera_transform);
-
-      Ray upper_mid_ray = scene_.camera.second.compute_eye_ray(upper_mid.x - ((float)width_ / 2),
-                                                                 upper_mid.y - ((float)height_/ 2),
-                                                                 distance, camera_transform);
-
-      Ray upper_right_ray = scene_.camera.second.compute_eye_ray(upper_right.x - ((float)width_ / 2),
-                                                                 upper_right.y - ((float)height_/ 2),
-                                                                 distance, camera_transform);
-
-      Ray mid_left_ray = scene_.camera.second.compute_eye_ray(mid_left.x - ((float)width_ / 2),
-                                                              mid_left.y - ((float)height_/ 2),
-                                                                distance, camera_transform);
-
-      Ray mid_mid_ray = scene_.camera.second.compute_eye_ray(mid_mid.x - ((float)width_ / 2),
-                                                             mid_mid.y - ((float)height_/ 2),
-                                                               distance, camera_transform);
-
-      Ray mid_right_ray = scene_.camera.second.compute_eye_ray(mid_right.x - ((float)width_ / 2),
-                                                               mid_right.y - ((float)height_/ 2),
-                                                                 distance, camera_transform);
-
-      Ray lower_left_ray = scene_.camera.second.compute_eye_ray(lower_left.x - ((float)width_ / 2),
-                                                                lower_left.y - ((float)height_/ 2),
-                                                                distance, camera_transform);
-
-      Ray lower_mid_ray = scene_.camera.second.compute_eye_ray(lower_mid.x - ((float)width_ / 2),
-                                                               lower_mid.y - ((float)height_/ 2),
-                                                               distance, camera_transform);
-
-      Ray lower_right_ray = scene_.camera.second.compute_eye_ray(lower_right.x - ((float)width_ / 2),
-                                                                 lower_right.y - ((float)height_/ 2),
-                                                                 distance, camera_transform);
-
-      upper_left.color = trace_ray(upper_left_ray);
-      upper_mid.color = trace_ray(upper_mid_ray);
-      upper_right.color = trace_ray(upper_right_ray);
-      mid_left.color = trace_ray(mid_left_ray);
-      mid_mid.color = trace_ray(mid_mid_ray);
-      mid_right.color = trace_ray(mid_right_ray);
-      lower_left.color = trace_ray(lower_left_ray);
-      lower_mid.color = trace_ray(lower_mid_ray);
-      lower_right.color = trace_ray(lower_right_ray);
-
-      // interpolate colors
-      Pixel p((float)x,(float)y);
-      p.color = (upper_left.color + upper_mid.color + upper_right.color +
-              mid_left.color + mid_mid.color + mid_right.color +
-              lower_left.color + lower_mid.color + lower_right.color) * 0.11f;*/
 
       Pixel p((float)x,(float)y);
 
@@ -500,7 +405,7 @@ Color Renderer::apply_anti_aliasing(unsigned pixel_pos_x, unsigned pixel_pos_y, 
     // interpolate colors
     final_color = (upper_left.color + upper_mid.color + upper_right.color +
                    mid_left.color + mid_mid.color + mid_right.color +
-                   lower_left.color + lower_mid.color + lower_right.color) * 0.11f;
+                   lower_left.color + lower_mid.color + lower_right.color) * 0.11111111f;
   }
 
   return final_color;

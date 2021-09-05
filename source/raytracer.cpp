@@ -12,24 +12,24 @@
 //now single threaded again
 int main(int argc, char* argv[])
 {
-  unsigned const image_width = 800;
-  unsigned const image_height = 600;
+  unsigned const image_width = 1200;
+  unsigned const image_height = 1000;
   std::string const filename = "../../images/rendered_image.ppm";
   std::string t_sdf_filepath{"D:/Ernst des Lebens/Uni/Informatik/Semester 2/Programmiersprachen/Uebung/Raytracer/materials.sdf"};
   std::string h_sdf_filepath{ "D:/Nextcloud/Bauhaus Uni Weimar/SoSe_2021/Programmiersprachen/Belege/Beleg_6/scene.sdf" };
   std::string sdf_filepath{"../../sdf/scene.sdf"};
   std::string animation_filepath{ "../../sdf/animation_description.sdf"};
 
-  unsigned const num_frames = 120;
+  unsigned const num_frames = 900;
 
   Scene scene;
   SDFToolbox::parse_scene(sdf_filepath,scene);
 
   Renderer renderer{image_width, image_height, filename, scene};
 
-  //Application app{renderer};
+  Application app{renderer};
 
-  //SDFToolbox::clear_file(animation_filepath);
+  SDFToolbox::clear_file(animation_filepath);
 
   // write animation description in separate file
 
