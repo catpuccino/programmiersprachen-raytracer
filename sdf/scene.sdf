@@ -202,9 +202,6 @@ define shape box gr16 0 0 0 1 1 1 black
 transform gr16 scale 5 0.5 5
 transform gr16 translate -7.5 0.75 7.5
 
-define shape box bottom_plate 0 0 0 1 1 1 mamor
-transform bottom_plate scale 20 0.5 20
-transform bottom_plate translate 0 0.25 0
 
 # ===============================================
 # 3 x 3 Brett
@@ -281,7 +278,7 @@ transform red_box translate 5 2 6
 define shape box green_box 0 0 0 1 1 1 light_green
 transform green_box scale 2 1 2
 transform green_box rotate 20 0 1 0
-transform green_box translate 0 1.5 0
+transform green_box translate -7 1.5 0
 
 
 define shape box refract_box 0 0 0 1 1 1 emerald
@@ -293,9 +290,9 @@ define shape sphere emerald_sphere 0 0 0 1 emerald
 transform emerald_sphere scale 1 2 1
 transform emerald_sphere translate -5 4 -4
 
-# define shape sphere glass_sphere 0 0 0 1 glass 
-# transform glass_sphere scale 2 2 2
-# transform glass_sphere translate 0 4 0
+define shape sphere glass_sphere 0 0 0 1 glass 
+transform glass_sphere scale 2 2 2
+transform glass_sphere translate 0 3 0
 
 
 
@@ -309,5 +306,7 @@ define light sun 0 20 10 .2 .2 .2 15
 
 # camera <name> <fov-x>, position, direction, up
 # define camera origin 60.0 0 12 26.5 0 -0.4 -1 0 0.4 -1
-define camera top 60.0 0 40 0 0 -1 -0 0 0 1
-# define camera front 60.0 0 0 30 0 0 -1 0 1 0
+define camera origin 60.0 0 -2 26.5 0 -0.4 -1 0 0.4 -1
+# define camera top 60.0 0 20 0 0 -1 0 0 0 -1
+# define camera front 60.0 0 2 30 0 0 -1 0 1 0
+# transform origin rotate -90 0 1 0

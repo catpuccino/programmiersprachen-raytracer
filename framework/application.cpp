@@ -5,7 +5,7 @@ Application::Application(Renderer const& renderer) :
         renderer_{renderer} {}
 
 
-void Application::createAnimation(unsigned num_frames) {
+void Application::createAnimation(unsigned num_frames, int start_frame) {
 
   // initialize scene requisites
   Scene scene;
@@ -13,7 +13,7 @@ void Application::createAnimation(unsigned num_frames) {
                           scene);
 
   // create SDF file for each frame
-  for (unsigned current_frame = 1; current_frame <= num_frames; ++current_frame) {
+  for (unsigned current_frame = start_frame; current_frame <= num_frames; ++current_frame) {
 
     if (current_frame >= 2) {
         // apply animation step to existing scene
