@@ -4,10 +4,17 @@
 *.o
 *.obj
 
+# Precompiled Headers
+*.gch
+*.pch
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
+
+# Fortran module files
+*.mod
 
 # Compiled Static libraries
 *.lai
@@ -20,7 +27,18 @@
 *.out
 *.app
 
-checkerboard.ppm
+# Temporary files
+*~
+.nfs*
 
-build
-cmake_out
+# build directory
+[Bb]uild
+.idea
+.vs
+cmake-build-*
+images
+
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+CMakeFiles

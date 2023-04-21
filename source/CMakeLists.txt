@@ -28,6 +28,7 @@ add_executable(tests
   Sphere.cpp
   Box.cpp)
 target_link_libraries(tests
+  ${FRAMEWORK_NAME}
   ${GLFW_LIBRARIES}
   )
 

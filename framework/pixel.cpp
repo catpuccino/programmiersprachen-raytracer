@@ -10,7 +10,7 @@
 #include "pixel.hpp"
 #include <ostream>
 
-Pixel::Pixel(unsigned int a, unsigned int b)
+Pixel::Pixel(float a, float b)
   : x(a),
     y(b),
     color{0,0,0}
